@@ -10,3 +10,4 @@ measurement/*
 pkg/*
 .DS_Store
 .env
+spec/dummy/tmp/*
