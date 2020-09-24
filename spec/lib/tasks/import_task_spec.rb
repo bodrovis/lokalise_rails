@@ -42,6 +42,27 @@ RSpec.describe 'Import task' do
       main_en = File.join LokaliseRails.loc_path, 'main_en.yml'
       expect(File.file?(main_en)).to be true
     end
+
+    it 'downloads ZIP archive properly' do
+      expect(LokaliseRails::Importer).to receive(:download_files).and_return(
+        {
+          'project_id' => '123.abc',
+          'bundle_url' => "https://github.com/bodrovis/lokalise_rails/blob/master/spec/dummy/public/translations.zip?raw=true"
+        }
+      )
+
+      expect(-> {
+        task.invoke
+      }).to output('Task complete!').to_stdout
+
+      file_count = Dir["#{Rails.root}/config/locales/*"].count do |file|
+        File.file?(file)
+      end
+      expect(file_count).to eq(4)
+
+      main_en = File.join LokaliseRails.loc_path, 'main_en.yml'
+      expect(File.file?(main_en)).to be true
+    end
   end
 
   context 'directory is not empty' do
