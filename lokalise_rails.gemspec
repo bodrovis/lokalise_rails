@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rubyzip', '~> 2.3'
 
   spec.add_development_dependency 'codecov',                   '~> 0.1'
+  spec.add_development_dependency 'pry'
   spec.add_development_dependency 'dotenv',                    '~> 2.5'
   spec.add_development_dependency 'rails', '~> 6.0.3'
   spec.add_development_dependency "sqlite3"

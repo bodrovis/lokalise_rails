@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require 'lokalise_rails/importer'
 require 'lokalise_rails/railtie' if defined?(Rails)
 
 class LokaliseRails
-  @opts = {
+  @project_id = nil
+  @import_opts = {
     format: 'yaml',
     placeholder_format: :icu,
     yaml_include_root: true,
@@ -11,11 +13,15 @@ class LokaliseRails
     directory_prefix: '',
     indentation: '2sp'
   }
-  @safe_mode = false
-  @lokalise_token = nil
+  @export_opts = {
+
+  }
+  @import_safe_mode = false
+  @api_token = nil
 
   class << self
-    attr_accessor :opts, :safe_mode, :lokalise_token
+    attr_accessor :import_opts, :import_safe_mode, :api_token, :export_opts,
+    :project_id
 
     def loc_path
       "#{Rails.root}/config/locales"

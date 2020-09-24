@@ -2,6 +2,6 @@
 
 require 'lokalise_rails'
 
-puts ENV['token']
-LokaliseRails.lokalise_token = 'PROVIDE_YOUR_API_TOKEN_HERE'
+LokaliseRails.api_token = ENV['LOKALISE_API_TOKEN']
+LokaliseRails.project_id = ENV['LOKALISE_PROJECT_ID']
 # LokaliseRails.opts[:indentation] = '8sp'

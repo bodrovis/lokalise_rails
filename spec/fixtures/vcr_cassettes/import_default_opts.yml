@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.lokalise.com/api2/projects/189934715f57a162257d74.88352370/files/download
+    body:
+      encoding: UTF-8
+      string: '{"format":"yaml","placeholder_format":"icu","yaml_include_root":true,"original_filenames":true,"directory_prefix":"","indentation":"2sp"}'
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - ruby-lokalise-api gem/3.1.0
+      X-api-token:
+      - "<LOKALISE_TOKEN>"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx
+      content-type:
+      - application/json
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      vary:
+      - Accept-Encoding
+      cache-control:
+      - max-age=0, must-revalidate, no-cache, no-store, private
+      date:
+      - Thu, 24 Sep 2020 16:41:56 GMT
+      pragma:
+      - no-cache
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - deny
+      x-xss-protection:
+      - 1; mode=block
+      strict-transport-security:
+      - max-age=31536000
+      referrer-policy:
+      - origin
+      expires:
+      - Thu, 24 Sep 2020 16:41:56 GMT
+      access-control-allow-origin:
+      - "*"
+      access-control-allow-headers:
+      - Content-Type
+    body:
+      encoding: ASCII-8BIT
+      string: '{"project_id":"189934715f57a162257d74.88352370","bundle_url":"https:\/\/s3-eu-west-1.amazonaws.com\/lokalise-assets\/files\/export\/189934715f57a162257d74.88352370\/e3e2891fdf65b7f7502c18515dd5d0e2\/Export_Demo-locale.zip"}'
+  recorded_at: Thu, 24 Sep 2020 16:41:49 GMT
+recorded_with: VCR 6.0.0

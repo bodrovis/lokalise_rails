@@ -2,5 +2,9 @@
 
 require 'lokalise_rails'
 
+# These are mandatory options that you must set before running rake tasks:
 LokaliseRails.lokalise_token = ENV['LOKALISE_API_TOKEN']
+LokaliseRails.project_id = ENV['LOKALISE_PROJECT_ID']
+
+# Additional options:
 # LokaliseRails.opts[:indentation] = '8sp'
