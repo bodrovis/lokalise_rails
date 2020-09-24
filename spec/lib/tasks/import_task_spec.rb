@@ -33,7 +33,8 @@ RSpec.describe 'Import task' do
         task.invoke
       }).to output('Task complete!').to_stdout
 
-      file_count = Dir["#{LokaliseRails.loc_path}/*"].count do |file|
+      file_count = Dir["#{Rails.root}/config/locales/*"].count do |file|
+      #file_count = Dir["#{File.dirname(__FILE__) + '../../../../../spec/dummy/config/locales'}/*"].count do |file|
         File.file?(file)
       end
       expect(file_count).to eq(4)
