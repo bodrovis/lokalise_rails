@@ -14,6 +14,7 @@ RSpec.describe 'Import task' do
 
   context 'directory is empty' do
     before do
+      FileUtils.mkdir_p(LokaliseRails.loc_path) unless File.directory?(LokaliseRails.loc_path)
       FileUtils.rm_rf Dir["#{LokaliseRails.loc_path}/*"]
     end
 
@@ -34,7 +35,6 @@ RSpec.describe 'Import task' do
       }).to output('Task complete!').to_stdout
 
       file_count = Dir["#{Rails.root}/config/locales/*"].count do |file|
-      #file_count = Dir["#{File.dirname(__FILE__) + '../../../../../spec/dummy/config/locales'}/*"].count do |file|
         File.file?(file)
       end
       expect(file_count).to eq(4)
@@ -46,6 +46,7 @@ RSpec.describe 'Import task' do
 
   context 'directory is not empty' do
     before :all do
+      FileUtils.mkdir_p(LokaliseRails.loc_path) unless File.directory?(LokaliseRails.loc_path)
       FileUtils.rm_rf Dir["#{LokaliseRails.loc_path}/*"]
       temp_file = File.join LokaliseRails.loc_path, 'kill.me'
       File.open(temp_file, 'w+') { |file| file.write('temp') }
