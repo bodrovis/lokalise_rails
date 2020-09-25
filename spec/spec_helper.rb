@@ -2,9 +2,10 @@
 
 require 'dotenv/load'
 require 'simplecov'
-SimpleCov.start do
+SimpleCov.start 'rails' do
   add_filter 'spec/'
   add_filter '.github/'
+  add_filter 'lib/generators/templates/'
 end
 
 if ENV['CI'] == 'true'
@@ -12,14 +13,21 @@ if ENV['CI'] == 'true'
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
 
-# Configure Rails Environment
-ENV["RAILS_ENV"] = "test"
+# Support files
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
 
-require_relative "../spec/dummy/config/environment"
-ActiveRecord::Migrator.migrations_paths = [File.expand_path("../spec/dummy/db/migrate", __dir__)]
-ENV['RAILS_ROOT'] ||= File.dirname(__FILE__) + '../../../spec/dummy'
+# Configure Rails Environment
+ENV['RAILS_ENV'] = 'test'
+
+require_relative '../spec/dummy/config/environment'
+ActiveRecord::Migrator.migrations_paths = [File.expand_path('../spec/dummy/db/migrate', __dir__)]
+ENV['RAILS_ROOT'] ||= "#{File.dirname(__FILE__)}../../../spec/dummy"
 
 require 'rspec/rails'
 
-# Support files
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
+RSpec.configure do |config|
+  config.include FileUtils
+  config.include RakeUtils
+end
+
+Rails.application.load_tasks

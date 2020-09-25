@@ -13,17 +13,17 @@ class LokaliseRails
     directory_prefix: '',
     indentation: '2sp'
   }
-  @export_opts = {
-
-  }
+  # @export_opts = {
+  #
+  # }
   @import_safe_mode = false
   @api_token = nil
 
   class << self
     attr_accessor :import_opts, :import_safe_mode, :api_token, :export_opts,
-    :project_id
+                  :project_id
 
-    def loc_path
+    def locales_path
       "#{Rails.root}/config/locales"
     end
   end

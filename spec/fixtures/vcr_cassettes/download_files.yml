@@ -31,7 +31,7 @@ http_interactions:
       cache-control:
       - max-age=0, must-revalidate, no-cache, no-store, private
       date:
-      - Thu, 24 Sep 2020 16:41:56 GMT
+      - Fri, 25 Sep 2020 14:19:40 GMT
       pragma:
       - no-cache
       x-content-type-options:
@@ -45,13 +45,13 @@ http_interactions:
       referrer-policy:
       - origin
       expires:
-      - Thu, 24 Sep 2020 16:41:56 GMT
+      - Fri, 25 Sep 2020 14:19:40 GMT
       access-control-allow-origin:
       - "*"
       access-control-allow-headers:
       - Content-Type
     body:
       encoding: ASCII-8BIT
-      string: '{"project_id":"189934715f57a162257d74.88352370","bundle_url":"https:\/\/s3-eu-west-1.amazonaws.com\/lokalise-assets\/files\/export\/189934715f57a162257d74.88352370\/e3e2891fdf65b7f7502c18515dd5d0e2\/Export_Demo-locale.zip"}'
-  recorded_at: Thu, 24 Sep 2020 16:41:49 GMT
+      string: '{"project_id":"189934715f57a162257d74.88352370","bundle_url":"https:\/\/s3-eu-west-1.amazonaws.com\/lokalise-assets\/files\/export\/189934715f57a162257d74.88352370\/8a738f6d0ca7afd918f63996907e9c4a\/Export_Demo-locale.zip"}'
+  recorded_at: Fri, 25 Sep 2020 14:19:30 GMT
 recorded_with: VCR 6.0.0

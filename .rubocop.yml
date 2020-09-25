@@ -63,15 +63,6 @@ Style/TrailingCommaInArrayLiteral:
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: 'no_comma'
 
-Style/HashEachMethods:
-  Enabled: true
-
-Style/HashTransformKeys:
-  Enabled: true
-
-Style/HashTransformValues:
-  Enabled: true
-
 RSpec/MultipleExpectations:
   Max: 30
 
@@ -83,3 +74,9 @@ RSpec/FilePath:
 
 RSpec/MessageSpies:
   EnforcedStyle: receive
+
+RSpec/BeforeAfterAll:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
