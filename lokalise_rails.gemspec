@@ -27,8 +27,11 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'codecov', '~> 0.1'
   spec.add_development_dependency 'dotenv', '~> 2.5'
-  spec.add_development_dependency 'pry'
-  spec.add_development_dependency 'rails', '~> 6.0.3'
+  if ENV['TEST_RAILS_VERSION'].nil?
+    spec.add_development_dependency 'rails', '~> 6.0.3'
+  else
+    spec.add_development_dependency 'rails', ENV['TEST_RAILS_VERSION'].to_s
+  end
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.6'
   spec.add_development_dependency 'rspec-rails', '~> 4.0'
