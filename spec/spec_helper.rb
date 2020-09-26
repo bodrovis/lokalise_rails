@@ -6,6 +6,7 @@ SimpleCov.start 'rails' do
   add_filter 'spec/'
   add_filter '.github/'
   add_filter 'lib/generators/templates/'
+  add_filter 'lib/lokalise_rails/version'
 end
 
 if ENV['CI'] == 'true'
