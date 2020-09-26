@@ -25,7 +25,7 @@ Layout/LineLength:
 
 Metrics/MethodLength:
   CountComments: false
-  Max: 10
+  Max: 15
 
 Metrics/ModuleLength:
   Max: 120

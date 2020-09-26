@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
+require 'rake'
+
 class LokaliseRails
   class Railtie < Rails::Railtie
     rake_tasks do
-      Dir[
-        File.join(File.dirname(__FILE__), '..', 'tasks', '**/*.rake')
-      ].each { |rake| load rake }
+      load 'tasks/lokalise_rails_tasks.rake'
     end
   end
 end

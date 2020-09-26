@@ -2,7 +2,6 @@
 
 require 'lokalise_rails/task_definition/base'
 require 'lokalise_rails/task_definition/importer'
-require 'lokalise_rails/railtie' if defined?(Rails)
 
 class LokaliseRails
   @project_id = nil
@@ -29,3 +28,5 @@ class LokaliseRails
     end
   end
 end
+
+require 'lokalise_rails/railtie' if defined?(Rails)

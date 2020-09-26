@@ -27,7 +27,7 @@ bundle install
 rails g lokalise_rails:install
 ```
 
-The latter command will generate a new initializer `lokalise_rails.rb` looking like this:
+The latter command will generate a new config file `config/lokalise_rails.rb` looking like this:
 
 ```ruby
 require 'lokalise_rails'
@@ -51,7 +51,7 @@ Please note that any existing files inside the `locales` directory will be overw
 
 ## Configuration
 
-Options are specified in the `config/initializers/lokalise_rails.rb` file.
+Options are specified in the `config/lokalise_rails.rb` file.
 
 ### Global settings
 

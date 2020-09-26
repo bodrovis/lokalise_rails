@@ -10,7 +10,7 @@ class LokaliseRails
       desc 'Creates a LokaliseRails config file.'
 
       def copy_config
-        template 'lokalise_rails_config.rb', "#{Rails.root}/config/initializers/lokalise_rails.rb"
+        template 'lokalise_rails_config.rb', "#{Rails.root}/config/lokalise_rails.rb"
       end
     end
   end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe LokaliseRails do
-  it 'should return a proper version' do
+  it 'returns a proper version' do
     expect(LokaliseRails::VERSION).to be_a(String)
   end
 

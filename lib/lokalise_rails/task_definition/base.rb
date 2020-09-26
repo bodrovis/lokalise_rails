@@ -8,9 +8,16 @@ class LokaliseRails
     class Base
       class << self
         def check_required_opts
-          return [false, 'Project ID is not set! Aborting...'] unless LokaliseRails.project_id
-          return [false, 'Lokalise API token is not set! Aborting...'] unless LokaliseRails.api_token
-
+          if LokaliseRails.project_id.nil? || LokaliseRails.project_id.empty?
+            return [
+              false, 'Project ID is not set! Aborting...'
+            ]
+          end
+          if LokaliseRails.api_token.nil? || LokaliseRails.api_token.empty?
+            return [
+              false, 'Lokalise API token is not set! Aborting...'
+            ]
+          end
           [true, '']
         end
       end

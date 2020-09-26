@@ -16,6 +16,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir['README.md', 'LICENSE',
                    'CHANGELOG.md', 'lib/**/*.rb',
+                   'lib/**/*.rake',
                    'lokalise_rails.gemspec', '.github/*.md',
                    'Gemfile', 'Rakefile']
   spec.test_files       = Dir['spec/**/*.rb']

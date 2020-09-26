@@ -22,6 +22,6 @@ module FileUtils
   end
 
   def config_file
-    "#{Rails.root}/config/initializers/lokalise_rails.rb"
+    "#{Rails.root}/config/lokalise_rails.rb"
   end
 end

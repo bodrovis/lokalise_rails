@@ -3,6 +3,7 @@
 describe LokaliseRails::TaskDefinition::Importer do
   describe '.download_files' do
     it 'returns a proper download URL' do
+      expect(LokaliseRails).to receive(:project_id).and_return('189934715f57a162257d74.88352370')
       response = VCR.use_cassette('download_files') do
         described_class.download_files
       end
