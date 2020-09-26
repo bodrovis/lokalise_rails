@@ -3,7 +3,9 @@
 class LokaliseRails
   class Railtie < Rails::Railtie
     rake_tasks do
-      load 'tasks/lokalise_rails_tasks.rake'
+      Dir[
+        File.join(File.dirname(__FILE__), '..', 'tasks', '**/*.rake')
+      ].each { |rake| load rake }
     end
   end
 end
