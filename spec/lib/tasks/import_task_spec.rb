@@ -14,7 +14,9 @@ RSpec.describe LokaliseRails do
     end
 
     it 'is callable' do
-      expect(LokaliseRails::Importer).to receive(:download_files).and_return(
+      expect(LokaliseRails::TaskDefinition::Importer).to receive(
+        :download_files
+      ).and_return(
         {
           'project_id' => '123.abc',
           'bundle_url' => "#{Rails.root}/public/translations.zip"
@@ -30,7 +32,9 @@ RSpec.describe LokaliseRails do
     end
 
     it 'downloads ZIP archive properly' do
-      expect(LokaliseRails::Importer).to receive(:download_files).and_return(
+      expect(LokaliseRails::TaskDefinition::Importer).to receive(
+        :download_files
+      ).and_return(
         {
           'project_id' => '123.abc',
           'bundle_url' => 'https://github.com/bodrovis/lokalise_rails/blob/master/spec/dummy/public/translations.zip?raw=true'
@@ -61,7 +65,9 @@ RSpec.describe LokaliseRails do
     end
 
     it 'returns a success message with default settings' do
-      expect(LokaliseRails::Importer).to receive(:download_files).and_return(
+      expect(LokaliseRails::TaskDefinition::Importer).to receive(
+        :download_files
+      ).and_return(
         {
           'project_id' => '123.abc',
           'bundle_url' => "#{Rails.root}/public/translations.zip"

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'lokalise_rails/importer'
+require 'lokalise_rails/task_definition/base'
+require 'lokalise_rails/task_definition/importer'
 require 'lokalise_rails/railtie' if defined?(Rails)
 
 class LokaliseRails
