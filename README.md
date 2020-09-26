@@ -37,7 +37,7 @@ LokaliseRails.project_id = ENV['LOKALISE_PROJECT_ID']
 # ...
 ```
 
-You have to provide `api_token` and `project_id` to proceed. Other options can be customized as well (see below) but they have sensible defaults.
+You have to provide `api_token` and `project_id` to proceed. [Other options can be customized as well (see below)](https://github.com/bodrovis/lokalise_rails#import-settings) but they have sensible defaults.
 
 ## Importing translations from Lokalise
 
@@ -47,7 +47,7 @@ To import translations from the specified Lokalise project to your Rails app, ru
 rails lokalise_rails:import
 ```
 
-Please note that any existing files inside the `locales` directory will be overwritten! You may enable safe mode to check if the folder is empty or not.
+Please note that any existing files inside the `locales` directory will be overwritten! You may enable [safe mode](https://github.com/bodrovis/lokalise_rails#import-settings) to check whether the folder is empty or not.
 
 ## Configuration
 

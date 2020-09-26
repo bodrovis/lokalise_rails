@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
-describe LokaliseRails do
+require 'generators/lokalise_rails/install_generator'
+
+describe LokaliseRails::Generators::InstallGenerator do
   before :all do
     remove_config
   end
 
   after :all do
     remove_config
-    install_invoker
+    described_class.start
   end
 
   it 'installs config file properly' do
-    install_invoker
+    described_class.start
     expect(File.file?(config_file)).to be true
   end
 end
