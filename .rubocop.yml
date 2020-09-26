@@ -5,6 +5,8 @@ require:
 AllCops:
   TargetRubyVersion: 2.5
   NewCops: enable
+  Exclude:
+    - 'spec/dummy/bin/*'
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space

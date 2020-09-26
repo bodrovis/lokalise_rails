@@ -7,7 +7,7 @@ LokaliseRails.api_token = ENV['LOKALISE_API_TOKEN']
 LokaliseRails.project_id = ENV['LOKALISE_PROJECT_ID']
 
 # Import options have the following defaults:
-# LokaliseRails.import_opts = {
+# @import_opts = {
 #   format: 'yaml',
 #   placeholder_format: :icu,
 #   yaml_include_root: true,
@@ -17,7 +17,7 @@ LokaliseRails.project_id = ENV['LOKALISE_PROJECT_ID']
 # }
 
 # Safe mode is disabled by default:
-# LokaliseRails.import_safe_mode = false
+# @import_safe_mode = false
 
 # Provide a custom path to the directory with your translation files:
 # class LokaliseRails
