@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ruby-lokalise-api'
 require 'open-uri'
 
@@ -6,8 +8,8 @@ class LokaliseRails
     class Base
       class << self
         def check_required_opts
-          return [false, "Project ID is not set! Aborting..."] unless LokaliseRails.project_id
-          return [false, "Lokalise API token is not set! Aborting..."] unless LokaliseRails.api_token
+          return [false, 'Project ID is not set! Aborting...'] unless LokaliseRails.project_id
+          return [false, 'Lokalise API token is not set! Aborting...'] unless LokaliseRails.api_token
 
           [true, '']
         end
