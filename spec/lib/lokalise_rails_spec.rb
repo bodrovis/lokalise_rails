@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 describe LokaliseRails do
+  it 'should return a proper version' do
+    expect(LokaliseRails::VERSION).to be_a(String)
+  end
+
   describe 'parameters' do
     let(:fake_class) { class_double('LokaliseRails') }
 
