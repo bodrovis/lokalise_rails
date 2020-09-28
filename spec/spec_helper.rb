@@ -31,4 +31,5 @@ RSpec.configure do |config|
   config.include RakeUtils
 end
 
+add_config!
 Rails.application.load_tasks

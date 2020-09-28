@@ -5,12 +5,23 @@ describe LokaliseRails do
     expect(LokaliseRails::VERSION).to be_a(String)
   end
 
+  it 'is possible to provide config options' do
+    described_class.config do |c|
+      expect(c).to eq(described_class)
+    end
+  end
+
   describe 'parameters' do
     let(:fake_class) { class_double('LokaliseRails') }
 
     it 'is possible to set project_id' do
       expect(fake_class).to receive(:project_id=).with('123.abc')
       fake_class.project_id = '123.abc'
+    end
+
+    it 'is possible to set file_ext_regexp' do
+      expect(fake_class).to receive(:file_ext_regexp=).with(Regexp.new('.*'))
+      fake_class.file_ext_regexp = Regexp.new('.*')
     end
 
     it 'is possible to set import_opts' do
@@ -32,9 +43,8 @@ describe LokaliseRails do
     end
 
     it 'is possible to override locales_path' do
-      expect(fake_class).to receive(:locales_path).and_return('/demo/path')
-
-      expect(fake_class.locales_path).to eq('/demo/path')
+      expect(fake_class).to receive(:locales_path=).with('/demo/path')
+      fake_class.locales_path = '/demo/path'
     end
   end
 end

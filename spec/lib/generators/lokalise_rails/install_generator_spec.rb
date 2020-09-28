@@ -9,7 +9,7 @@ describe LokaliseRails::Generators::InstallGenerator do
 
   after :all do
     remove_config
-    described_class.start
+    add_config!
   end
 
   it 'installs config file properly' do

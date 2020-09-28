@@ -32,8 +32,10 @@ The latter command will generate a new config file `config/lokalise_rails.rb` lo
 ```ruby
 require 'lokalise_rails'
 
-LokaliseRails.api_token = ENV['LOKALISE_API_TOKEN']
-LokaliseRails.project_id = ENV['LOKALISE_PROJECT_ID']
+LokaliseRails.config do |c|
+  c.api_token = ENV['LOKALISE_API_TOKEN']
+  c.project_id = ENV['LOKALISE_PROJECT_ID']
+end
 # ...
 ```
 
@@ -55,23 +57,13 @@ Options are specified in the `config/lokalise_rails.rb` file.
 
 ### Global settings
 
-* `LokaliseRails.api_token` (`string`, required) - Lokalise API token with read/write permissions.
-* `LokaliseRails.project_id` (`string`, required) - Lokalise project ID. You must have import/export permissions in the specified project.
-* `locales_path` - method returning a string with the path to your translation files. Defaults to `"#{Rails.root}/config/locales"`. To provide a custom path, override the method inside the initializer (make sure that the path exists!):
-
-```ruby
-class LokaliseRails
-  class << self
-    def locales_path
-      "#{Rails.root}/config/locales_custom"
-    end
-  end
-end
-```
+* `api_token` (`string`, required) - Lokalise API token with read/write permissions.
+* `project_id` (`string`, required) - Lokalise project ID. You must have import/export permissions in the specified project.
+* `locales_path` (`string`) - path to your translation files. Defaults to `"#{Rails.root}/config/locales"`.
 
 ### Import settings
 
-* `LokaliseRails.import_opts` (`hash`) - options that will be passed to Lokalise API when downloading translations to your app. Here are the default options:
+* `import_opts` (`hash`) - options that will be passed to Lokalise API when downloading translations to your app. Here are the default options:
 
 ```ruby
 {
@@ -85,7 +77,7 @@ end
 ```
 
 Full list of available options [can be found at the official API documentation](https://app.lokalise.com/api2docs/curl/#transition-download-files-post).
-* `LokaliseRails.import_safe_mode` (`boolean`) - default to `false`. When this option is enabled, the import task will check whether the `locales` directory is empty or not. If it is not empty, you will be prompted to continue.
+* `import_safe_mode` (`boolean`) - default to `false`. When this option is enabled, the import task will check whether the directory set with `locales_path` is empty or not. If it is not empty, you will be prompted to continue.
 
 ## License
 

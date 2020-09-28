@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'ruby-lokalise-api'
-require 'open-uri'
 
 class LokaliseRails
   module TaskDefinition
