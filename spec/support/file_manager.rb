@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'fileutils'
 
 module FileManager
@@ -23,30 +24,16 @@ module FileManager
     locales_dir.count { |file| File.file?(file) }
   end
 
-  def add_translation_files!(with_ru = false)
-    en = <<~DATA
-en:
-  my_key: "My value"
-  nested:
-    key: "Value 2"
-    DATA
-
+  def add_translation_files!(with_ru: false)
     FileUtils.mkdir_p "#{Rails.root}/config/locales/nested"
     File.open("#{Rails.root}/config/locales/nested/en.yml", 'w+:UTF-8') do |f|
-      f.write en
+      f.write en_data
     end
 
-    if with_ru
-      ru = <<~DATA
-ru:
-  my_key: "Моё значение"
-  nested:
-    key: "Значение 2"
-      DATA
+    return unless with_ru
 
-      File.open("#{Rails.root}/config/locales/ru.yml", 'w+:UTF-8') do |f|
-        f.write ru
-      end
+    File.open("#{Rails.root}/config/locales/ru.yml", 'w+:UTF-8') do |f|
+      f.write ru_data
     end
   end
 
@@ -70,5 +57,25 @@ ru:
 
   def config_file
     "#{Rails.root}/config/lokalise_rails.rb"
+  end
+
+  private
+
+  def en_data
+    <<~DATA
+      en:
+        my_key: "My value"
+        nested:
+          key: "Value 2"
+    DATA
+  end
+
+  def ru_data
+    <<~DATA
+      ru:
+        my_key: "Моё значение"
+        nested:
+          key: "Значение 2"
+    DATA
   end
 end

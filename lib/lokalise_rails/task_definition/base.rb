@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'ruby-lokalise-api'
-require "pathname"
+require 'pathname'
 
 module LokaliseRails
   module TaskDefinition
@@ -15,18 +15,14 @@ module LokaliseRails
 
         def opt_errors
           errors = []
-          if LokaliseRails.project_id.nil? || LokaliseRails.project_id.empty?
-            errors << 'Project ID is not set! Aborting...'
-          end
-          if LokaliseRails.api_token.nil? || LokaliseRails.api_token.empty?
-            errors << 'Lokalise API token is not set! Aborting...'
-          end
+          errors << 'Project ID is not set! Aborting...' if LokaliseRails.project_id.nil? || LokaliseRails.project_id.empty?
+          errors << 'Lokalise API token is not set! Aborting...' if LokaliseRails.api_token.nil? || LokaliseRails.api_token.empty?
           errors
         end
 
         private
 
-        def has_proper_ext?(raw_path)
+        def proper_ext?(raw_path)
           path = raw_path.is_a?(Pathname) ? raw_path : Pathname.new(raw_path)
           LokaliseRails.file_ext_regexp.match? path.extname
         end

@@ -54,5 +54,11 @@ describe LokaliseRails do
       expect(fake_class).to receive(:locales_path=).with('/demo/path')
       fake_class.locales_path = '/demo/path'
     end
+
+    it 'is possible to set skip_file_export' do
+      cond = ->(f) { f.nil? }
+      expect(fake_class).to receive(:skip_file_export=).with(cond)
+      fake_class.skip_file_export = cond
+    end
   end
 end

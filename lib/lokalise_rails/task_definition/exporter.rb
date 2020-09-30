@@ -1,4 +1,6 @@
-require "base64"
+# frozen_string_literal: true
+
+require 'base64'
 
 module LokaliseRails
   module TaskDefinition
@@ -8,7 +10,7 @@ module LokaliseRails
           errors = opt_errors
 
           if errors.any?
-            errors.each {|e| $stdout.puts e}
+            errors.each { |e| $stdout.puts e }
             return false
           end
 
@@ -28,10 +30,10 @@ module LokaliseRails
           return unless block_given?
 
           loc_path = LokaliseRails.locales_path
-          Dir["#{loc_path}/**/*"].each do |f|
+          Dir["#{loc_path}/**/*"].sort.each do |f|
             full_path = Pathname.new f
 
-            next unless full_path.file? && has_proper_ext?(full_path)
+            next unless file_matches_criteria? full_path
 
             relative_path = full_path.relative_path_from Pathname.new(loc_path)
             filename = relative_path.split[1].to_s
@@ -50,6 +52,11 @@ module LokaliseRails
           }
 
           initial_opts.merge LokaliseRails.export_opts
+        end
+
+        def file_matches_criteria?(full_path)
+          full_path.file? && proper_ext?(full_path) &&
+            !LokaliseRails.skip_file_export.call(full_path)
         end
       end
     end

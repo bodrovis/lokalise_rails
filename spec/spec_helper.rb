@@ -22,7 +22,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
 ENV['RAILS_ENV'] = 'test'
 
 require_relative '../spec/dummy/config/environment'
-ActiveRecord::Migrator.migrations_paths = [File.expand_path('../spec/dummy/db/migrate', __dir__)]
+# ActiveRecord::Migrator.migrations_paths = [File.expand_path('../spec/dummy/db/migrate', __dir__)]
 ENV['RAILS_ROOT'] ||= "#{File.dirname(__FILE__)}../../../spec/dummy"
 
 require 'rspec/rails'
@@ -32,7 +32,9 @@ RSpec.configure do |config|
   config.include RakeUtils
 end
 
+# rubocop:disable Style/MixinUsage
 include FileManager
-add_config!
+# rubocop:enable Style/MixinUsage
 
+add_config!
 Rails.application.load_tasks

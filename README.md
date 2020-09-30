@@ -51,6 +51,14 @@ rails lokalise_rails:import
 
 Please note that any existing files inside the `locales` directory will be overwritten! You may enable [safe mode](https://github.com/bodrovis/lokalise_rails#import-settings) to check whether the folder is empty or not.
 
+## Exporting translations to Lokalise
+
+To export translations from your Rails app to the specified Lokalise project, run the following command:
+
+```
+rails lokalise_rails:export
+```
+
 ## Configuration
 
 Options are specified in the `config/lokalise_rails.rb` file.
@@ -60,6 +68,7 @@ Options are specified in the `config/lokalise_rails.rb` file.
 * `api_token` (`string`, required) - Lokalise API token with read/write permissions.
 * `project_id` (`string`, required) - Lokalise project ID. You must have import/export permissions in the specified project.
 * `locales_path` (`string`) - path to your translation files. Defaults to `"#{Rails.root}/config/locales"`.
+* `file_ext_regexp` (`regexp`) - regular expression applied to file extensions to determine which files should be imported and exported. Defaults to `/\.ya?ml\z/i`.
 
 ### Import settings
 
@@ -78,6 +87,15 @@ Options are specified in the `config/lokalise_rails.rb` file.
 
 Full list of available options [can be found at the official API documentation](https://app.lokalise.com/api2docs/curl/#transition-download-files-post).
 * `import_safe_mode` (`boolean`) - default to `false`. When this option is enabled, the import task will check whether the directory set with `locales_path` is empty or not. If it is not empty, you will be prompted to continue.
+
+### Export settings
+
+* `export_opts` (`hash`) - options that will be passed to Lokalise API when uploading translations. By default, the following options are provided: `data`, `lang_iso`, `filename`.
+* `skip_file_export` (`lambda` or `proc`) - specify additional exclusion criteria for the exported files. By default, the rake task will ignore all non-file entries and all files with improper extensions (the latter is controlled by the `file_ext_regexp`). Lambda passed to this option should accept a single argument which is full path to the file (instance of the `Pathname` class). For example, to exclude all files that have `fr` part in their names, add the following:
+
+```ruby
+c.skip_file_export = ->(file) { f.split[1].to_s.include?('fr') }
+```
 
 ## License
 

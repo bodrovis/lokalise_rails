@@ -62,7 +62,7 @@ RSpec.describe LokaliseRails do
       described_class.import_safe_mode = true
     end
 
-    before :each do
+    before do
       rm_translation_files
       add_translation_files!
     end

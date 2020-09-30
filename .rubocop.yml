@@ -83,3 +83,6 @@ RSpec/BeforeAfterAll:
 
 RSpec/NamedSubject:
   Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10

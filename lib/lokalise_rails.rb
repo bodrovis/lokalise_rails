@@ -8,7 +8,7 @@ module LokaliseRails
   class << self
     attr_accessor :api_token, :project_id
     attr_writer :import_opts, :import_safe_mode, :export_opts, :locales_path,
-                :file_ext_regexp
+                :file_ext_regexp, :skip_file_export
 
     def config
       yield self
@@ -39,6 +39,10 @@ module LokaliseRails
 
     def import_safe_mode
       @import_safe_mode.nil? ? false : @import_safe_mode
+    end
+
+    def skip_file_export
+      @skip_file_export || ->(_) { false }
     end
   end
 end

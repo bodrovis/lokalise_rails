@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'base64'
 
 describe LokaliseRails::TaskDefinition::Exporter do
@@ -27,19 +29,19 @@ describe LokaliseRails::TaskDefinition::Exporter do
       it 'halts when the API key is not set' do
         expect(LokaliseRails).to receive(:api_token).and_return(nil)
         expect(described_class).not_to receive(:each_file)
-        expect(-> {described_class.export!}).to output(/API token is not set/).to_stdout
+        expect(-> { described_class.export! }).to output(/API token is not set/).to_stdout
       end
 
       it 'halts when the project_id is not set' do
         expect(LokaliseRails).to receive(:project_id).and_return(nil)
         expect(described_class).not_to receive(:each_file)
-        expect(-> {described_class.export!}).to output(/Project ID is not set/).to_stdout
+        expect(-> { described_class.export! }).to output(/Project ID is not set/).to_stdout
       end
     end
 
     describe '.each_file' do
       it 'yield proper arguments' do
-        expect {|b| described_class.each_file(&b) }.to yield_with_args(
+        expect { |b| described_class.each_file(&b) }.to yield_with_args(
           Pathname.new(path),
           Pathname.new(relative_name),
           filename
@@ -60,9 +62,9 @@ describe LokaliseRails::TaskDefinition::Exporter do
 
       it 'allows to redefine options' do
         expect(LokaliseRails).to receive(:export_opts).and_return({
-          detect_icu_plurals: true,
-          convert_placeholders: true
-        })
+                                                                    detect_icu_plurals: true,
+                                                                    convert_placeholders: true
+                                                                  })
 
         resulting_opts = described_class.opts(path, relative_name, filename)
 
@@ -81,31 +83,40 @@ describe LokaliseRails::TaskDefinition::Exporter do
     let(:relative_name_ru) { filename_ru }
 
     before :all do
-      add_translation_files! true
+      add_translation_files! with_ru: true
     end
 
     after :all do
       rm_translation_files
     end
 
-    describe '.opts' do
-      let(:base64content) { Base64.strict_encode64(File.read(path).strip) }
+    describe '.each_file' do
+      it 'yields every translation file' do
+        expect { |b| described_class.each_file(&b) }.to yield_successive_args(
+          [
+            Pathname.new(path),
+            Pathname.new(relative_name),
+            filename
+          ],
+          [
+            Pathname.new(path_ru),
+            Pathname.new(relative_name_ru),
+            filename_ru
+          ]
+        )
+      end
 
-      describe '.each_file' do
-        it 'yield successive arguments' do
-          expect {|b| described_class.each_file(&b) }.to yield_successive_args(
-            [
-              Pathname.new(path),
-              Pathname.new(relative_name),
-              filename
-            ],
-            [
-              Pathname.new(path_ru),
-              Pathname.new(relative_name_ru),
-              filename_ru
-            ]
-          )
-        end
+      it 'does not yield files that have to be skipped' do
+        expect(LokaliseRails).to receive(:skip_file_export).twice.and_return(
+          ->(f) { f.split[1].to_s.include?('ru') }
+        )
+        expect { |b| described_class.each_file(&b) }.to yield_successive_args(
+          [
+            Pathname.new(path),
+            Pathname.new(relative_name),
+            filename
+          ]
+        )
       end
     end
   end

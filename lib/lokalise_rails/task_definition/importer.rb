@@ -13,7 +13,7 @@ module LokaliseRails
           errors = opt_errors
 
           if errors.any?
-            errors.each {|e| $stdout.puts e}
+            errors.each { |e| $stdout.puts e }
             return false
           end
 
@@ -40,7 +40,7 @@ module LokaliseRails
 
         def process_zip(zip)
           zip.each do |entry|
-            next unless has_proper_ext? entry.name
+            next unless proper_ext? entry.name
 
             data = YAML.safe_load entry.get_input_stream.read
             subdir, filename = subdir_and_filename_for entry.name
