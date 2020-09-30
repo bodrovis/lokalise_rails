@@ -32,6 +32,14 @@ describe LokaliseRails do
       }
     end
 
+    it 'is possible to set export_opts' do
+      expect(fake_class).to receive(:export_opts=).with(duck_type(:each))
+      fake_class.export_opts = {
+        convert_placeholders: true,
+        detect_icu_plurals: true
+      }
+    end
+
     it 'is possible to set import_safe_mode' do
       expect(fake_class).to receive(:import_safe_mode=).with(true)
       fake_class.import_safe_mode = true

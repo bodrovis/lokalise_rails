@@ -2,6 +2,8 @@
 
 require 'dotenv/load'
 require 'simplecov'
+require 'pry'
+
 SimpleCov.start 'rails' do
   add_filter 'spec/'
   add_filter '.github/'
@@ -27,9 +29,11 @@ ENV['RAILS_ROOT'] ||= "#{File.dirname(__FILE__)}../../../spec/dummy"
 require 'rspec/rails'
 
 RSpec.configure do |config|
-  config.include FileUtils
+  config.include FileManager
   config.include RakeUtils
 end
 
+include FileManager
 add_config!
+
 Rails.application.load_tasks

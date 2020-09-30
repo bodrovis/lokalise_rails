@@ -1,6 +1,12 @@
 # frozen_string_literal: true
+require 'fileutils'
 
-module FileUtils
+module FileManager
+  def expect_file_exist(path, file)
+    file_path = File.join path, file
+    expect(File.file?(file_path)).to be true
+  end
+
   def mkdir_locales
     FileUtils.mkdir_p(LokaliseRails.locales_path) unless File.directory?(LokaliseRails.locales_path)
   end
@@ -10,11 +16,36 @@ module FileUtils
   end
 
   def locales_dir
-    Dir["#{LokaliseRails.locales_path}/*"]
+    Dir["#{LokaliseRails.locales_path}/**/*"]
   end
 
   def count_translations
     locales_dir.count { |file| File.file?(file) }
+  end
+
+  def add_translation_files!
+    en = <<~DATA
+en:
+  my_key: "My value"
+  nested:
+    key: "Value 2"
+    DATA
+
+    FileUtils.mkdir_p "#{Rails.root}/config/locales/nested"
+    File.open("#{Rails.root}/config/locales/nested/en.yml", 'w+:UTF-8') do |f|
+      f.write en
+    end
+
+#     ru = <<~DATA
+# ru:
+#   my_key: "Моё значение"
+#   nested:
+#     key: "Значение 2"
+#     DATA
+#
+#     File.open("#{Rails.root}/config/locales/ru.yml", 'w+:UTF-8') do |f|
+#       f.write ru
+#     end
   end
 
   def add_config!

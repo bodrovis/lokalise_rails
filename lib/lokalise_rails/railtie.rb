@@ -2,7 +2,7 @@
 
 require 'rake'
 
-class LokaliseRails
+module LokaliseRails
   class Railtie < Rails::Railtie
     rake_tasks do
       load 'tasks/lokalise_rails_tasks.rake'

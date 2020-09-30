@@ -1,11 +1,18 @@
 # frozen_string_literal: true
 
 require 'ruby-lokalise-api'
+require "pathname"
 
-class LokaliseRails
+module LokaliseRails
   module TaskDefinition
     class Base
       class << self
+        attr_writer :api_client
+
+        def api_client
+          @api_client ||= ::Lokalise.client LokaliseRails.api_token
+        end
+
         def check_required_opts
           if LokaliseRails.project_id.nil? || LokaliseRails.project_id.empty?
             return [
@@ -18,6 +25,17 @@ class LokaliseRails
             ]
           end
           [true, '']
+        end
+
+        private
+
+        def has_proper_ext?(name)
+          LokaliseRails.file_ext_regexp.match? name
+        end
+
+        def subdir_and_filename_for(entry)
+          Pathname.new(entry).split
+        #  entry.include?('/') ? entry.split('/') : ['', entry]
         end
       end
     end

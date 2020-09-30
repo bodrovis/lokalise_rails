@@ -3,8 +3,9 @@
 require 'zip'
 require 'yaml'
 require 'open-uri'
+require 'fileutils'
 
-class LokaliseRails
+module LokaliseRails
   module TaskDefinition
     class Importer < Base
       class << self
@@ -19,10 +20,9 @@ class LokaliseRails
         end
 
         def download_files
-          client = ::Lokalise.client LokaliseRails.api_token
           opts = LokaliseRails.import_opts
 
-          client.download_files LokaliseRails.project_id, opts
+          api_client.download_files LokaliseRails.project_id, opts
         end
 
         def open_and_process_zip(path)
@@ -31,11 +31,13 @@ class LokaliseRails
 
         def process_zip(zip)
           zip.each do |entry|
-            next unless LokaliseRails.file_ext_regexp.match?(entry.name)
+            next unless has_proper_ext? entry.name
 
-            filename = translation_filename_for entry
             data = YAML.safe_load entry.get_input_stream.read
-            File.open("#{LokaliseRails.locales_path}/#{filename}", 'w+:UTF-8') do |f|
+            subdir, filename = subdir_and_filename_for entry.name
+            full_path = "#{LokaliseRails.locales_path}/#{subdir}"
+            FileUtils.mkdir_p full_path
+            File.open(File.join(full_path, filename), 'w+:UTF-8') do |f|
               f.write data.to_yaml
             end
           end
@@ -48,12 +50,6 @@ class LokaliseRails
           $stdout.print 'Enter Y to continue: '
           answer = $stdin.gets
           answer.to_s.strip == 'Y'
-        end
-
-        private
-
-        def translation_filename_for(entry)
-          entry.name.include?('/') ? entry.name.split('/')[1] : entry.name
         end
       end
     end

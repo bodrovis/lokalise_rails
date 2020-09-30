@@ -2,8 +2,9 @@
 
 require 'lokalise_rails/task_definition/base'
 require 'lokalise_rails/task_definition/importer'
+require 'lokalise_rails/task_definition/exporter'
 
-class LokaliseRails
+module LokaliseRails
   class << self
     attr_accessor :api_token, :project_id
     attr_writer :import_opts, :import_safe_mode, :export_opts, :locales_path,
@@ -18,7 +19,7 @@ class LokaliseRails
     end
 
     def file_ext_regexp
-      @file_ext_regexp || /\.ya?ml/i
+      @file_ext_regexp || /\.ya?ml\z/i
     end
 
     def import_opts
@@ -30,6 +31,10 @@ class LokaliseRails
         directory_prefix: '',
         indentation: '2sp'
       }
+    end
+
+    def export_opts
+      @export_opts || {}
     end
 
     def import_safe_mode

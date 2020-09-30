@@ -17,6 +17,9 @@ LokaliseRails.config do |c|
   #   indentation: '2sp'
   # }
 
+  # Additional export options (only filename, contents, and lang_iso params are provided by default)
+  # c.export_opts = {}
+
   # Safe mode for imports is disabled by default:
   # c.import_safe_mode = false
 
@@ -24,5 +27,5 @@ LokaliseRails.config do |c|
   # c.locales_path = "#{Rails.root}/config/locales"
 
   # Regular expression to use when choosing the files to export from the downloaded archive
-  # c.file_ext_regexp = /\.ya?ml/i
+  # c.file_ext_regexp = /\.ya?ml\z/i
 end

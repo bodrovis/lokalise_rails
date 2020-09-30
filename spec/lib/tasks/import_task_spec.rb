@@ -13,6 +13,8 @@ RSpec.describe LokaliseRails do
       rm_translation_files
     end
 
+    let(:loc_path) { described_class.locales_path }
+
     it 'is callable' do
       expect(LokaliseRails::TaskDefinition::Importer).to receive(
         :download_files
@@ -27,8 +29,9 @@ RSpec.describe LokaliseRails do
 
       expect(count_translations).to eq(4)
 
-      main_en = File.join described_class.locales_path, 'main_en.yml'
-      expect(File.file?(main_en)).to be true
+      expect_file_exist loc_path, 'en/nested/main_en.yml'
+      expect_file_exist loc_path, 'en/nested/deep/secondary_en.yml'
+      expect_file_exist loc_path, 'ru/main_ru.yml'
     end
 
     it 'downloads ZIP archive properly' do
@@ -45,8 +48,7 @@ RSpec.describe LokaliseRails do
 
       expect(count_translations).to eq(4)
 
-      main_en = File.join described_class.locales_path, 'main_en.yml'
-      expect(File.file?(main_en)).to be true
+      expect_file_exist loc_path, 'en/main_en.yml'
     end
   end
 
@@ -54,8 +56,7 @@ RSpec.describe LokaliseRails do
     before :all do
       mkdir_locales
       rm_translation_files
-      temp_file = File.join described_class.locales_path, 'kill.me'
-      File.open(temp_file, 'w+') { |file| file.write('temp') }
+      add_translation_files!
       described_class.import_safe_mode = true
     end
 
