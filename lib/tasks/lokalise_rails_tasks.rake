@@ -5,7 +5,10 @@ require "#{Rails.root}/config/lokalise_rails"
 
 namespace :lokalise_rails do
   task :import do
-    msg = LokaliseRails::TaskDefinition::Importer.import!
-    $stdout.print msg
+    LokaliseRails::TaskDefinition::Importer.import!
+  end
+
+  task :export do
+    LokaliseRails::TaskDefinition::Exporter.export!
   end
 end

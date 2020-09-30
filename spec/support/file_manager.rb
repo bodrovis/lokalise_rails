@@ -23,7 +23,7 @@ module FileManager
     locales_dir.count { |file| File.file?(file) }
   end
 
-  def add_translation_files!
+  def add_translation_files!(with_ru = false)
     en = <<~DATA
 en:
   my_key: "My value"
@@ -36,16 +36,18 @@ en:
       f.write en
     end
 
-#     ru = <<~DATA
-# ru:
-#   my_key: "Моё значение"
-#   nested:
-#     key: "Значение 2"
-#     DATA
-#
-#     File.open("#{Rails.root}/config/locales/ru.yml", 'w+:UTF-8') do |f|
-#       f.write ru
-#     end
+    if with_ru
+      ru = <<~DATA
+ru:
+  my_key: "Моё значение"
+  nested:
+    key: "Значение 2"
+      DATA
+
+      File.open("#{Rails.root}/config/locales/ru.yml", 'w+:UTF-8') do |f|
+        f.write ru
+      end
+    end
   end
 
   def add_config!

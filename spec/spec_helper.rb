@@ -2,7 +2,6 @@
 
 require 'dotenv/load'
 require 'simplecov'
-require 'pry'
 
 SimpleCov.start 'rails' do
   add_filter 'spec/'

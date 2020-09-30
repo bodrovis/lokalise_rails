@@ -5,6 +5,10 @@ module RakeUtils
     -> { Rake::Task['lokalise_rails:import'].execute }
   end
 
+  def export_executor
+    -> { Rake::Task['lokalise_rails:export'].execute }
+  end
+
   def install_invoker
     Rails::Generators.invoke 'lokalise_rails:install'
   end

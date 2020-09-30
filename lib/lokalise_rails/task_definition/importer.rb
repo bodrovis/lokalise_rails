@@ -10,13 +10,22 @@ module LokaliseRails
     class Importer < Base
       class << self
         def import!
-          status_ok, msg = check_required_opts
-          return msg unless status_ok
-          return 'Task cancelled!' unless proceed_when_safe_mode?
+          errors = opt_errors
+
+          if errors.any?
+            errors.each {|e| $stdout.puts e}
+            return false
+          end
+
+          unless proceed_when_safe_mode?
+            $stdout.print 'Task cancelled!'
+            return false
+          end
 
           open_and_process_zip download_files['bundle_url']
 
-          'Task complete!'
+          $stdout.print 'Task complete!'
+          true
         end
 
         def download_files
@@ -37,6 +46,7 @@ module LokaliseRails
             subdir, filename = subdir_and_filename_for entry.name
             full_path = "#{LokaliseRails.locales_path}/#{subdir}"
             FileUtils.mkdir_p full_path
+
             File.open(File.join(full_path, filename), 'w+:UTF-8') do |f|
               f.write data.to_yaml
             end

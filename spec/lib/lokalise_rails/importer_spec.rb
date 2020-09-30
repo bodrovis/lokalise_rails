@@ -16,15 +16,13 @@ describe LokaliseRails::TaskDefinition::Importer do
   describe '.import!' do
     it 'halts when the API key is not set' do
       expect(LokaliseRails).to receive(:api_token).and_return(nil)
-      result = described_class.import!
-      expect(result).to include('API token is not set')
+      expect(-> {described_class.import!}).to output(/API token is not set/).to_stdout
       expect(count_translations).to eq(0)
     end
 
     it 'halts when the project_id is not set' do
       expect(LokaliseRails).to receive(:project_id).and_return(nil)
-      result = described_class.import!
-      expect(result).to include('Project ID is not set')
+      expect(-> {described_class.import!}).to output(/Project ID is not set/).to_stdout
       expect(count_translations).to eq(0)
     end
   end
