@@ -38,7 +38,7 @@ describe LokaliseRails::TaskDefinition::Exporter do
     end
 
     describe '.each_file' do
-      it 'works' do
+      it 'yield proper arguments' do
         expect {|b| described_class.each_file(&b) }.to yield_with_args(
           Pathname.new(path),
           Pathname.new(relative_name),
@@ -71,6 +71,41 @@ describe LokaliseRails::TaskDefinition::Exporter do
         expect(resulting_opts[:lang_iso]).to eq('en')
         expect(resulting_opts[:detect_icu_plurals]).to be true
         expect(resulting_opts[:convert_placeholders]).to be true
+      end
+    end
+  end
+
+  context 'with two translation files' do
+    let(:filename_ru) { 'ru.yml' }
+    let(:path_ru) { "#{Rails.root}/config/locales/#{filename_ru}" }
+    let(:relative_name_ru) { filename_ru }
+
+    before :all do
+      add_translation_files! true
+    end
+
+    after :all do
+      rm_translation_files
+    end
+
+    describe '.opts' do
+      let(:base64content) { Base64.strict_encode64(File.read(path).strip) }
+
+      describe '.each_file' do
+        it 'yield successive arguments' do
+          expect {|b| described_class.each_file(&b) }.to yield_successive_args(
+            [
+              Pathname.new(path),
+              Pathname.new(relative_name),
+              filename
+            ],
+            [
+              Pathname.new(path_ru),
+              Pathname.new(relative_name_ru),
+              filename_ru
+            ]
+          )
+        end
       end
     end
   end

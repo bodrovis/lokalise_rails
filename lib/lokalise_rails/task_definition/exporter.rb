@@ -33,7 +33,7 @@ module LokaliseRails
 
             next unless full_path.file? && has_proper_ext?(full_path)
 
-            relative_path = full_path.relative_path_from loc_path
+            relative_path = full_path.relative_path_from Pathname.new(loc_path)
             filename = relative_path.split[1].to_s
 
             yield full_path, relative_path, filename
