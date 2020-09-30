@@ -3,6 +3,8 @@
 require 'fileutils'
 
 RSpec.describe LokaliseRails do
+  let(:loc_path) { described_class.locales_path }
+
   context 'when directory is empty' do
     before do
       mkdir_locales
@@ -13,15 +15,13 @@ RSpec.describe LokaliseRails do
       rm_translation_files
     end
 
-    let(:loc_path) { described_class.locales_path }
-
     it 'is callable' do
       expect(LokaliseRails::TaskDefinition::Importer).to receive(
         :download_files
       ).and_return(
         {
           'project_id' => '123.abc',
-          'bundle_url' => "#{Rails.root}/public/translations.zip"
+          'bundle_url' => "#{Rails.root}/public/trans.zip"
         }
       )
 
@@ -40,7 +40,7 @@ RSpec.describe LokaliseRails do
       ).and_return(
         {
           'project_id' => '123.abc',
-          'bundle_url' => 'https://github.com/bodrovis/lokalise_rails/blob/master/spec/dummy/public/translations.zip?raw=true'
+          'bundle_url' => 'https://github.com/bodrovis/lokalise_rails/blob/master/spec/dummy/public/trans.zip?raw=true'
         }
       )
 
@@ -48,7 +48,9 @@ RSpec.describe LokaliseRails do
 
       expect(count_translations).to eq(4)
 
-      expect_file_exist loc_path, 'en/main_en.yml'
+      expect_file_exist loc_path, 'en/nested/main_en.yml'
+      expect_file_exist loc_path, 'en/nested/deep/secondary_en.yml'
+      expect_file_exist loc_path, 'ru/main_ru.yml'
     end
   end
 
@@ -78,6 +80,10 @@ RSpec.describe LokaliseRails do
       expect(import_executor).to output(/is not empty/).to_stdout
 
       expect(count_translations).to eq(5)
+
+      expect_file_exist loc_path, 'en/nested/main_en.yml'
+      expect_file_exist loc_path, 'en/nested/deep/secondary_en.yml'
+      expect_file_exist loc_path, 'ru/main_ru.yml'
     end
   end
 end
