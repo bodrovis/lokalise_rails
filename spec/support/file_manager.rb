@@ -72,7 +72,7 @@ module FileManager
 
   def ru_data
     <<~DATA
-      ru:
+      ru_RU:
         my_key: "Моё значение"
         nested:
           key: "Значение 2"

@@ -15,10 +15,12 @@ module LokaliseRails
           end
 
           queued_processes = []
-          each_file do |*args|
+          each_file do |full_path, relative_path|
             queued_processes << api_client.upload_file(
-              LokaliseRails.project_id, opts(*args)
+              LokaliseRails.project_id, opts(full_path, relative_path)
             )
+          rescue StandardError => e
+            $stdout.puts "Error while trying to upload #{full_path}: #{e.inspect}"
           end
 
           $stdout.print 'Task complete!'
@@ -36,19 +38,20 @@ module LokaliseRails
             next unless file_matches_criteria? full_path
 
             relative_path = full_path.relative_path_from Pathname.new(loc_path)
-            filename = relative_path.split[1].to_s
 
-            yield full_path, relative_path, filename
+            yield full_path, relative_path
           end
         end
 
-        def opts(full_p, relative_p, filename)
+        def opts(full_p, relative_p)
           content = File.read full_p
+
+          lang_iso = YAML.safe_load(content)&.keys&.first
 
           initial_opts = {
             data: Base64.strict_encode64(content.strip),
             filename: relative_p,
-            lang_iso: filename.split('.')[0]
+            lang_iso: lang_iso
           }
 
           initial_opts.merge LokaliseRails.export_opts

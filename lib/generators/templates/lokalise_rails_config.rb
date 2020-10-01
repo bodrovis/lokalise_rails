@@ -27,7 +27,7 @@ LokaliseRails.config do |c|
   # c.export_opts = {}
 
   # Provide additional file exclusion criteria for exports (by default, any file with the proper extension will be exported)
-  # c.skip_file_export = ->(file) { f.split[1].to_s.include?('fr') }
+  # c.skip_file_export = ->(file) { file.split[1].to_s.include?('fr') }
 
   # Regular expression to use when choosing the files to extract from the downloaded archive and upload to Lokalise
   # c.file_ext_regexp = /\.ya?ml\z/i

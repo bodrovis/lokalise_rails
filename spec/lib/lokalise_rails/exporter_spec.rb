@@ -43,8 +43,7 @@ describe LokaliseRails::TaskDefinition::Exporter do
       it 'yield proper arguments' do
         expect { |b| described_class.each_file(&b) }.to yield_with_args(
           Pathname.new(path),
-          Pathname.new(relative_name),
-          filename
+          Pathname.new(relative_name)
         )
       end
     end
@@ -53,7 +52,7 @@ describe LokaliseRails::TaskDefinition::Exporter do
       let(:base64content) { Base64.strict_encode64(File.read(path).strip) }
 
       it 'generates proper options' do
-        resulting_opts = described_class.opts(path, relative_name, filename)
+        resulting_opts = described_class.opts(path, relative_name)
 
         expect(resulting_opts[:data]).to eq(base64content)
         expect(resulting_opts[:filename]).to eq(relative_name)
@@ -66,7 +65,7 @@ describe LokaliseRails::TaskDefinition::Exporter do
                                                                     convert_placeholders: true
                                                                   })
 
-        resulting_opts = described_class.opts(path, relative_name, filename)
+        resulting_opts = described_class.opts(path, relative_name)
 
         expect(resulting_opts[:data]).to eq(base64content)
         expect(resulting_opts[:filename]).to eq(relative_name)
@@ -90,18 +89,41 @@ describe LokaliseRails::TaskDefinition::Exporter do
       rm_translation_files
     end
 
+    describe '.export!' do
+      it 'rescues from export errors' do
+        processes = VCR.use_cassette('upload_files_error') do
+          described_class.export!
+        end
+
+        expect(processes.length).to eq(1)
+        process = processes.first
+        expect(process.project_id).to eq(LokaliseRails.project_id)
+        expect(process.status).to eq('queued')
+      end
+    end
+
+    describe '.opts' do
+      let(:base64content_ru) { Base64.strict_encode64(File.read(path_ru).strip) }
+
+      it 'generates proper options' do
+        resulting_opts = described_class.opts(path_ru, relative_name_ru)
+
+        expect(resulting_opts[:data]).to eq(base64content_ru)
+        expect(resulting_opts[:filename]).to eq(relative_name_ru)
+        expect(resulting_opts[:lang_iso]).to eq('ru_RU')
+      end
+    end
+
     describe '.each_file' do
       it 'yields every translation file' do
         expect { |b| described_class.each_file(&b) }.to yield_successive_args(
           [
             Pathname.new(path),
-            Pathname.new(relative_name),
-            filename
+            Pathname.new(relative_name)
           ],
           [
             Pathname.new(path_ru),
-            Pathname.new(relative_name_ru),
-            filename_ru
+            Pathname.new(relative_name_ru)
           ]
         )
       end
@@ -113,8 +135,7 @@ describe LokaliseRails::TaskDefinition::Exporter do
         expect { |b| described_class.each_file(&b) }.to yield_successive_args(
           [
             Pathname.new(path),
-            Pathname.new(relative_name),
-            filename
+            Pathname.new(relative_name)
           ]
         )
       end

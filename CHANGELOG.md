@@ -1,8 +1,10 @@
 # Changelog
 
-## Unreleased
+## 1.0.0 (01-Oct-20)
 
-* More convenient configuration
+* Added export feature
+* More convenient configuration and additional options
+* Other major enhancements
 
 ## 0.2.0 (26-Sep-20)
 

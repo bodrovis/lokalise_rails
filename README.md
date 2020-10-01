@@ -1,6 +1,6 @@
 # LokaliseRails
 
-<!-- [![Gem Version](https://badge.fury.io/rb/ruby-lokalise-api.svg)](https://badge.fury.io/rb/ruby-lokalise-api) -->
+[![Gem Version](https://badge.fury.io/rb/lokalise_rails.svg)](https://badge.fury.io/rb/lokalise_rails)
 [![Build Status](https://travis-ci.org/bodrovis/lokalise_rails.svg?branch=master)](https://travis-ci.org/bodrovis/lokalise_rails)
 [![Test Coverage](https://codecov.io/gh/bodrovis/lokalise_rails/graph/badge.svg)](https://codecov.io/gh/bodrovis/lokalise_rails)
 
@@ -10,17 +10,17 @@ This gem provides [Lokalise](http://lokalise.com) integration for Ruby on Rails 
 
 ### Requirements
 
-This gem requires Ruby 2.5+ and Rails 5.1+. It might work with older versions of Rails though. You will also need to setup a Lokalise account and a translation project. Finally, you will need to generate a read/write API token at your Lokalise profile.
+This gem requires Ruby 2.5+ and Rails 5.1+. It might work with older versions of Rails though. You will also need to [setup a Lokalise account](https://app.lokalise.com/signup) and create a [translation project](https://docs.lokalise.com/en/articles/1400460-projects). Finally, you will need to generate a [read/write API token](https://docs.lokalise.com/en/articles/1929556-api-tokens) at your Lokalise profile.
 
 ### Installation
 
-Add the gem to your `Gemfile`
+Add the gem to your `Gemfile`:
 
 ```ruby
 gem 'lokalise_rails'
 ```
 
-and run
+and run:
 
 ```
 bundle install
@@ -35,11 +35,14 @@ require 'lokalise_rails'
 LokaliseRails.config do |c|
   c.api_token = ENV['LOKALISE_API_TOKEN']
   c.project_id = ENV['LOKALISE_PROJECT_ID']
+
+  # ...other options
 end
-# ...
 ```
 
-You have to provide `api_token` and `project_id` to proceed. [Other options can be customized as well (see below)](https://github.com/bodrovis/lokalise_rails#import-settings) but they have sensible defaults.
+You have to provide `api_token` and `project_id` to proceed. `project_id` can be found in your Lokalise project settings.
+
+[Other options can be customized as well (see below)](https://github.com/bodrovis/lokalise_rails#import-settings) but they have sensible defaults.
 
 ## Importing translations from Lokalise
 
@@ -49,7 +52,7 @@ To import translations from the specified Lokalise project to your Rails app, ru
 rails lokalise_rails:import
 ```
 
-Please note that any existing files inside the `locales` directory will be overwritten! You may enable [safe mode](https://github.com/bodrovis/lokalise_rails#import-settings) to check whether the folder is empty or not.
+Please note that any duplicating files inside the `locales` directory (or any other directory that you've specified in the options) will be overwritten! You may enable [safe mode](https://github.com/bodrovis/lokalise_rails#import-settings) to check whether the folder is empty or not.
 
 ## Exporting translations to Lokalise
 
@@ -67,8 +70,8 @@ Options are specified in the `config/lokalise_rails.rb` file.
 
 * `api_token` (`string`, required) - Lokalise API token with read/write permissions.
 * `project_id` (`string`, required) - Lokalise project ID. You must have import/export permissions in the specified project.
-* `locales_path` (`string`) - path to your translation files. Defaults to `"#{Rails.root}/config/locales"`.
-* `file_ext_regexp` (`regexp`) - regular expression applied to file extensions to determine which files should be imported and exported. Defaults to `/\.ya?ml\z/i`.
+* `locales_path` (`string`) - path to the directory with your translation files. Defaults to `"#{Rails.root}/config/locales"`.
+* `file_ext_regexp` (`regexp`) - regular expression applied to file extensions to determine which files should be imported and exported. Defaults to `/\.ya?ml\z/i` (YAML files).
 
 ### Import settings
 
@@ -85,13 +88,22 @@ Options are specified in the `config/lokalise_rails.rb` file.
 }
 ```
 
-Full list of available options [can be found at the official API documentation](https://app.lokalise.com/api2docs/curl/#transition-download-files-post).
+Full list of available import options [can be found in the official API documentation](https://app.lokalise.com/api2docs/curl/#transition-download-files-post).
 * `import_safe_mode` (`boolean`) - default to `false`. When this option is enabled, the import task will check whether the directory set with `locales_path` is empty or not. If it is not empty, you will be prompted to continue.
 
 ### Export settings
 
-* `export_opts` (`hash`) - options that will be passed to Lokalise API when uploading translations. By default, the following options are provided: `data`, `lang_iso`, `filename`.
-* `skip_file_export` (`lambda` or `proc`) - specify additional exclusion criteria for the exported files. By default, the rake task will ignore all non-file entries and all files with improper extensions (the latter is controlled by the `file_ext_regexp`). Lambda passed to this option should accept a single argument which is full path to the file (instance of the `Pathname` class). For example, to exclude all files that have `fr` part in their names, add the following:
+* `export_opts` (`hash`) - options that will be passed to Lokalise API when uploading translations. Full list of available export options [can be found in the official documentation](https://app.lokalise.com/api2docs/curl/#transition-download-files-post). By default, the following options are provided:
+  + `data` (`string`, required) - base64-encoded contents of the translation file.
+  + `lang_iso` (`string`, required) - language ISO code which is determined using the root key inside your YAML file. For example, in this case the `lang_iso` is `en_US`:
+
+```yaml
+en_US:
+  my_key: "my value"
+```
+  + **Please note** that if your Lokalise project does not have a language with the specified `lang_iso` code, the export will fail.
+  + `filename` (`string`, required) - translation file name. If the file is stored under a subdirectory (for example, `nested/en.yml` inside the `locales/` directory), the whole path acts as a name. Later when importing files with such names, they will be placed into the proper subdirectories.
+* `skip_file_export` (`lambda` or `proc`) - specify additional exclusion criteria for the exported files. By default, the rake task will ignore all non-file entries and all files with improper extensions (the latter is controlled by the `file_ext_regexp`). Lambda passed to this option should accept a single argument which is full path to the file (instance of the [`Pathname` class](https://ruby-doc.org/stdlib-2.7.1/libdoc/pathname/rdoc/Pathname.html)). For example, to exclude all files that have `fr` part in their names, add the following config:
 
 ```ruby
 c.skip_file_export = ->(file) { f.split[1].to_s.include?('fr') }
