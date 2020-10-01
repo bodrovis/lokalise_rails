@@ -95,14 +95,16 @@ Full list of available import options [can be found in the official API document
 
 * `export_opts` (`hash`) - options that will be passed to Lokalise API when uploading translations. Full list of available export options [can be found in the official documentation](https://app.lokalise.com/api2docs/curl/#transition-download-files-post). By default, the following options are provided:
   + `data` (`string`, required) - base64-encoded contents of the translation file.
+  + `filename` (`string`, required) - translation file name. If the file is stored under a subdirectory (for example, `nested/en.yml` inside the `locales/` directory), the whole path acts as a name. Later when importing files with such names, they will be placed into the proper subdirectories.
   + `lang_iso` (`string`, required) - language ISO code which is determined using the root key inside your YAML file. For example, in this case the `lang_iso` is `en_US`:
 
 ```yaml
 en_US:
   my_key: "my value"
 ```
-  + **Please note** that if your Lokalise project does not have a language with the specified `lang_iso` code, the export will fail.
-  + `filename` (`string`, required) - translation file name. If the file is stored under a subdirectory (for example, `nested/en.yml` inside the `locales/` directory), the whole path acts as a name. Later when importing files with such names, they will be placed into the proper subdirectories.
+
+**Please note** that if your Lokalise project does not have a language with the specified `lang_iso` code, the export will fail.
+
 * `skip_file_export` (`lambda` or `proc`) - specify additional exclusion criteria for the exported files. By default, the rake task will ignore all non-file entries and all files with improper extensions (the latter is controlled by the `file_ext_regexp`). Lambda passed to this option should accept a single argument which is full path to the file (instance of the [`Pathname` class](https://ruby-doc.org/stdlib-2.7.1/libdoc/pathname/rdoc/Pathname.html)). For example, to exclude all files that have `fr` part in their names, add the following config:
 
 ```ruby
