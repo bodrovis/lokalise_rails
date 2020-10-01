@@ -9,6 +9,9 @@ module LokaliseRails
   module TaskDefinition
     class Importer < Base
       class << self
+        # Performs translation files import from Lokalise to Rails app
+        #
+        # @return [Boolean]
         def import!
           errors = opt_errors
 
@@ -28,6 +31,9 @@ module LokaliseRails
           true
         end
 
+        # Downloads files from Lokalise using the specified options
+        #
+        # @return [Hash]
         def download_files
           opts = LokaliseRails.import_opts
 
@@ -36,12 +42,16 @@ module LokaliseRails
           $stdout.puts "There was an error when trying to download files: #{e.inspect}"
         end
 
+        # Opens ZIP archive (local or remote) with translations and processes its entries
+        #
+        # @param path [String]
         def open_and_process_zip(path)
           Zip::File.open_buffer(URI.open(path)) do |zip|
             fetch_zip_entries(zip) { |entry| process!(entry) }
           end
         end
 
+        # Iterates over ZIP entries. Each entry may be a file or folder.
         def fetch_zip_entries(zip)
           return unless block_given?
 
@@ -52,6 +62,7 @@ module LokaliseRails
           end
         end
 
+        # Processes ZIP entry by reading its contents and creating the corresponding translation file
         def process!(zip_entry)
           data = YAML.safe_load zip_entry.get_input_stream.read
           subdir, filename = subdir_and_filename_for zip_entry.name
@@ -65,6 +76,9 @@ module LokaliseRails
           $stdout.puts "Error when trying to process #{zip_entry&.name}: #{e.inspect}"
         end
 
+        # Checks whether the user wishes to proceed when safe mode is enabled and the target directory is not empty
+        #
+        # @return [Boolean]
         def proceed_when_safe_mode?
           return true unless LokaliseRails.import_safe_mode && !Dir.empty?(LokaliseRails.locales_path.to_s)
 

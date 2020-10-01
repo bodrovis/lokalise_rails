@@ -25,7 +25,7 @@ describe LokaliseRails::TaskDefinition::Importer do
       allow(LokaliseRails).to receive(:api_token).and_return('incorrect')
 
       VCR.use_cassette('download_files_error') do
-        expect(-> { described_class.download_files}).
+        expect(-> { described_class.download_files }).
           to output(/Lokalise::Error::BadRequest/).to_stdout
       end
     end
