@@ -62,6 +62,20 @@ To export translations from your Rails app to the specified Lokalise project, ru
 rails lokalise_rails:export
 ```
 
+## Running tasks programmatically
+
+You can also run the import and export tasks from the Rails app:
+
+```ruby
+require "#{Rails.root}/config/lokalise_rails.rb"
+
+# Import the files:
+LokaliseRails::TaskDefinition::Importer.import!
+
+# Export the files:
+LokaliseRails::TaskDefinition::Exporter.export!
+```
+
 ## Configuration
 
 Options are specified in the `config/lokalise_rails.rb` file.
