@@ -22,6 +22,7 @@ describe LokaliseRails::TaskDefinition::Importer do
     end
 
     it 'rescues from errors during file download' do
+      allow_project_id
       allow(LokaliseRails).to receive(:api_token).and_return('incorrect')
 
       VCR.use_cassette('download_files_error') do

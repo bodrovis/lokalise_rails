@@ -30,6 +30,7 @@ require 'rspec/rails'
 RSpec.configure do |config|
   config.include FileManager
   config.include RakeUtils
+  config.include SpecAddons
 end
 
 # rubocop:disable Style/MixinUsage

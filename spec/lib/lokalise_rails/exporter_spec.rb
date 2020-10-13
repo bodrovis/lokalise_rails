@@ -18,6 +18,8 @@ describe LokaliseRails::TaskDefinition::Exporter do
 
     describe '.export!' do
       it 'sends a proper API request' do
+        allow_project_id
+        
         process = VCR.use_cassette('upload_files') do
           described_class.export!
         end.first
@@ -91,6 +93,8 @@ describe LokaliseRails::TaskDefinition::Exporter do
 
     describe '.export!' do
       it 'rescues from export errors' do
+        allow_project_id
+
         processes = VCR.use_cassette('upload_files_error') do
           described_class.export!
         end
