@@ -14,7 +14,7 @@ module LokaliseRails
 
           if errors.any?
             errors.each { |e| $stdout.puts e }
-            return false
+            return errors
           end
 
           queued_processes = []
