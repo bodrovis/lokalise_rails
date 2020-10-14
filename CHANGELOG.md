@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 (14-Oct-20)
+
+* Minor bug fixes and spec updates
+
 ## 1.0.0 (01-Oct-20)
 
 * Added export feature

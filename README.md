@@ -70,10 +70,12 @@ You can also run the import and export tasks from the Rails app:
 require "#{Rails.root}/config/lokalise_rails.rb"
 
 # Import the files:
-LokaliseRails::TaskDefinition::Importer.import!
+result = LokaliseRails::TaskDefinition::Importer.import!
+# `result` contains a boolean value with the result of the operation
 
 # Export the files:
-LokaliseRails::TaskDefinition::Exporter.export!
+processes = LokaliseRails::TaskDefinition::Exporter.export!
+# `processes` contains a list of queued background processes
 ```
 
 ## Configuration
