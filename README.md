@@ -137,4 +137,4 @@ c.skip_file_export = ->(file) { f.split[1].to_s.include?('fr') }
 
 ## License
 
-Copyright (c) [Lokalise team](http://lokalise.com), [Ilya Bodrov](http://bodrovis.tech)
+Copyright (c) [Lokalise team](http://lokalise.com), [Ilya Bodrov](http://bodrovis.tech). License type is [MIT](https://github.com/bodrovis/lokalise_rails/blob/master/LICENSE).
