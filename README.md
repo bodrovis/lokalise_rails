@@ -71,12 +71,15 @@ require "#{Rails.root}/config/lokalise_rails.rb"
 
 # Import the files:
 result = LokaliseRails::TaskDefinition::Importer.import!
-# `result` contains a boolean value with the result of the operation
+```
+`result` contains a boolean value with the result of the operation
 
+```ruby
 # Export the files:
 processes = LokaliseRails::TaskDefinition::Exporter.export!
-# `processes` contains a list of queued background processes
 ```
+
+`processes` contains a list of [queued background processes](https://lokalise.github.io/ruby-lokalise-api/api/queued-processes).
 
 ## Configuration
 
