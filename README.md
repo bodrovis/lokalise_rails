@@ -6,6 +6,8 @@
 
 This gem provides [Lokalise](http://lokalise.com) integration for Ruby on Rails and allows to exchange translation files easily. It relies on [ruby-lokalise-api](https://lokalise.github.io/ruby-lokalise-api) to send APIv2 requests.
 
+*If you would like to know how this gem was built, check out the ["How to create a Ruby gem" series at Lokalise blog](https://lokalise.com/blog/create-a-ruby-gem-basics/).*
+
 ## Getting started
 
 ### Requirements
