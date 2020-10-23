@@ -8,7 +8,7 @@ module LokaliseRails
   class << self
     attr_accessor :api_token, :project_id
     attr_writer :import_opts, :import_safe_mode, :export_opts, :locales_path,
-                :file_ext_regexp, :skip_file_export
+                :file_ext_regexp, :skip_file_export, :branch, :timeouts
 
     # Main interface to provide configuration options for rake tasks
     def config
@@ -18,6 +18,16 @@ module LokaliseRails
     # Full path to directory with translation files
     def locales_path
       @locales_path || "#{Rails.root}/config/locales"
+    end
+
+    # Project branch to use
+    def branch
+      @branch || 'master'
+    end
+
+    # Set request timeouts for the Lokalise API client
+    def timeouts
+      @timeouts || {}
     end
 
     # Regular expression used to select translation files with proper extensions

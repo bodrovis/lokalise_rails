@@ -13,7 +13,13 @@ module LokaliseRails
         #
         # @return [Lokalise::Client]
         def api_client
-          @api_client ||= ::Lokalise.client LokaliseRails.api_token
+          @api_client ||= ::Lokalise.client LokaliseRails.api_token, LokaliseRails.timeouts
+        end
+
+        # Resets API client
+        def reset_api_client!
+          Lokalise.reset_client!
+          @api_client = nil
         end
 
         # Checks task options
@@ -43,6 +49,13 @@ module LokaliseRails
         # @param entry [String]
         def subdir_and_filename_for(entry)
           Pathname.new(entry).split
+        end
+
+        # Returns Lokalise project ID and branch, semicolumn separated
+        #
+        # @return [String]
+        def project_id_with_branch
+          "#{LokaliseRails.project_id}:#{LokaliseRails.branch}"
         end
       end
     end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.lokalise.com/api2/projects/189934715f57a162257d74.88352370/files/upload
+    uri: https://api.lokalise.com/api2/projects/189934715f57a162257d74.88352370%3Amaster/files/upload
     body:
       encoding: UTF-8
       string: '{"data":"ZW46CiAgbXlfa2V5OiAiTXkgdmFsdWUiCiAgbmVzdGVkOgogICAga2V5OiAiVmFsdWUgMiI=","filename":"nested/en.yml","lang_iso":"en"}'
@@ -29,9 +29,9 @@ http_interactions:
       cache-control:
       - max-age=0, must-revalidate, no-cache, no-store, private
       date:
-      - Thu, 01 Oct 2020 15:09:43 GMT
+      - Fri, 23 Oct 2020 14:48:54 GMT
       location:
-      - "/api2/projects/189934715f57a162257d74.88352370/processes/d35d23637b624f77c6ba59370f2ece5c30957924"
+      - "/api2/projects/189934715f57a162257d74.88352370:master/processes/0df7256b177ccaf70997c7635ba14a2ed9f8a2fa"
       pragma:
       - no-cache
       x-content-type-options:
@@ -45,15 +45,15 @@ http_interactions:
       referrer-policy:
       - origin
       expires:
-      - Thu, 01 Oct 2020 15:09:43 GMT
+      - Fri, 23 Oct 2020 14:48:55 GMT
     body:
       encoding: UTF-8
-      string: '{"project_id":"189934715f57a162257d74.88352370","process":{"process_id":"d35d23637b624f77c6ba59370f2ece5c30957924","type":"file-import","status":"queued","message":"","created_by":20181,"created_by_email":"bodrovis@protonmail.com","created_at":"2020-10-01
-        15:09:43 (Etc\/UTC)","created_at_timestamp":1601564983}}'
-  recorded_at: Thu, 01 Oct 2020 15:09:35 GMT
+      string: '{"project_id":"189934715f57a162257d74.88352370","branch":"master","process":{"process_id":"0df7256b177ccaf70997c7635ba14a2ed9f8a2fa","type":"file-import","status":"queued","message":"","created_by":20181,"created_by_email":"bodrovis@protonmail.com","created_at":"2020-10-23
+        14:48:55 (Etc\/UTC)","created_at_timestamp":1603464535}}'
+  recorded_at: Fri, 23 Oct 2020 14:48:46 GMT
 - request:
     method: post
-    uri: https://api.lokalise.com/api2/projects/189934715f57a162257d74.88352370/files/upload
+    uri: https://api.lokalise.com/api2/projects/189934715f57a162257d74.88352370%3Amaster/files/upload
     body:
       encoding: UTF-8
       string: '{"data":"cnVfUlU6CiAgbXlfa2V5OiAi0JzQvtGRINC30L3QsNGH0LXQvdC40LUiCiAgbmVzdGVkOgogICAga2V5OiAi0JfQvdCw0YfQtdC90LjQtSAyIg==","filename":"ru.yml","lang_iso":"ru_RU"}'
@@ -80,7 +80,7 @@ http_interactions:
       cache-control:
       - max-age=0, must-revalidate, no-cache, no-store, private
       date:
-      - Thu, 01 Oct 2020 15:09:43 GMT
+      - Fri, 23 Oct 2020 14:48:55 GMT
       pragma:
       - no-cache
       x-content-type-options:
@@ -94,9 +94,9 @@ http_interactions:
       referrer-policy:
       - origin
       expires:
-      - Thu, 01 Oct 2020 15:09:43 GMT
+      - Fri, 23 Oct 2020 14:48:55 GMT
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Unknown `lang_iso`","code":400}}'
-  recorded_at: Thu, 01 Oct 2020 15:09:36 GMT
+  recorded_at: Fri, 23 Oct 2020 14:48:46 GMT
 recorded_with: VCR 6.0.0

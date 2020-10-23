@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.lokalise.com/api2/projects/189934715f57a162257d74.88352370/files/download
+    uri: https://api.lokalise.com/api2/projects/invalid%3Amaster/files/download
     body:
       encoding: UTF-8
       string: '{"format":"yaml","placeholder_format":"icu","yaml_include_root":true,"original_filenames":true,"directory_prefix":"","indentation":"2sp"}'
@@ -12,7 +12,7 @@ http_interactions:
       User-Agent:
       - ruby-lokalise-api gem/3.1.0
       X-api-token:
-      - incorrect
+      - "<LOKALISE_TOKEN>"
   response:
     status:
       code: 400
@@ -29,7 +29,7 @@ http_interactions:
       cache-control:
       - max-age=0, must-revalidate, no-cache, no-store, private
       date:
-      - Thu, 01 Oct 2020 15:34:28 GMT
+      - Fri, 23 Oct 2020 15:25:11 GMT
       pragma:
       - no-cache
       x-content-type-options:
@@ -43,9 +43,9 @@ http_interactions:
       referrer-policy:
       - origin
       expires:
-      - Thu, 01 Oct 2020 15:34:28 GMT
+      - Fri, 23 Oct 2020 15:25:11 GMT
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"Invalid `X-Api-Token` header","code":400}}'
-  recorded_at: Thu, 01 Oct 2020 15:34:20 GMT
+      string: '{"error":{"message":"Invalid `project_id` parameter","code":400}}'
+  recorded_at: Fri, 23 Oct 2020 15:25:02 GMT
 recorded_with: VCR 6.0.0

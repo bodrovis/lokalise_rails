@@ -10,6 +10,12 @@ LokaliseRails.config do |c|
   # Provide a custom path to the directory with your translation files:
   # c.locales_path = "#{Rails.root}/config/locales"
 
+  # Provide a Lokalise project branch to use:
+  # c.branch = 'master'
+
+  # Provide request timeouts for the Lokalise API client:
+  # c.timeouts = {open_timeout: nil, timeout: nil}
+
   # Import options have the following defaults:
   # c.import_opts = {
   #   format: 'yaml',

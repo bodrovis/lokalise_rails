@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 (23-Oct-20)
+
+* New option `branch`
+* New option `timeouts`
+* New method `.reset_api_client!` for the task definitions
+
 ## 1.0.1 (14-Oct-20)
 
 * Minor bug fixes and spec updates

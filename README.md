@@ -91,6 +91,8 @@ Options are specified in the `config/lokalise_rails.rb` file.
 * `project_id` (`string`, required) - Lokalise project ID. You must have import/export permissions in the specified project.
 * `locales_path` (`string`) - path to the directory with your translation files. Defaults to `"#{Rails.root}/config/locales"`.
 * `file_ext_regexp` (`regexp`) - regular expression applied to file extensions to determine which files should be imported and exported. Defaults to `/\.ya?ml\z/i` (YAML files).
+* `branch` (`string`) - Lokalise project branch to use. Defaults to `"master"`.
+* `timeouts` (`hash`) - set [request timeouts for the Lokalise API client](https://lokalise.github.io/ruby-lokalise-api/additional_info/customization#setting-timeouts). By default, requests have no timeouts: `{open_timeout: nil, timeout: nil}`. Both values are in seconds.
 
 ### Import settings
 

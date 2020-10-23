@@ -37,7 +37,7 @@ module LokaliseRails
         def download_files
           opts = LokaliseRails.import_opts
 
-          api_client.download_files LokaliseRails.project_id, opts
+          api_client.download_files project_id_with_branch, opts
         rescue StandardError => e
           $stdout.puts "There was an error when trying to download files: #{e.inspect}"
         end

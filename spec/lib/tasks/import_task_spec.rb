@@ -18,7 +18,7 @@ RSpec.describe LokaliseRails do
     end
 
     it 'import rake task is callable' do
-      expect(LokaliseRails::TaskDefinition::Importer).to receive(
+      allow(LokaliseRails::TaskDefinition::Importer).to receive(
         :download_files
       ).and_return(
         {
@@ -30,14 +30,14 @@ RSpec.describe LokaliseRails do
       expect(import_executor).to output(/complete!/).to_stdout
 
       expect(count_translations).to eq(4)
-
+      expect(LokaliseRails::TaskDefinition::Importer).to have_received(:download_files)
       expect_file_exist loc_path, 'en/nested/main_en.yml'
       expect_file_exist loc_path, 'en/nested/deep/secondary_en.yml'
       expect_file_exist loc_path, 'ru/main_ru.yml'
     end
 
     it 'import rake task downloads ZIP archive properly' do
-      expect(LokaliseRails::TaskDefinition::Importer).to receive(
+      allow(LokaliseRails::TaskDefinition::Importer).to receive(
         :download_files
       ).and_return(
         {
@@ -48,8 +48,8 @@ RSpec.describe LokaliseRails do
 
       expect(import_executor).to output(/complete!/).to_stdout
 
+      expect(LokaliseRails::TaskDefinition::Importer).to have_received(:download_files)
       expect(count_translations).to eq(4)
-
       expect_file_exist loc_path, 'en/nested/main_en.yml'
       expect_file_exist loc_path, 'en/nested/deep/secondary_en.yml'
       expect_file_exist loc_path, 'ru/main_ru.yml'
@@ -73,7 +73,7 @@ RSpec.describe LokaliseRails do
     end
 
     it 'import proceeds when the user agrees' do
-      expect(LokaliseRails::TaskDefinition::Importer).to receive(
+      allow(LokaliseRails::TaskDefinition::Importer).to receive(
         :download_files
       ).and_return(
         {
@@ -81,21 +81,27 @@ RSpec.describe LokaliseRails do
           'bundle_url' => local_trans
         }
       )
-      expect($stdin).to receive(:gets).and_return('Y')
+
+      allow($stdin).to receive(:gets).and_return('Y')
       expect(import_executor).to output(/is not empty/).to_stdout
 
       expect(count_translations).to eq(5)
-
+      expect($stdin).to have_received(:gets)
+      expect(LokaliseRails::TaskDefinition::Importer).to have_received(:download_files)
       expect_file_exist loc_path, 'en/nested/main_en.yml'
       expect_file_exist loc_path, 'en/nested/deep/secondary_en.yml'
       expect_file_exist loc_path, 'ru/main_ru.yml'
     end
 
     it 'import halts when a user chooses not to proceed' do
-      expect(LokaliseRails::TaskDefinition::Importer).not_to receive(:download_files)
-      expect($stdin).to receive(:gets).and_return('N')
+      allow(LokaliseRails::TaskDefinition::Importer).to receive(
+        :download_files
+      ).at_most(0).times
+      allow($stdin).to receive(:gets).and_return('N')
       expect(import_executor).to output(/is not empty/).to_stdout
 
+      expect(LokaliseRails::TaskDefinition::Importer).not_to have_received(:download_files)
+      expect($stdin).to have_received(:gets)
       expect(count_translations).to eq(1)
     end
   end

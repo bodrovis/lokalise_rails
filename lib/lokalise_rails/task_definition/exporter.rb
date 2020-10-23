@@ -20,7 +20,7 @@ module LokaliseRails
           queued_processes = []
           each_file do |full_path, relative_path|
             queued_processes << api_client.upload_file(
-              LokaliseRails.project_id, opts(full_path, relative_path)
+              project_id_with_branch, opts(full_path, relative_path)
             )
           rescue StandardError => e
             $stdout.puts "Error while trying to upload #{full_path}: #{e.inspect}"

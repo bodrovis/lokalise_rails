@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.lokalise.com/api2/projects/189934715f57a162257d74.88352370%3Amaster/files/upload
+    uri: https://api.lokalise.com/api2/projects/189934715f57a162257d74.88352370%3Adevelop/files/upload
     body:
       encoding: UTF-8
       string: '{"data":"ZW46CiAgbXlfa2V5OiAiTXkgdmFsdWUiCiAgbmVzdGVkOgogICAga2V5OiAiVmFsdWUgMiI=","filename":"nested/en.yml","lang_iso":"en"}'
@@ -29,9 +29,9 @@ http_interactions:
       cache-control:
       - max-age=0, must-revalidate, no-cache, no-store, private
       date:
-      - Fri, 23 Oct 2020 14:48:54 GMT
+      - Fri, 23 Oct 2020 15:32:53 GMT
       location:
-      - "/api2/projects/189934715f57a162257d74.88352370:master/processes/b8ec4288608cfbe88699f16b8f7c197e30798380"
+      - "/api2/projects/189934715f57a162257d74.88352370:develop/processes/8188c633f5609aa57afd6599511bac0ec7798b7f"
       pragma:
       - no-cache
       x-content-type-options:
@@ -45,10 +45,10 @@ http_interactions:
       referrer-policy:
       - origin
       expires:
-      - Fri, 23 Oct 2020 14:48:54 GMT
+      - Fri, 23 Oct 2020 15:32:53 GMT
     body:
       encoding: UTF-8
-      string: '{"project_id":"189934715f57a162257d74.88352370","branch":"master","process":{"process_id":"b8ec4288608cfbe88699f16b8f7c197e30798380","type":"file-import","status":"queued","message":"","created_by":20181,"created_by_email":"bodrovis@protonmail.com","created_at":"2020-10-23
-        14:48:54 (Etc\/UTC)","created_at_timestamp":1603464534}}'
-  recorded_at: Fri, 23 Oct 2020 14:48:45 GMT
+      string: '{"project_id":"189934715f57a162257d74.88352370","branch":"develop","process":{"process_id":"8188c633f5609aa57afd6599511bac0ec7798b7f","type":"file-import","status":"queued","message":"","created_by":20181,"created_by_email":"bodrovis@protonmail.com","created_at":"2020-10-23
+        15:32:53 (Etc\/UTC)","created_at_timestamp":1603467173}}'
+  recorded_at: Fri, 23 Oct 2020 15:32:44 GMT
 recorded_with: VCR 6.0.0

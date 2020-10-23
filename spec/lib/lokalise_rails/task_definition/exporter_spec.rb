@@ -19,7 +19,7 @@ describe LokaliseRails::TaskDefinition::Exporter do
     describe '.export!' do
       it 'sends a proper API request' do
         allow_project_id
-        
+
         process = VCR.use_cassette('upload_files') do
           described_class.export!
         end.first
@@ -28,16 +28,31 @@ describe LokaliseRails::TaskDefinition::Exporter do
         expect(process.status).to eq('queued')
       end
 
+      it 'sends a proper API request when a different branch is provided' do
+        allow_project_id
+        allow(LokaliseRails).to receive(:branch).and_return('develop')
+
+        process = VCR.use_cassette('upload_files_branch') do
+          described_class.export!
+        end.first
+
+        expect(LokaliseRails).to have_received(:branch)
+        expect(process.project_id).to eq(LokaliseRails.project_id)
+        expect(process.status).to eq('queued')
+      end
+
       it 'halts when the API key is not set' do
-        expect(LokaliseRails).to receive(:api_token).and_return(nil)
-        expect(described_class).not_to receive(:each_file)
+        allow(LokaliseRails).to receive(:api_token).and_return(nil)
+
         expect(-> { described_class.export! }).to output(/API token is not set/).to_stdout
+        expect(LokaliseRails).to have_received(:api_token)
       end
 
       it 'halts when the project_id is not set' do
-        expect(LokaliseRails).to receive(:project_id).and_return(nil)
-        expect(described_class).not_to receive(:each_file)
+        allow(LokaliseRails).to receive(:project_id).and_return(nil)
+
         expect(-> { described_class.export! }).to output(/Project ID is not set/).to_stdout
+        expect(LokaliseRails).to have_received(:project_id)
       end
     end
 
@@ -62,13 +77,14 @@ describe LokaliseRails::TaskDefinition::Exporter do
       end
 
       it 'allows to redefine options' do
-        expect(LokaliseRails).to receive(:export_opts).and_return({
-                                                                    detect_icu_plurals: true,
-                                                                    convert_placeholders: true
-                                                                  })
+        allow(LokaliseRails).to receive(:export_opts).and_return({
+                                                                   detect_icu_plurals: true,
+                                                                   convert_placeholders: true
+                                                                 })
 
         resulting_opts = described_class.opts(path, relative_name)
 
+        expect(LokaliseRails).to have_received(:export_opts)
         expect(resulting_opts[:data]).to eq(base64content)
         expect(resulting_opts[:filename]).to eq(relative_name)
         expect(resulting_opts[:lang_iso]).to eq('en')
@@ -133,7 +149,7 @@ describe LokaliseRails::TaskDefinition::Exporter do
       end
 
       it 'does not yield files that have to be skipped' do
-        expect(LokaliseRails).to receive(:skip_file_export).twice.and_return(
+        allow(LokaliseRails).to receive(:skip_file_export).twice.and_return(
           ->(f) { f.split[1].to_s.include?('ru') }
         )
         expect { |b| described_class.each_file(&b) }.to yield_successive_args(
@@ -142,6 +158,8 @@ describe LokaliseRails::TaskDefinition::Exporter do
             Pathname.new(relative_name)
           ]
         )
+
+        expect(LokaliseRails).to have_received(:skip_file_export).twice
       end
     end
   end

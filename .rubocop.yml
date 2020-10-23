@@ -76,9 +76,6 @@ RSpec/ExampleLength:
 RSpec/FilePath:
   Enabled: false
 
-RSpec/MessageSpies:
-  EnforcedStyle: receive
-
 RSpec/BeforeAfterAll:
   Enabled: false
 
