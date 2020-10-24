@@ -46,7 +46,7 @@ module LokaliseRails
         #
         # @param path [String]
         def open_and_process_zip(path)
-          Zip::File.open_buffer(URI.open(path)) do |zip|
+          Zip::File.open_buffer(open_file_or_remote(path)) do |zip|
             fetch_zip_entries(zip) { |entry| process!(entry) }
           end
         end
@@ -86,6 +86,18 @@ module LokaliseRails
           $stdout.print 'Enter Y to continue: '
           answer = $stdin.gets
           answer.to_s.strip == 'Y'
+        end
+
+        # Opens a local file or a remote URL using the provided patf
+        #
+        # @return [String]
+        def open_file_or_remote(path)
+          parsed_path = URI.parse(path)
+          if parsed_path.scheme.include?('http')
+            parsed_path.open
+          else
+            File.open path
+          end
         end
       end
     end
