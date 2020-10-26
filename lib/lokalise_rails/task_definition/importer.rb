@@ -93,7 +93,7 @@ module LokaliseRails
         # @return [String]
         def open_file_or_remote(path)
           parsed_path = URI.parse(path)
-          if parsed_path.scheme.include?('http')
+          if parsed_path&.scheme&.include?('http')
             parsed_path.open
           else
             File.open path
