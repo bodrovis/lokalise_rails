@@ -49,10 +49,9 @@ describe LokaliseRails::TaskDefinition::Exporter do
       end
 
       it 'halts when the project_id is not set' do
-        allow(LokaliseRails).to receive(:project_id).and_return(nil)
-
-        expect(-> { described_class.export! }).to output(/Project ID is not set/).to_stdout
-        expect(LokaliseRails).to have_received(:project_id)
+        allow_project_id nil do
+          expect(-> { described_class.export! }).to output(/Project ID is not set/).to_stdout
+        end
       end
     end
 

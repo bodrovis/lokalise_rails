@@ -8,7 +8,8 @@ module LokaliseRails
   class << self
     attr_accessor :api_token, :project_id
     attr_writer :import_opts, :import_safe_mode, :export_opts, :locales_path,
-                :file_ext_regexp, :skip_file_export, :branch, :timeouts
+                :file_ext_regexp, :skip_file_export, :branch, :timeouts,
+                :translations_loader, :translations_converter, :lang_iso_inferer
 
     # Main interface to provide configuration options for rake tasks
     def config
@@ -60,6 +61,20 @@ module LokaliseRails
     # Additional file skip criteria to apply when performing export
     def skip_file_export
       @skip_file_export || ->(_) { false }
+    end
+
+    def translations_loader
+      @translations_loader || ->(raw_data) { YAML.safe_load raw_data }
+    end
+
+    # Converts translations data to the proper format
+    def translations_converter
+      @translations_converter || ->(raw_data) { raw_data.to_yaml }
+    end
+
+    # Infers lang ISO for the given translation file
+    def lang_iso_inferer
+      @lang_iso_inferer || ->(data) { YAML.safe_load(data)&.keys&.first }
     end
   end
 end

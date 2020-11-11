@@ -64,13 +64,13 @@ module LokaliseRails
 
         # Processes ZIP entry by reading its contents and creating the corresponding translation file
         def process!(zip_entry)
-          data = YAML.safe_load zip_entry.get_input_stream.read
+          data = data_from zip_entry
           subdir, filename = subdir_and_filename_for zip_entry.name
           full_path = "#{LokaliseRails.locales_path}/#{subdir}"
           FileUtils.mkdir_p full_path
 
           File.open(File.join(full_path, filename), 'w+:UTF-8') do |f|
-            f.write data.to_yaml
+            f.write LokaliseRails.translations_converter.call(data)
           end
         rescue StandardError => e
           $stdout.puts "Error when trying to process #{zip_entry&.name}: #{e.inspect}"
@@ -98,6 +98,12 @@ module LokaliseRails
           else
             File.open path
           end
+        end
+
+        private
+
+        def data_from(zip_entry)
+          LokaliseRails.translations_loader.call zip_entry.get_input_stream.read
         end
       end
     end

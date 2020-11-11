@@ -45,12 +45,12 @@ describe LokaliseRails::TaskDefinition::Base do
     end
 
     it 'returns an error when the project_id is not set' do
-      allow(LokaliseRails).to receive(:project_id).and_return(nil)
-      errors = described_class.opt_errors
+      allow_project_id nil do
+        errors = described_class.opt_errors
 
-      expect(LokaliseRails).to have_received(:project_id)
-      expect(errors.length).to eq(1)
-      expect(errors.first).to include('Project ID is not set')
+        expect(errors.length).to eq(1)
+        expect(errors.first).to include('Project ID is not set')
+      end
     end
   end
 

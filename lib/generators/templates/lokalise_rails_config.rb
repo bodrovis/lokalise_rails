@@ -35,6 +35,16 @@ LokaliseRails.config do |c|
   # Provide additional file exclusion criteria for exports (by default, any file with the proper extension will be exported)
   # c.skip_file_export = ->(file) { file.split[1].to_s.include?('fr') }
 
-  # Regular expression to use when choosing the files to extract from the downloaded archive and upload to Lokalise
-  # c.file_ext_regexp = /\.ya?ml\z/i
+  # Set the options below if you would like to work with format other than YAML
+  ## Regular expression to use when choosing the files to extract from the downloaded archive and upload to Lokalise
+  ## c.file_ext_regexp = /\.ya?ml\z/i
+
+  ## Load translations data and make sure they are valid:
+  ## c.translations_loader = ->(raw_data) { YAML.safe_load raw_data }
+
+  ## Convert translations data to a proper format:
+  ## c.translations_converter = ->(raw_data) { raw_data.to_yaml }
+
+  ## Infer language ISO code for the translation file:
+  ## c.lang_iso_inferer = ->(data) { YAML.safe_load(data)&.keys&.first }
 end

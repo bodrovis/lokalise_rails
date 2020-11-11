@@ -55,12 +55,10 @@ module LokaliseRails
         def opts(full_p, relative_p)
           content = File.read full_p
 
-          lang_iso = YAML.safe_load(content)&.keys&.first
-
           initial_opts = {
             data: Base64.strict_encode64(content.strip),
             filename: relative_p,
-            lang_iso: lang_iso
+            lang_iso: LokaliseRails.lang_iso_inferer.call(content)
           }
 
           initial_opts.merge LokaliseRails.export_opts

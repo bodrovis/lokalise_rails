@@ -12,14 +12,14 @@ describe LokaliseRails::TaskDefinition::Importer do
 
   describe '.download_files' do
     it 'returns a proper download URL' do
-      allow(LokaliseRails).to receive(:project_id).and_return('189934715f57a162257d74.88352370')
-      response = VCR.use_cassette('download_files') do
-        described_class.download_files
-      end
+      allow_project_id '189934715f57a162257d74.88352370' do
+        response = VCR.use_cassette('download_files') do
+          described_class.download_files
+        end
 
-      expect(LokaliseRails).to have_received(:project_id)
-      expect(response['project_id']).to eq('189934715f57a162257d74.88352370')
-      expect(response['bundle_url']).to include('s3-eu-west-1.amazonaws.com')
+        expect(response['project_id']).to eq('189934715f57a162257d74.88352370')
+        expect(response['bundle_url']).to include('s3-eu-west-1.amazonaws.com')
+      end
     end
 
     it 'rescues from errors during file download' do
@@ -40,10 +40,10 @@ describe LokaliseRails::TaskDefinition::Importer do
     end
 
     it 'halts when the project_id is not set' do
-      allow(LokaliseRails).to receive(:project_id).and_return(nil)
-      expect(-> { described_class.import! }).to output(/Project ID is not set/).to_stdout
-      expect(LokaliseRails).to have_received(:project_id)
-      expect(count_translations).to eq(0)
+      allow_project_id nil do
+        expect(-> { described_class.import! }).to output(/Project ID is not set/).to_stdout
+        expect(count_translations).to eq(0)
+      end
     end
   end
 end

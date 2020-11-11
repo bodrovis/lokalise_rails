@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 (11-Nov-20)
+
+* New option `translations_loader`
+* New option `translations_converter`
+* New option `lang_iso_inferer`
+
 ## 1.1.0 (23-Oct-20)
 
 * New option `branch`

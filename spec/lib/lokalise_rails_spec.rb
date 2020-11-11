@@ -73,5 +73,23 @@ describe LokaliseRails do
       allow(fake_class).to receive(:skip_file_export=).with(cond)
       fake_class.skip_file_export = cond
     end
+
+    it 'is possible to set translations_loader' do
+      runner = ->(f) { f.to_json }
+      allow(fake_class).to receive(:translations_loader=).with(runner)
+      fake_class.translations_loader = runner
+    end
+
+    it 'is possible to set translations_converter' do
+      runner = ->(f) { f.to_json }
+      allow(fake_class).to receive(:translations_converter=).with(runner)
+      fake_class.translations_converter = runner
+    end
+
+    it 'is possible to set lang_iso_inferer' do
+      runner = ->(f) { f.to_json }
+      allow(fake_class).to receive(:lang_iso_inferer=).with(runner)
+      fake_class.lang_iso_inferer = runner
+    end
   end
 end

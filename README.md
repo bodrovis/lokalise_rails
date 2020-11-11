@@ -92,7 +92,6 @@ Options are specified in the `config/lokalise_rails.rb` file.
 * `api_token` (`string`, required) - Lokalise API token with read/write permissions.
 * `project_id` (`string`, required) - Lokalise project ID. You must have import/export permissions in the specified project.
 * `locales_path` (`string`) - path to the directory with your translation files. Defaults to `"#{Rails.root}/config/locales"`.
-* `file_ext_regexp` (`regexp`) - regular expression applied to file extensions to determine which files should be imported and exported. Defaults to `/\.ya?ml\z/i` (YAML files).
 * `branch` (`string`) - Lokalise project branch to use. Defaults to `"master"`.
 * `timeouts` (`hash`) - set [request timeouts for the Lokalise API client](https://lokalise.github.io/ruby-lokalise-api/additional_info/customization#setting-timeouts). By default, requests have no timeouts: `{open_timeout: nil, timeout: nil}`. Both values are in seconds.
 
@@ -133,6 +132,15 @@ en_US:
 ```ruby
 c.skip_file_export = ->(file) { f.split[1].to_s.include?('fr') }
 ```
+
+### Settings to work with formats other than YAML
+
+If your translation files are not in YAML format, you will need to adjust the following options:
+
+* `file_ext_regexp` (`regexp`) - regular expression applied to file extensions to determine which files should be imported and exported. Defaults to `/\.ya?ml\z/i` (YAML files).
+* `translations_loader` (`lambda` or `proc`) - loads translations data and makes sure they are valid before saving them to a translation file. Defaults to `->(raw_data) { YAML.safe_load raw_data }`. In the simplest case you may just return the data back, for example `-> (raw_data) { raw_data }`.
+* `translations_converter` (`lambda` or `proc`) - converts translations data to a proper format before saving them to a translation file. Defaults to `->(raw_data) { raw_data.to_yaml }`. In the simplest case you may just return the data back, for example `-> (raw_data) { raw_data }`.
+* `lang_iso_inferer` (`lambda` or `proc`) - infers language ISO code based on the translation file data before uploading it to Lokalise. Defaults to `->(data) { YAML.safe_load(data)&.keys&.first }`.
 
 ## Running tests
 
