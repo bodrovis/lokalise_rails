@@ -1,7 +1,7 @@
 # LokaliseRails
 
 [![Gem Version](https://badge.fury.io/rb/lokalise_rails.svg)](https://badge.fury.io/rb/lokalise_rails)
-[![Build Status](https://travis-ci.org/bodrovis/lokalise_rails.svg?branch=master)](https://travis-ci.org/bodrovis/lokalise_rails)
+[![Build Status](https://travis-ci.com/bodrovis/lokalise_rails.svg?branch=master)](https://travis-ci.com/github/bodrovis/lokalise_rails)
 [![Test Coverage](https://codecov.io/gh/bodrovis/lokalise_rails/graph/badge.svg)](https://codecov.io/gh/bodrovis/lokalise_rails)
 
 This gem provides [Lokalise](http://lokalise.com) integration for Ruby on Rails and allows to exchange translation files easily. It relies on [ruby-lokalise-api](https://lokalise.github.io/ruby-lokalise-api) to send APIv2 requests.
