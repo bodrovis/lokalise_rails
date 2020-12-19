@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'ruby-lokalise-api', '~> 3.1'
   spec.add_dependency 'rubyzip', '~> 2.3'
 
-  spec.add_development_dependency 'codecov', '~> 0.1'
+  spec.add_development_dependency 'codecov', '~> 0.2'
   spec.add_development_dependency 'dotenv', '~> 2.5'
   if ENV['TEST_RAILS_VERSION'].nil?
     spec.add_development_dependency 'rails', '~> 6.1.0'
@@ -37,7 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.6'
   spec.add_development_dependency 'rubocop', '~> 1.0'
   spec.add_development_dependency 'rubocop-performance', '~> 1.5'
-  spec.add_development_dependency 'rubocop-rspec', '~> 2.0.0'
+  spec.add_development_dependency 'rubocop-rspec', '~> 2.1.0'
   spec.add_development_dependency 'simplecov', '~> 0.16'
   spec.add_development_dependency 'vcr', '~> 6.0'
 end
