@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.extra_rdoc_files = ['README.md']
   spec.require_paths    = ['lib']
 
-  spec.add_dependency 'ruby-lokalise-api', '~> 3.1'
+  spec.add_dependency 'ruby-lokalise-api', '~> 4.0'
   spec.add_dependency 'rubyzip', '~> 2.3'
 
   spec.add_development_dependency 'codecov', '~> 0.2'

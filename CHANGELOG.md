@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 (02-Feb-21)
+
+* Use ruby-lokalise-api v3
+
 ## 1.2.0 (11-Nov-20)
 
 * New option `translations_loader`
