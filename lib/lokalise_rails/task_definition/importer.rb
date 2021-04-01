@@ -49,6 +49,8 @@ module LokaliseRails
           Zip::File.open_buffer(open_file_or_remote(path)) do |zip|
             fetch_zip_entries(zip) { |entry| process!(entry) }
           end
+        rescue StandardError => e
+          $stdout.puts "There was an error when trying to process the downloaded files: #{e.inspect}"
         end
 
         # Iterates over ZIP entries. Each entry may be a file or folder.

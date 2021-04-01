@@ -8,6 +8,11 @@ describe LokaliseRails::TaskDefinition::Importer do
       expect(-> { described_class.open_and_process_zip(faulty_trans) }).
         to output(/Psych::DisallowedClass/).to_stdout
     end
+
+    it 'rescues from errors during file opening' do
+      expect(-> { described_class.open_and_process_zip('http://fake.url/wrong/path.zip') }).
+        to output(/SocketError/).to_stdout
+    end
   end
 
   describe '.download_files' do

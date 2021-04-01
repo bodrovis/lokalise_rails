@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1 (01-Apr-21)
+
+* A bit better exception handling
+* Update dependencies
+
 ## 1.3.0 (02-Feb-21)
 
 * Use ruby-lokalise-api v3
