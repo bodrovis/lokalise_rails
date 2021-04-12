@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+* Dropped support for Ruby 2.5
+* Test against Ruby 3
+
 ## 1.3.1 (01-Apr-21)
 
 * A bit better exception handling
