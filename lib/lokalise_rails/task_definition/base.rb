@@ -25,11 +25,12 @@ module LokaliseRails
         # Checks task options
         #
         # @return Array
-        def opt_errors
+        def check_options_errors!
           errors = []
-          errors << 'Project ID is not set! Aborting...' if LokaliseRails.project_id.nil? || LokaliseRails.project_id.empty?
-          errors << 'Lokalise API token is not set! Aborting...' if LokaliseRails.api_token.nil? || LokaliseRails.api_token.empty?
-          errors
+          errors << 'Project ID is not set!' if LokaliseRails.project_id.nil? || LokaliseRails.project_id.empty?
+          errors << 'Lokalise API token is not set!' if LokaliseRails.api_token.nil? || LokaliseRails.api_token.empty?
+
+          raise(LokaliseRails::Error, errors.join(' ')) if errors.any?
         end
 
         private

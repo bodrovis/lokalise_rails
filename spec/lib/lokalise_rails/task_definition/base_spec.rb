@@ -34,22 +34,18 @@ describe LokaliseRails::TaskDefinition::Base do
     end
   end
 
-  describe '.opt_errors' do
-    it 'returns an error when the API key is not set' do
+  describe '.check_options_errors!' do
+    it 'raises an error when the API key is not set' do
       allow(LokaliseRails).to receive(:api_token).and_return(nil)
-      errors = described_class.opt_errors
+
+      expect(-> { described_class.check_options_errors! }).to raise_error(LokaliseRails::Error, /API token is not set/i)
 
       expect(LokaliseRails).to have_received(:api_token)
-      expect(errors.length).to eq(1)
-      expect(errors.first).to include('API token is not set')
     end
 
     it 'returns an error when the project_id is not set' do
       allow_project_id nil do
-        errors = described_class.opt_errors
-
-        expect(errors.length).to eq(1)
-        expect(errors.first).to include('Project ID is not set')
+        expect(-> { described_class.check_options_errors! }).to raise_error(LokaliseRails::Error, /ID is not set/i)
       end
     end
   end

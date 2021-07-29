@@ -1,7 +1,8 @@
 # Changelog
 
-## Unreleased
+## 1.4.0 (29-Jun-21)
 
+* Re-worked exception handling. Now when something goes wrong during the import or export process, this gem will re-raise all such errors (previously it just printed out some errors to the `$stdout`). If you run a Rake task, it will exit with a status code `1` and the actual error message. If you run a task programattically, you'll get an exception.
 * Dropped support for Ruby 2.5
 * Test against Ruby 3
 

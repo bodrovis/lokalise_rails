@@ -44,13 +44,13 @@ describe LokaliseRails::TaskDefinition::Exporter do
       it 'halts when the API key is not set' do
         allow(LokaliseRails).to receive(:api_token).and_return(nil)
 
-        expect(-> { described_class.export! }).to output(/API token is not set/).to_stdout
+        expect(-> { described_class.export! }).to raise_error(LokaliseRails::Error, /API token is not set/i)
         expect(LokaliseRails).to have_received(:api_token)
       end
 
       it 'halts when the project_id is not set' do
         allow_project_id nil do
-          expect(-> { described_class.export! }).to output(/Project ID is not set/).to_stdout
+          expect(-> { described_class.export! }).to raise_error(LokaliseRails::Error, /ID is not set/i)
         end
       end
     end
@@ -107,17 +107,12 @@ describe LokaliseRails::TaskDefinition::Exporter do
     end
 
     describe '.export!' do
-      it 'rescues from export errors' do
+      it 're-raises export errors' do
         allow_project_id
 
-        processes = VCR.use_cassette('upload_files_error') do
-          described_class.export!
+        VCR.use_cassette('upload_files_error') do
+          expect { described_class.export! }.to raise_error(Lokalise::Error::BadRequest, /Unknown `lang_iso`/)
         end
-
-        expect(processes.length).to eq(1)
-        process = processes.first
-        expect(process.project_id).to eq(LokaliseRails.project_id)
-        expect(process.status).to eq('queued')
       end
     end
 

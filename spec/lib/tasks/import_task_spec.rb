@@ -7,6 +7,19 @@ RSpec.describe LokaliseRails do
   let(:local_trans) { "#{Rails.root}/public/trans.zip" }
   let(:remote_trans) { 'https://github.com/bodrovis/lokalise_rails/blob/master/spec/dummy/public/trans.zip?raw=true' }
 
+  it 'halts when the API key is not set' do
+    allow(described_class).to receive(:api_token).and_return(nil)
+
+    expect(import_executor).to raise_error(SystemExit, /API token is not set/i)
+    expect(described_class).to have_received(:api_token)
+  end
+
+  it 'halts when the project ID is not set' do
+    allow_project_id nil do
+      expect(import_executor).to raise_error(SystemExit, /ID is not set/i)
+    end
+  end
+
   context 'when directory is empty' do
     before do
       mkdir_locales

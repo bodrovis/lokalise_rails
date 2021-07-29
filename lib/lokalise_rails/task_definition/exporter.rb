@@ -10,12 +10,7 @@ module LokaliseRails
         #
         # @return [Array]
         def export!
-          errors = opt_errors
-
-          if errors.any?
-            errors.each { |e| $stdout.puts e }
-            return errors
-          end
+          check_options_errors!
 
           queued_processes = []
           each_file do |full_path, relative_path|
@@ -23,7 +18,7 @@ module LokaliseRails
               project_id_with_branch, opts(full_path, relative_path)
             )
           rescue StandardError => e
-            $stdout.puts "Error while trying to upload #{full_path}: #{e.inspect}"
+            raise e.class, "Error while trying to upload #{full_path}: #{e.message}"
           end
 
           $stdout.print 'Task complete!'

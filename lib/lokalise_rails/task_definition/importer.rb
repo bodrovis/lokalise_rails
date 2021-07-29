@@ -13,12 +13,7 @@ module LokaliseRails
         #
         # @return [Boolean]
         def import!
-          errors = opt_errors
-
-          if errors.any?
-            errors.each { |e| $stdout.puts e }
-            return false
-          end
+          check_options_errors!
 
           unless proceed_when_safe_mode?
             $stdout.print 'Task cancelled!'
@@ -39,7 +34,7 @@ module LokaliseRails
 
           api_client.download_files project_id_with_branch, opts
         rescue StandardError => e
-          $stdout.puts "There was an error when trying to download files: #{e.inspect}"
+          raise e.class, "There was an error when trying to download files: #{e.message}"
         end
 
         # Opens ZIP archive (local or remote) with translations and processes its entries
@@ -50,7 +45,7 @@ module LokaliseRails
             fetch_zip_entries(zip) { |entry| process!(entry) }
           end
         rescue StandardError => e
-          $stdout.puts "There was an error when trying to process the downloaded files: #{e.inspect}"
+          raise e.class, "There was an error when trying to process the downloaded files: #{e.message}"
         end
 
         # Iterates over ZIP entries. Each entry may be a file or folder.
@@ -75,7 +70,7 @@ module LokaliseRails
             f.write LokaliseRails.translations_converter.call(data)
           end
         rescue StandardError => e
-          $stdout.puts "Error when trying to process #{zip_entry&.name}: #{e.inspect}"
+          raise e.class, "Error when trying to process #{zip_entry&.name}: #{e.message}"
         end
 
         # Checks whether the user wishes to proceed when safe mode is enabled and the target directory is not empty

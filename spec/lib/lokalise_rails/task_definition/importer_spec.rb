@@ -4,14 +4,14 @@ describe LokaliseRails::TaskDefinition::Importer do
   describe '.open_and_process_zip' do
     let(:faulty_trans) { "#{Rails.root}/public/faulty_trans.zip" }
 
-    it 'rescues from errors during file processing' do
+    it 're-raises errors during file processing' do
       expect(-> { described_class.open_and_process_zip(faulty_trans) }).
-        to output(/Psych::DisallowedClass/).to_stdout
+        to raise_error(Psych::DisallowedClass, /Error when trying to process fail\.yml/)
     end
 
-    it 'rescues from errors during file opening' do
+    it 're-raises errors during file opening' do
       expect(-> { described_class.open_and_process_zip('http://fake.url/wrong/path.zip') }).
-        to output(/SocketError/).to_stdout
+        to raise_error(SocketError, /Failed to open TCP connection/)
     end
   end
 
@@ -27,11 +27,11 @@ describe LokaliseRails::TaskDefinition::Importer do
       end
     end
 
-    it 'rescues from errors during file download' do
+    it 're-raises errors during file download' do
       allow_project_id 'invalid'
       VCR.use_cassette('download_files_error') do
         expect(-> { described_class.download_files }).
-          to output(/Lokalise::Error::BadRequest/).to_stdout
+          to raise_error(Lokalise::Error::BadRequest, /Invalid `project_id` parameter/)
       end
     end
   end
@@ -39,14 +39,14 @@ describe LokaliseRails::TaskDefinition::Importer do
   describe '.import!' do
     it 'halts when the API key is not set' do
       allow(LokaliseRails).to receive(:api_token).and_return(nil)
-      expect(-> { described_class.import! }).to output(/API token is not set/).to_stdout
+      expect(-> { described_class.import! }).to raise_error(LokaliseRails::Error, /API token is not set/i)
       expect(LokaliseRails).to have_received(:api_token)
       expect(count_translations).to eq(0)
     end
 
     it 'halts when the project_id is not set' do
       allow_project_id nil do
-        expect(-> { described_class.import! }).to output(/Project ID is not set/).to_stdout
+        expect(-> { described_class.import! }).to raise_error(LokaliseRails::Error, /ID is not set/i)
         expect(count_translations).to eq(0)
       end
     end
