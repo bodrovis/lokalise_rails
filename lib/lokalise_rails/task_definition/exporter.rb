@@ -9,6 +9,21 @@ module LokaliseRails
         # Performs translation file export from Rails to Lokalise and returns an array of queued processes
         #
         # @return [Array]
+        # def export!
+        #   check_options_errors!
+
+        #   queued_processes = []
+        #   each_file do |full_path, relative_path|
+        #     queued_processes << do_upload(full_path, relative_path)
+        #   rescue StandardError => e
+        #     raise e.class, "Error while trying to upload #{full_path}: #{e.message}"
+        #   end
+
+        #   $stdout.print 'Task complete!'
+
+        #   queued_processes
+        # end
+
         def export!
           check_options_errors!
 
@@ -24,6 +39,19 @@ module LokaliseRails
           $stdout.print 'Task complete!'
 
           queued_processes
+        end
+
+        def do_upload(f_path, r_path)
+          retries = 0
+          begin
+            api_client.upload_file project_id_with_branch, opts(f_path, r_path)
+          rescue Lokalise::Error::TooManyRequests => e
+            #raise(e.class, "Gave up after #{retries} retries") if retries > LokaliseRails.max_retries_export
+
+            sleep 2 ** retries
+            retries += 1
+            retry
+          end
         end
 
         # Processes each translation file in the specified directory

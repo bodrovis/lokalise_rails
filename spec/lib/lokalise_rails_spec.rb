@@ -58,6 +58,11 @@ describe LokaliseRails do
       fake_class.import_safe_mode = true
     end
 
+    it 'is possible to set import_safe_mode' do
+      allow(fake_class).to receive(:max_retries_export=).with(10)
+      fake_class.max_retries_export = 10
+    end
+
     it 'is possible to set api_token' do
       allow(fake_class).to receive(:api_token=).with('abc')
       fake_class.api_token = 'abc'

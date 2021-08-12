@@ -16,6 +16,9 @@ LokaliseRails.config do |c|
   # Provide request timeouts for the Lokalise API client:
   # c.timeouts = {open_timeout: nil, timeout: nil}
 
+  # Provide maximum number of retries for file exporting:
+  # c.max_retries_export = 5
+
   # Import options have the following defaults:
   # c.import_opts = {
   #   format: 'yaml',
