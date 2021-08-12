@@ -24,6 +24,7 @@ describe LokaliseRails::TaskDefinition::Importer do
 
         expect(response['project_id']).to eq('672198945b7d72fc048021.15940510')
         expect(response['bundle_url']).to include('s3-eu-west-1.amazonaws.com')
+        expect(described_class.api_client.enable_compression).to eq(true)
       end
     end
 

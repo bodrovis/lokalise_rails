@@ -1,8 +1,8 @@
 # Changelog
 
-## 2.0.0 (unreleased)
+## 2.0.0.rc1 (12-Aug-21)
 
-* Lokalise is introducing API rate limiting. Access to all endpoints will be limited to 6 requests per second from 14 September, 2021. This limit is applied per API token and per IP address. If you exceed the limit, a 429 HTTP status code will be returned and a `Lokalise::Error::TooManyRequests` will be raised. Therefore, to overcome this issue LokaliseRails is introducing an exponential backoff mechanism for file exports. Why? Because if you have, say, 10 translation files, we'll have to send 10 separate API requests which will probably mean exceeding the limit (this is not the case with importing as we're always receiving a single archive). Thus, if the HTTP status code 429 was received, we'll do the following:
+* **Lokalise is introducing API rate limiting.** Access to all endpoints will be limited to 6 requests per second from 14 September, 2021. This limit is applied per API token and per IP address. If you exceed the limit, a 429 HTTP status code will be returned and a `Lokalise::Error::TooManyRequests` exception will be raised. Therefore, to overcome this issue LokaliseRails is introducing an exponential backoff mechanism for file exports. Why? Because if you have, say, 10 translation files, we'll have to send 10 separate API requests which will probably mean exceeding the limit (this is not the case with importing as we're always receiving a single archive). Thus, if the HTTP status code 429 was received, we'll do the following:
 
 ```ruby
 sleep 2 ** retries

@@ -134,6 +134,8 @@ en_US:
 c.skip_file_export = ->(file) { f.split[1].to_s.include?('fr') }
 ```
 
+* `max_retries_export` (`integer`) - this option is introduced to properly handle Lokalise API rate limiting during file exporting. If the HTTP status code 429 (too many requests) has been received, LokaliseRails will apply an exponential backoff mechanism with a very simple formula: `2 ** retries` (initially `retries` is `0`). If the maximum number of retries has been reached, a `Lokalise::Error::TooManyRequests` exception will be raised and the export operation will be halted. By default, LokaliseRails will make up to `5` retries which potentially means `1 + 2 + 4 + 8 + 16 + 32 = 63` seconds of waiting time. If the `max_retries_export` is less than `1`, LokaliseRails will not perform any retries and give up immediately after receiving error 429.
+
 ### Settings to work with formats other than YAML
 
 If your translation files are not in YAML format, you will need to adjust the following options:
