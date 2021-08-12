@@ -19,6 +19,9 @@ LokaliseRails.config do |c|
   # Provide maximum number of retries for file exporting:
   # c.max_retries_export = 5
 
+  # Provide maximum number of retries for file importing:
+  # c.max_retries_import = 5
+
   # Import options have the following defaults:
   # c.import_opts = {
   #   format: 'yaml',

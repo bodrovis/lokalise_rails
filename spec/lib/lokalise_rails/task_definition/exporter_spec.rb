@@ -39,7 +39,7 @@ describe LokaliseRails::TaskDefinition::Exporter do
         allow(fake_class).to receive(:api_client).and_return(fake_client)
 
         expect(-> { fake_class.export! }).to raise_error(Lokalise::Error::TooManyRequests, /Gave up after 2 retries/i)
-        expect(LokaliseRails).to have_received(:max_retries_export).exactly(3).times
+        expect(LokaliseRails).to have_received(:max_retries_export).exactly(1).times
         expect(fake_class).to have_received(:api_client).exactly(3).times
         expect(fake_client).to have_received(:upload_file).exactly(3).times
       end

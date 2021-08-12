@@ -10,7 +10,8 @@ module LokaliseRails
     attr_accessor :api_token, :project_id
     attr_writer :import_opts, :import_safe_mode, :export_opts, :locales_path,
                 :file_ext_regexp, :skip_file_export, :branch, :timeouts,
-                :translations_loader, :translations_converter, :lang_iso_inferer, :max_retries_export
+                :translations_loader, :translations_converter, :lang_iso_inferer,
+                :max_retries_export, :max_retries_import
 
     # Main interface to provide configuration options for rake tasks
     def config
@@ -35,6 +36,11 @@ module LokaliseRails
     # Maximum number of retries for file exporting
     def max_retries_export
       @max_retries_export || 5
+    end
+
+    # Maximum number of retries for file importing
+    def max_retries_import
+      @max_retries_import || 5
     end
 
     # Regular expression used to select translation files with proper extensions

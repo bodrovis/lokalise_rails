@@ -58,6 +58,22 @@ module LokaliseRails
         def project_id_with_branch
           "#{LokaliseRails.project_id}:#{LokaliseRails.branch}"
         end
+
+        # Sends request with exponential backoff mechanism
+        def with_exp_backoff(max_retries)
+          return unless block_given?
+
+          retries = 0
+          begin
+            yield
+          rescue Lokalise::Error::TooManyRequests => e
+            raise(e.class, "Gave up after #{retries} retries") if retries >= max_retries
+
+            sleep 2**retries
+            retries += 1
+            retry
+          end
+        end
       end
     end
   end

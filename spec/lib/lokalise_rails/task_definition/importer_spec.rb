@@ -25,6 +25,7 @@ describe LokaliseRails::TaskDefinition::Importer do
         expect(response['project_id']).to eq('672198945b7d72fc048021.15940510')
         expect(response['bundle_url']).to include('s3-eu-west-1.amazonaws.com')
         expect(described_class.api_client.enable_compression).to eq(true)
+        expect(LokaliseRails.max_retries_import).to eq(5)
       end
     end
 
@@ -38,6 +39,22 @@ describe LokaliseRails::TaskDefinition::Importer do
   end
 
   describe '.import!' do
+    let(:fake_class) { described_class }
+
+    it 'handles too many requests' do
+      allow_project_id '672198945b7d72fc048021.15940510'
+      allow(LokaliseRails).to receive(:max_retries_import).and_return(2)
+
+      fake_client = double
+      allow(fake_client).to receive(:download_files).and_raise(Lokalise::Error::TooManyRequests)
+      allow(fake_class).to receive(:api_client).and_return(fake_client)
+
+      expect(-> { fake_class.import! }).to raise_error(Lokalise::Error::TooManyRequests, /Gave up after 2 retries/i)
+      expect(LokaliseRails).to have_received(:max_retries_import).exactly(1).times
+      expect(fake_class).to have_received(:api_client).exactly(3).times
+      expect(fake_client).to have_received(:download_files).exactly(3).times
+    end
+
     it 'halts when the API key is not set' do
       allow(LokaliseRails).to receive(:api_token).and_return(nil)
       expect(-> { described_class.import! }).to raise_error(LokaliseRails::Error, /API token is not set/i)

@@ -63,6 +63,11 @@ describe LokaliseRails do
       fake_class.max_retries_export = 10
     end
 
+    it 'is possible to set max_retries_import' do
+      allow(fake_class).to receive(:max_retries_import=).with(10)
+      fake_class.max_retries_import = 10
+    end
+
     it 'is possible to set api_token' do
       allow(fake_class).to receive(:api_token=).with('abc')
       fake_class.api_token = 'abc'

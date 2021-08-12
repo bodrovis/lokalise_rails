@@ -26,13 +26,14 @@ module LokaliseRails
           true
         end
 
-        # Downloads files from Lokalise using the specified options
+        # Downloads files from Lokalise using the specified options.
+        # Utilizes exponential backoff if "too many requests" error is received
         #
         # @return [Hash]
         def download_files
-          opts = LokaliseRails.import_opts
-
-          api_client.download_files project_id_with_branch, opts
+          with_exp_backoff(LokaliseRails.max_retries_import) do
+            api_client.download_files project_id_with_branch, LokaliseRails.import_opts
+          end
         rescue StandardError => e
           raise e.class, "There was an error when trying to download files: #{e.message}"
         end
