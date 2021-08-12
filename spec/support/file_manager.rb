@@ -26,16 +26,16 @@ module FileManager
 
   def add_translation_files!(with_ru: false, additional: nil)
     FileUtils.mkdir_p "#{Rails.root}/config/locales/nested"
-    open_and_write("config/locales/nested/en.yml") { |f| f.write en_data }
+    open_and_write('config/locales/nested/en.yml') { |f| f.write en_data }
 
     return unless with_ru
 
-    open_and_write("config/locales/ru.yml") { |f| f.write ru_data }
+    open_and_write('config/locales/ru.yml') { |f| f.write ru_data }
 
     return unless additional
 
     additional.times do |i|
-      data = {"en"=>{"key_#{i}"=>"value #{i}"}}
+      data = {'en' => {"key_#{i}" => "value #{i}"}}
 
       open_and_write("config/locales/en_#{i}.yml") { |f| f.write data.to_yaml }
     end
@@ -50,15 +50,13 @@ module FileManager
       end
     DATA
 
-    open_and_write("config/lokalise_rails.rb") { |f| f.write data }
+    open_and_write('config/lokalise_rails.rb') { |f| f.write data }
   end
 
-  def open_and_write(rel_path)
-    return unless block_given?
+  def open_and_write(rel_path, &block)
+    return unless block
 
-    File.open("#{Rails.root}/#{rel_path}", 'w+:UTF-8') do |f|
-      yield f
-    end
+    File.open("#{Rails.root}/#{rel_path}", 'w+:UTF-8', &block)
   end
 
   def remove_config

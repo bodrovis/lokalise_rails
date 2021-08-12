@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'base64'
-require 'pry'
 
 describe LokaliseRails::TaskDefinition::Exporter do
   let(:filename) { 'en.yml' }
@@ -9,7 +8,7 @@ describe LokaliseRails::TaskDefinition::Exporter do
   let(:relative_name) { "nested/#{filename}" }
 
   context 'with many translation files' do
-    let(:fake_class) { LokaliseRails::TaskDefinition::Exporter }
+    let(:fake_class) { described_class }
 
     before :all do
       add_translation_files! with_ru: true, additional: 5
@@ -35,11 +34,11 @@ describe LokaliseRails::TaskDefinition::Exporter do
         allow_project_id '672198945b7d72fc048021.15940510'
         allow(LokaliseRails).to receive(:max_retries_export).and_return(2)
 
-        fake_client = double()
+        fake_client = double
         allow(fake_client).to receive(:upload_file).and_raise(Lokalise::Error::TooManyRequests)
         allow(fake_class).to receive(:api_client).and_return(fake_client)
 
-        expect(-> {fake_class.export!}).to raise_error(Lokalise::Error::TooManyRequests, /Gave up after 2 retries/i)
+        expect(-> { fake_class.export! }).to raise_error(Lokalise::Error::TooManyRequests, /Gave up after 2 retries/i)
         expect(LokaliseRails).to have_received(:max_retries_export).exactly(3).times
         expect(fake_class).to have_received(:api_client).exactly(3).times
         expect(fake_client).to have_received(:upload_file).exactly(3).times

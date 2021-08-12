@@ -24,6 +24,8 @@ module LokaliseRails
           queued_processes
         end
 
+        # Performs the actual file uploading to Lokalise. If the API rate limit is exceeed,
+        # applies exponential backoff
         def do_upload(f_path, r_path)
           retries = 0
           begin
@@ -31,7 +33,7 @@ module LokaliseRails
           rescue Lokalise::Error::TooManyRequests => e
             raise(e.class, "Gave up after #{retries} retries") if retries >= LokaliseRails.max_retries_export
 
-            sleep 2 ** retries
+            sleep 2**retries
             retries += 1
             retry
           end
