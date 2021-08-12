@@ -1,11 +1,51 @@
 # frozen_string_literal: true
 
 require 'base64'
+require 'pry'
 
 describe LokaliseRails::TaskDefinition::Exporter do
   let(:filename) { 'en.yml' }
   let(:path) { "#{Rails.root}/config/locales/nested/#{filename}" }
   let(:relative_name) { "nested/#{filename}" }
+
+  context 'with many translation files' do
+    let(:fake_class) { LokaliseRails::TaskDefinition::Exporter }
+
+    before :all do
+      add_translation_files! with_ru: true, additional: 5
+    end
+
+    after :all do
+      rm_translation_files
+    end
+
+    describe '.export!' do
+      it 'sends a proper API request and handles rate limiting' do
+        allow_project_id '672198945b7d72fc048021.15940510'
+
+        process = VCR.use_cassette('upload_files_multiple') do
+          described_class.export!
+        end.first
+
+        expect(process.project_id).to eq(LokaliseRails.project_id)
+        expect(process.status).to eq('queued')
+      end
+
+      it 'handles too many requests' do
+        allow_project_id '672198945b7d72fc048021.15940510'
+        allow(LokaliseRails).to receive(:max_retries_export).and_return(2)
+
+        fake_client = double()
+        allow(fake_client).to receive(:upload_file).and_raise(Lokalise::Error::TooManyRequests)
+        allow(fake_class).to receive(:api_client).and_return(fake_client)
+
+        expect(-> {fake_class.export!}).to raise_error(Lokalise::Error::TooManyRequests, /Gave up after 2 retries/i)
+        expect(LokaliseRails).to have_received(:max_retries_export).exactly(3).times
+        expect(fake_class).to have_received(:api_client).exactly(3).times
+        expect(fake_client).to have_received(:upload_file).exactly(3).times
+      end
+    end
+  end
 
   context 'with one translation file' do
     before :all do
@@ -26,6 +66,7 @@ describe LokaliseRails::TaskDefinition::Exporter do
 
         expect(process.project_id).to eq(LokaliseRails.project_id)
         expect(process.status).to eq('queued')
+        expect(LokaliseRails.max_retries_export).to eq(5)
       end
 
       it 'sends a proper API request when a different branch is provided' do

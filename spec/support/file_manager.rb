@@ -24,16 +24,20 @@ module FileManager
     locales_dir.count { |file| File.file?(file) }
   end
 
-  def add_translation_files!(with_ru: false)
+  def add_translation_files!(with_ru: false, additional: nil)
     FileUtils.mkdir_p "#{Rails.root}/config/locales/nested"
-    File.open("#{Rails.root}/config/locales/nested/en.yml", 'w+:UTF-8') do |f|
-      f.write en_data
-    end
+    open_and_write("config/locales/nested/en.yml") { |f| f.write en_data }
 
     return unless with_ru
 
-    File.open("#{Rails.root}/config/locales/ru.yml", 'w+:UTF-8') do |f|
-      f.write ru_data
+    open_and_write("config/locales/ru.yml") { |f| f.write ru_data }
+
+    return unless additional
+
+    additional.times do |i|
+      data = {"en"=>{"key_#{i}"=>"value #{i}"}}
+
+      open_and_write("config/locales/en_#{i}.yml") { |f| f.write data.to_yaml }
     end
   end
 
@@ -46,8 +50,14 @@ module FileManager
       end
     DATA
 
-    File.open("#{Rails.root}/config/lokalise_rails.rb", 'w+:UTF-8') do |f|
-      f.write data
+    open_and_write("config/lokalise_rails.rb") { |f| f.write data }
+  end
+
+  def open_and_write(rel_path)
+    return unless block_given?
+
+    File.open("#{Rails.root}/#{rel_path}", 'w+:UTF-8') do |f|
+      yield f
     end
   end
 

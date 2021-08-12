@@ -13,7 +13,7 @@ module LokaliseRails
         #
         # @return [Lokalise::Client]
         def api_client
-          @api_client ||= ::Lokalise.client LokaliseRails.api_token, LokaliseRails.timeouts
+          @api_client ||= ::Lokalise.client LokaliseRails.api_token, {enable_compression: true}.merge(LokaliseRails.timeouts)
         end
 
         # Resets API client

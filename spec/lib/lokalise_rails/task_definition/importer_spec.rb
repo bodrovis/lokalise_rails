@@ -17,12 +17,12 @@ describe LokaliseRails::TaskDefinition::Importer do
 
   describe '.download_files' do
     it 'returns a proper download URL' do
-      allow_project_id '189934715f57a162257d74.88352370' do
+      allow_project_id '672198945b7d72fc048021.15940510' do
         response = VCR.use_cassette('download_files') do
           described_class.download_files
         end
 
-        expect(response['project_id']).to eq('189934715f57a162257d74.88352370')
+        expect(response['project_id']).to eq('672198945b7d72fc048021.15940510')
         expect(response['bundle_url']).to include('s3-eu-west-1.amazonaws.com')
       end
     end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.lokalise.com/api2/projects/189934715f57a162257d74.88352370%3Amaster/files/download
+    uri: https://api.lokalise.com/api2/projects/672198945b7d72fc048021.15940510%3Amaster/files/download
     body:
       encoding: UTF-8
       string: '{"format":"yaml","placeholder_format":"icu","yaml_include_root":true,"original_filenames":true,"directory_prefix":"","indentation":"2sp"}'
@@ -10,9 +10,11 @@ http_interactions:
       Accept:
       - application/json
       User-Agent:
-      - ruby-lokalise-api gem/3.1.0
+      - ruby-lokalise-api gem/4.3.0
       X-api-token:
       - "<LOKALISE_TOKEN>"
+      Accept-Encoding:
+      - gzip,deflate
   response:
     status:
       code: 200
@@ -20,6 +22,8 @@ http_interactions:
     headers:
       server:
       - nginx
+      date:
+      - Thu, 12 Aug 2021 13:44:26 GMT
       content-type:
       - application/json
       transfer-encoding:
@@ -30,8 +34,6 @@ http_interactions:
       - Accept-Encoding
       cache-control:
       - max-age=0, must-revalidate, no-cache, no-store, private
-      date:
-      - Fri, 23 Oct 2020 15:24:10 GMT
       pragma:
       - no-cache
       x-content-type-options:
@@ -45,13 +47,16 @@ http_interactions:
       referrer-policy:
       - origin
       expires:
-      - Fri, 23 Oct 2020 15:24:10 GMT
+      - Thu, 12 Aug 2021 13:44:26 GMT
       access-control-allow-origin:
       - "*"
       access-control-allow-headers:
       - Content-Type
+      content-encoding:
+      - gzip
     body:
       encoding: ASCII-8BIT
-      string: '{"project_id":"189934715f57a162257d74.88352370","branch":"master","bundle_url":"https:\/\/s3-eu-west-1.amazonaws.com\/lokalise-assets\/files\/export\/189934715f57a162257d74.88352370\/612e05c3ab283f211a349cfcfa388e7c\/Export_Demo-locale.zip"}'
-  recorded_at: Fri, 23 Oct 2020 15:24:02 GMT
+      string: !binary |-
+        H4sIAAAAAAAEA4WPQQ7CIBAA/8JZCpTWQs8+wHgmabawjSiVpkuj0fh3+wNPc5lkMh+2rPmGvgwxsJ4du1pZY5t27EJXT142RtaqUq1tZKskO7Bxe4SEw7amXb+WslDvhBOkOW78iVS4qmCGd37AkyqfZydSvkOKhByIsJATU0y4A19LXosTf6K7UIMcUWur7aSDlKDkOFmvm2DQGPROnHDOwwViouG8//CUPSSs3nFh3x8O8xH84wAAAA==
+  recorded_at: Thu, 12 Aug 2021 13:44:28 GMT
 recorded_with: VCR 6.0.0

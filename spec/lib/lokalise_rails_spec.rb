@@ -58,7 +58,7 @@ describe LokaliseRails do
       fake_class.import_safe_mode = true
     end
 
-    it 'is possible to set import_safe_mode' do
+    it 'is possible to set max_retries_export' do
       allow(fake_class).to receive(:max_retries_export=).with(10)
       fake_class.max_retries_export = 10
     end
