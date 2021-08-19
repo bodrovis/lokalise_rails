@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.0 (unreleased)
+## 2.0.0 (19-Aug-21)
 
 * Add exponential backoff mechanism for file imports to comply with the upcoming API changes ("rate limiting"), see below for more details.
 * Add `max_retries_import` option with a default value of `5`.

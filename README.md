@@ -113,6 +113,7 @@ Options are specified in the `config/lokalise_rails.rb` file.
 
 Full list of available import options [can be found in the official API documentation](https://app.lokalise.com/api2docs/curl/#transition-download-files-post).
 * `import_safe_mode` (`boolean`) - default to `false`. When this option is enabled, the import task will check whether the directory set with `locales_path` is empty or not. If it is not empty, you will be prompted to continue.
+* `max_retries_import` (`integer`) - this option is introduced to properly handle Lokalise API rate limiting. If the HTTP status code 429 (too many requests) has been received, LokaliseRails will apply an exponential backoff mechanism with a very simple formula: `2 ** retries`. If the maximum number of retries has been reached, a `Lokalise::Error::TooManyRequests` exception will be raised and the export operation will be halted.
 
 ### Export settings
 
@@ -134,7 +135,7 @@ en_US:
 c.skip_file_export = ->(file) { f.split[1].to_s.include?('fr') }
 ```
 
-* `max_retries_export` (`integer`) - this option is introduced to properly handle Lokalise API rate limiting during file exporting. If the HTTP status code 429 (too many requests) has been received, LokaliseRails will apply an exponential backoff mechanism with a very simple formula: `2 ** retries` (initially `retries` is `0`). If the maximum number of retries has been reached, a `Lokalise::Error::TooManyRequests` exception will be raised and the export operation will be halted. By default, LokaliseRails will make up to `5` retries which potentially means `1 + 2 + 4 + 8 + 16 + 32 = 63` seconds of waiting time. If the `max_retries_export` is less than `1`, LokaliseRails will not perform any retries and give up immediately after receiving error 429.
+* `max_retries_export` (`integer`) - this option is introduced to properly handle Lokalise API rate limiting. If the HTTP status code 429 (too many requests) has been received, LokaliseRails will apply an exponential backoff mechanism with a very simple formula: `2 ** retries` (initially `retries` is `0`). If the maximum number of retries has been reached, a `Lokalise::Error::TooManyRequests` exception will be raised and the export operation will be halted. By default, LokaliseRails will make up to `5` retries which potentially means `1 + 2 + 4 + 8 + 16 + 32 = 63` seconds of waiting time. If the `max_retries_export` is less than `1`, LokaliseRails will not perform any retries and give up immediately after receiving error 429.
 
 ### Settings to work with formats other than YAML
 
