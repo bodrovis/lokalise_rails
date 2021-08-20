@@ -3,9 +3,26 @@
 RSpec.describe LokaliseRails do
   let(:fake_exporter) { LokaliseRails::TaskDefinition::Exporter }
 
-  context 'with one translation file' do
+  it 'halts when the API key is not set' do
+    allow(described_class).to receive(:api_token).and_return(nil)
+
+    expect(export_executor).to raise_error(SystemExit, /API token is not set/i)
+    expect(described_class).to have_received(:api_token)
+  end
+
+  it 'halts when the project ID is not set' do
+    allow_project_id nil do
+      expect(export_executor).to raise_error(SystemExit, /ID is not set/i)
+    end
+  end
+
+  context 'with two translation files' do
+    let(:filename_ru) { 'ru.yml' }
+    let(:path_ru) { "#{Rails.root}/config/locales/#{filename_ru}" }
+    let(:relative_name_ru) { filename_ru }
+
     before :all do
-      add_translation_files!
+      add_translation_files! with_ru: true
     end
 
     after :all do
@@ -36,34 +53,7 @@ RSpec.describe LokaliseRails do
 
       expect(export_executor).to output(/complete!/).to_stdout
 
-      expect(fake_client).to have_received(:upload_file).exactly(1).time
-    end
-  end
-
-  it 'halts when the API key is not set' do
-    allow(described_class).to receive(:api_token).and_return(nil)
-
-    expect(export_executor).to raise_error(SystemExit, /API token is not set/i)
-    expect(described_class).to have_received(:api_token)
-  end
-
-  it 'halts when the project ID is not set' do
-    allow_project_id nil do
-      expect(export_executor).to raise_error(SystemExit, /ID is not set/i)
-    end
-  end
-
-  context 'with two translation files' do
-    let(:filename_ru) { 'ru.yml' }
-    let(:path_ru) { "#{Rails.root}/config/locales/#{filename_ru}" }
-    let(:relative_name_ru) { filename_ru }
-
-    before :all do
-      add_translation_files! with_ru: true
-    end
-
-    after :all do
-      rm_translation_files
+      expect(fake_client).to have_received(:upload_file).exactly(2).times
     end
 
     describe '.export!' do
