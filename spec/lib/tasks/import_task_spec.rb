@@ -7,6 +7,25 @@ RSpec.describe LokaliseRails do
   let(:local_trans) { "#{Rails.root}/public/trans.zip" }
   let(:remote_trans) { 'https://github.com/bodrovis/lokalise_rails/blob/master/spec/dummy/public/trans.zip?raw=true' }
 
+  let(:fake_importer) { LokaliseRails::TaskDefinition::Importer }
+
+  it 'handles too many requests' do
+    allow_project_id '672198945b7d72fc048021.15940510'
+    allow(described_class).to receive(:max_retries_import).and_return(2)
+    allow(fake_importer).to receive(:sleep).and_return(0)
+
+    fake_client = double
+    allow(fake_client).to receive(:download_files).and_raise(Lokalise::Error::TooManyRequests)
+    allow(fake_importer).to receive(:api_client).and_return(fake_client)
+
+    expect(import_executor).to raise_error(SystemExit, /Gave up after 2 retries/i)
+
+    expect(fake_importer).to have_received(:sleep).exactly(2).times
+    expect(described_class).to have_received(:max_retries_import).exactly(1).times
+    expect(fake_importer).to have_received(:api_client).exactly(3).times
+    expect(fake_client).to have_received(:download_files).exactly(3).times
+  end
+
   it 'halts when the API key is not set' do
     allow(described_class).to receive(:api_token).and_return(nil)
 

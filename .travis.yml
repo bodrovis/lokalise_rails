@@ -13,4 +13,4 @@ before_install:
 env:
   - 'TEST_RAILS_VERSION="~> 5.2.3"'
   - 'TEST_RAILS_VERSION="~> 6.0.3"'
-  - 'TEST_RAILS_VERSION="~> 6.1.0"'
+  - 'TEST_RAILS_VERSION="~> 6.1.4"'

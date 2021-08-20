@@ -44,15 +44,15 @@ describe LokaliseRails::TaskDefinition::Importer do
     it 'handles too many requests' do
       allow_project_id '672198945b7d72fc048021.15940510'
       allow(LokaliseRails).to receive(:max_retries_import).and_return(2)
-      allow(described_class).to receive(:sleep).and_return(0)
+      allow(fake_class).to receive(:sleep).and_return(0)
 
       fake_client = double
       allow(fake_client).to receive(:download_files).and_raise(Lokalise::Error::TooManyRequests)
       allow(fake_class).to receive(:api_client).and_return(fake_client)
 
       expect(-> { fake_class.import! }).to raise_error(Lokalise::Error::TooManyRequests, /Gave up after 2 retries/i)
-      
-      expect(described_class).to have_received(:sleep).exactly(2).times
+
+      expect(fake_class).to have_received(:sleep).exactly(2).times
       expect(LokaliseRails).to have_received(:max_retries_import).exactly(1).times
       expect(fake_class).to have_received(:api_client).exactly(3).times
       expect(fake_client).to have_received(:download_files).exactly(3).times

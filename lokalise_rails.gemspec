@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'codecov', '~> 0.2'
   spec.add_development_dependency 'dotenv', '~> 2.5'
   if ENV['TEST_RAILS_VERSION'].nil?
-    spec.add_development_dependency 'rails', '~> 6.1.0'
+    spec.add_development_dependency 'rails', '~> 6.1.4'
   else
     spec.add_development_dependency 'rails', ENV['TEST_RAILS_VERSION'].to_s
   end
