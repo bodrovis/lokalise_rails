@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+* Breaking change: to run your task prommatically, you now have to instantiate the corresponding class:
+
+```ruby
+LokaliseRails::TaskDefinition::Importer.new.import!
+
+LokaliseRails::TaskDefinition::Exporter.new.export!
+```
+
+* The above change doesn't have any effect on you if you're using only Rake tasks to import/export files.
+* No need to say `require 'lokalise_rails` in your `lokalise_rails.rb` config file anymore.
+
 ## 2.0.0 (19-Aug-21)
 
 * Add exponential backoff mechanism for file imports to comply with the upcoming API changes ("rate limiting"), see below for more details.

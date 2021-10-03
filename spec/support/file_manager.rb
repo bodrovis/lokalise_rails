@@ -41,15 +41,15 @@ module FileManager
     end
   end
 
-  def add_config!
+  def add_config!(custom_text = '')
     data = <<~DATA
-      require 'lokalise_rails'
       LokaliseRails.config do |c|
         c.api_token = ENV['LOKALISE_API_TOKEN']
         c.project_id = ENV['LOKALISE_PROJECT_ID']
-      end
     DATA
-
+    
+    data += custom_text
+    data += 'end'
     open_and_write('config/lokalise_rails.rb') { |f| f.write data }
   end
 

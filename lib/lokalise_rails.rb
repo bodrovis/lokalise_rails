@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'lokalise_rails/utils'
 require 'lokalise_rails/error'
 require 'lokalise_rails/task_definition/base'
 require 'lokalise_rails/task_definition/importer'
@@ -20,7 +21,7 @@ module LokaliseRails
 
     # Full path to directory with translation files
     def locales_path
-      @locales_path || "#{Rails.root}/config/locales"
+      @locales_path || "#{LokaliseRails::Utils.root}/config/locales"
     end
 
     # Project branch to use
