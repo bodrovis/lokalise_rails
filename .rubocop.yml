@@ -21,6 +21,9 @@ Metrics/BlockLength:
 Metrics/BlockNesting:
   Max: 2
 
+RSpec/DescribeClass:
+  Enabled: false
+
 Layout/LineLength:
   AllowURI: true
   Enabled: false

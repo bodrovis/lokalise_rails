@@ -6,13 +6,15 @@ require "#{LokaliseRails::Utils.root}/config/lokalise_rails"
 
 namespace :lokalise_rails do
   task :import do
-    LokaliseRails::TaskDefinition::Importer.new.import!
+    importer = LokaliseManager::TaskDefinitions::Importer.new({}, LokaliseRails::GlobalConfig)
+    importer.import!
   rescue StandardError => e
     abort e.inspect
   end
 
   task :export do
-    LokaliseRails::TaskDefinition::Exporter.new.export!
+    exporter = LokaliseManager::TaskDefinitions::Exporter.new({}, LokaliseRails::GlobalConfig)
+    exporter.export!
   rescue StandardError => e
     abort e.inspect
   end

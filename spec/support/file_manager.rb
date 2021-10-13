@@ -3,13 +3,8 @@
 require 'fileutils'
 
 module FileManager
-  def expect_file_exist(path, file)
-    file_path = File.join path, file
-    expect(File.file?(file_path)).to be true
-  end
-
   def mkdir_locales
-    FileUtils.mkdir_p(LokaliseRails.locales_path) unless File.directory?(LokaliseRails.locales_path)
+    FileUtils.mkdir_p(LokaliseRails::GlobalConfig.locales_path) unless File.directory?(LokaliseRails::GlobalConfig.locales_path)
   end
 
   def rm_translation_files
@@ -17,7 +12,7 @@ module FileManager
   end
 
   def locales_dir
-    Dir["#{LokaliseRails.locales_path}/**/*"]
+    Dir["#{LokaliseRails::GlobalConfig.locales_path}/**/*"]
   end
 
   def count_translations
@@ -43,13 +38,13 @@ module FileManager
 
   def add_config!(custom_text = '')
     data = <<~DATA
-      LokaliseRails.config do |c|
+      LokaliseRails::GlobalConfig.config do |c|
         c.api_token = ENV['LOKALISE_API_TOKEN']
         c.project_id = ENV['LOKALISE_PROJECT_ID']
     DATA
-    
+
     data += custom_text
-    data += 'end'
+    data += "\nend"
     open_and_write('config/lokalise_rails.rb') { |f| f.write data }
   end
 
