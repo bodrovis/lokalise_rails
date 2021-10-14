@@ -32,7 +32,6 @@ Gem::Specification.new do |spec|
   else
     spec.add_development_dependency 'rails', ENV['TEST_RAILS_VERSION'].to_s
   end
-  spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.6'
   spec.add_development_dependency 'rubocop', '~> 1.0'
