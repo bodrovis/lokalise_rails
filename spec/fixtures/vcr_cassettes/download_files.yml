@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.lokalise.com/api2/projects/672198945b7d72fc048021.15940510%3Amaster/files/download
+    uri: https://api.lokalise.com/api2/projects/672198945b7d72fc048021.15940510/files/download
     body:
       encoding: UTF-8
       string: '{"format":"yaml","placeholder_format":"icu","yaml_include_root":true,"original_filenames":true,"directory_prefix":"","indentation":"2sp"}'
@@ -23,7 +23,7 @@ http_interactions:
       server:
       - nginx
       date:
-      - Wed, 13 Oct 2021 16:36:05 GMT
+      - Thu, 14 Oct 2021 13:14:50 GMT
       content-type:
       - application/json
       transfer-encoding:
@@ -47,7 +47,7 @@ http_interactions:
       referrer-policy:
       - origin
       expires:
-      - Wed, 13 Oct 2021 16:36:05 GMT
+      - Thu, 14 Oct 2021 13:14:50 GMT
       access-control-allow-origin:
       - "*"
       access-control-allow-headers:
@@ -57,6 +57,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAEA4WPS2rDMBQA76J1ZX39kdc5QMhaYJ6lZ6pWjoyfTIJL717foKvZDAzzw7a9fGGoU4psZF2vlRucbec+9noJ0g5Sq0a1zspWSfbB5uMZM07Hni/9s9aNRi+8IMPx4C+kylUDK5zlCS9qQlm9yOUbciLkQISVvFhSxgv43spevfgn6oVE49AosNpEBNvGYJ3Frlsimlkv1osbrmV6QMo03a8fnkuAjM2ZNvb7B4xFai7jAAAA
-  recorded_at: Wed, 13 Oct 2021 16:36:05 GMT
+        H4sIAAAAAAAEA4WPS27DIBRF98K4mI9NsTPOAqqOkaxneFZosbF4WIkSde+lK+joSkd3cM6LHSV/oa9zDOzC3q1W0zgNZrHB6tXLYZRadcpMgzRKsje2FNj9rV03oIrlj5x7SDifJTV6q/WgixNOUM/x5HekylUHGzzzDnfqfN6cSPkbUiTkQISVnFhjwjb4OHKpTvyj4YS00tje2sFij2bxflIrNkcddFj6MDpxxS3PnxATzR+tkKfsIWH3jAf7+QUYhJNA9QAAAA==
+  recorded_at: Thu, 14 Oct 2021 13:14:51 GMT
 recorded_with: VCR 6.0.0

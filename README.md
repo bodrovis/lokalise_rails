@@ -5,7 +5,7 @@
 [![Test Coverage](https://codecov.io/gh/bodrovis/lokalise_rails/graph/badge.svg)](https://codecov.io/gh/bodrovis/lokalise_rails)
 ![Downloads total](https://img.shields.io/gem/dt/lokalise_rails)
 
-This gem provides [Lokalise](http://lokalise.com) integration for Ruby on Rails and allows to exchange translation files easily. It relies on [ruby-lokalise-api](https://lokalise.github.io/ruby-lokalise-api) to send APIv2 requests.
+This gem provides [Lokalise](http://lokalise.com) integration for Ruby on Rails and allows to exchange translation files easily. It relies on [lokalise_manager](https://github.com/bodrovis/lokalise_manager) which perform the actual import/export and can be used to run this task in any Ruby script.
 
 *If you would like to know how this gem was built, check out the ["How to create a Ruby gem" series at Lokalise blog](https://lokalise.com/blog/create-a-ruby-gem-basics/).*
 
@@ -33,9 +33,7 @@ rails g lokalise_rails:install
 The latter command will generate a new config file `config/lokalise_rails.rb` looking like this:
 
 ```ruby
-require 'lokalise_rails'
-
-LokaliseRails.config do |c|
+LokaliseRails::GlobalConfig.config do |c|
   c.api_token = ENV['LOKALISE_API_TOKEN']
   c.project_id = ENV['LOKALISE_PROJECT_ID']
 
@@ -45,7 +43,7 @@ end
 
 You have to provide `api_token` and `project_id` to proceed. `project_id` can be found in your Lokalise project settings.
 
-[Other options can be customized as well (see below)](https://github.com/bodrovis/lokalise_rails#import-settings) but they have sensible defaults.
+Other options can be customized as well but they have sensible defaults. To learn about all the available options please check [lokalise_manager docs](https://github.com/bodrovis/lokalise_manager#configuration). The generated config file also contains some examples to help you get started.
 
 ## Importing translations from Lokalise
 
@@ -55,7 +53,7 @@ To import translations from the specified Lokalise project to your Rails app, ru
 rails lokalise_rails:import
 ```
 
-Please note that any duplicating files inside the `locales` directory (or any other directory that you've specified in the options) will be overwritten! You may enable [safe mode](https://github.com/bodrovis/lokalise_rails#import-settings) to check whether the folder is empty or not.
+Please note that any duplicating files inside the `locales` directory (or any other directory that you've specified in the options) will be overwritten! You can enable [safe mode](https://github.com/bodrovis/lokalise_manager#import-config) to check whether the folder is empty or not.
 
 ## Exporting translations to Lokalise
 
@@ -67,84 +65,101 @@ rails lokalise_rails:export
 
 ## Running tasks programmatically
 
-You can also run the import and export tasks from the Rails app:
+You can also run the import and export tasks programmatically from your code. To achieve that, please check the [`lokalise_manager`](https://github.com/bodrovis/lokalise_manager) gem which `lokalise_rails` relies on.
+
+For example, you can use the following approach:
 
 ```ruby
+# This line is actually not required. Include it if you would like to use your global settings:
 require "#{Rails.root}/config/lokalise_rails.rb"
 
-# Import the files:
-result = LokaliseRails::TaskDefinition::Importer.import!
+importer = LokaliseManager.importer({api_token: '1234abc', project_id: '123.abc'}, LokaliseRails::GlobalConfig)
+
+# OR
+
+exporter = LokaliseManager.exporter({api_token: '1234abc', project_id: '123.abc'}, LokaliseRails::GlobalConfig)
 ```
-`result` contains a boolean value with the result of the operation
+
+The first argument passed to `importer` or `exporter` is the hash containing per-client options. This is an optional argument and you can simply pass an empty hash if you don't want to override any global settings.
+
+The second argument is the name of your global config which is usually stored inside the `lokalise_rails.rb` file (however, you can subclass this global config and even adjust the defaults [as explained here](https://github.com/bodrovis/lokalise_manager#overriding-defaults)). If you would like to use `LokaliseRails` global defaults, then you must pass this class to the clients. If you don't do this, then `LokaliseManager` defaults will be used instead. The only difference is the location where translation files are stored. For `LokaliseManager` we use `./locales` directory, whereas for `LokaliseRails` the directory is `./config/locales`.
+
+However, you can also provide the translation files folder on per-client basis, for instance:
 
 ```ruby
-# Export the files:
-processes = LokaliseRails::TaskDefinition::Exporter.export!
+importer = LokaliseManager.importer api_token: '1234abc', project_id: '123.abc', locales_path: "#{Rails.root}/config/locales"
 ```
 
-`processes` contains a list of [queued background processes](https://lokalise.github.io/ruby-lokalise-api/api/queued-processes).
+After the client is instantiated, you can run the corresponding task:
+
+```ruby
+importer.import!
+
+# OR 
+
+exporter.export!
+```
 
 ## Configuration
 
 Options are specified in the `config/lokalise_rails.rb` file.
 
-### Global settings
-
-* `api_token` (`string`, required) - Lokalise API token with read/write permissions.
-* `project_id` (`string`, required) - Lokalise project ID. You must have import/export permissions in the specified project.
-* `locales_path` (`string`) - path to the directory with your translation files. Defaults to `"#{Rails.root}/config/locales"`.
-* `branch` (`string`) - Lokalise project branch to use. Defaults to `"master"`.
-* `timeouts` (`hash`) - set [request timeouts for the Lokalise API client](https://lokalise.github.io/ruby-lokalise-api/additional_info/customization#setting-timeouts). By default, requests have no timeouts: `{open_timeout: nil, timeout: nil}`. Both values are in seconds.
-
-### Import settings
-
-* `import_opts` (`hash`) - options that will be passed to Lokalise API when downloading translations to your app. Here are the default options:
+Here's an example:
 
 ```ruby
-{
-  format: 'yaml',
-  placeholder_format: :icu,
-  yaml_include_root: true,
-  original_filenames: true,
-  directory_prefix: '',
-  indentation: '2sp'
-}
+LokaliseRails::GlobalConfig.config do |c|
+  # These are mandatory options that you must set before running rake tasks:
+  c.api_token = ENV['LOKALISE_API_TOKEN']
+  c.project_id = ENV['LOKALISE_PROJECT_ID']
+
+  # Provide a custom path to the directory with your translation files:
+  # c.locales_path = "#{Rails.root}/config/locales"
+
+  # Provide a Lokalise project branch to use:
+  c.branch = 'develop'
+
+  # Provide request timeouts for the Lokalise API client:
+  c.timeouts = {open_timeout: 5, timeout: 5}
+
+  # Provide maximum number of retries for file exporting:
+  c.max_retries_export = 5
+
+  # Provide maximum number of retries for file importing:
+  c.max_retries_import = 5
+
+  # Import options have the following defaults:
+  # c.import_opts = {
+  #   format: 'yaml',
+  #   placeholder_format: :icu,
+  #   yaml_include_root: true,
+  #   original_filenames: true,
+  #   directory_prefix: '',
+  #   indentation: '2sp'
+  # }
+
+  # Safe mode for imports is disabled by default:
+  # c.import_safe_mode = false
+
+  # Additional export options (only filename, contents, and lang_iso params are provided by default)
+  # c.export_opts = {}
+
+  # Provide additional file exclusion criteria for exports (by default, any file with the proper extension will be exported)
+  # c.skip_file_export = ->(file) { file.split[1].to_s.include?('fr') }
+
+  # Set the options below if you would like to work with format other than YAML
+  ## Regular expression to use when choosing the files to extract from the downloaded archive and upload to Lokalise
+  ## c.file_ext_regexp = /\.ya?ml\z/i
+
+  ## Load translations data and make sure they are valid:
+  ## c.translations_loader = ->(raw_data) { YAML.safe_load raw_data }
+
+  ## Convert translations data to a proper format:
+  ## c.translations_converter = ->(raw_data) { raw_data.to_yaml }
+
+  ## Infer language ISO code for the translation file:
+  ## c.lang_iso_inferer = ->(data) { YAML.safe_load(data)&.keys&.first }
+end
 ```
-
-Full list of available import options [can be found in the official API documentation](https://app.lokalise.com/api2docs/curl/#transition-download-files-post).
-* `import_safe_mode` (`boolean`) - default to `false`. When this option is enabled, the import task will check whether the directory set with `locales_path` is empty or not. If it is not empty, you will be prompted to continue.
-* `max_retries_import` (`integer`) - this option is introduced to properly handle Lokalise API rate limiting. If the HTTP status code 429 (too many requests) has been received, LokaliseRails will apply an exponential backoff mechanism with a very simple formula: `2 ** retries`. If the maximum number of retries has been reached, a `Lokalise::Error::TooManyRequests` exception will be raised and the export operation will be halted.
-
-### Export settings
-
-* `export_opts` (`hash`) - options that will be passed to Lokalise API when uploading translations. Full list of available export options [can be found in the official documentation](https://app.lokalise.com/api2docs/curl/#transition-download-files-post). By default, the following options are provided:
-  + `data` (`string`, required) - base64-encoded contents of the translation file.
-  + `filename` (`string`, required) - translation file name. If the file is stored under a subdirectory (for example, `nested/en.yml` inside the `locales/` directory), the whole path acts as a name. Later when importing files with such names, they will be placed into the proper subdirectories.
-  + `lang_iso` (`string`, required) - language ISO code which is determined using the root key inside your YAML file. For example, in this case the `lang_iso` is `en_US`:
-
-```yaml
-en_US:
-  my_key: "my value"
-```
-
-**Please note** that if your Lokalise project does not have a language with the specified `lang_iso` code, the export will fail.
-
-* `skip_file_export` (`lambda` or `proc`) - specify additional exclusion criteria for the exported files. By default, the rake task will ignore all non-file entries and all files with improper extensions (the latter is controlled by the `file_ext_regexp`). Lambda passed to this option should accept a single argument which is full path to the file (instance of the [`Pathname` class](https://ruby-doc.org/stdlib-2.7.1/libdoc/pathname/rdoc/Pathname.html)). For example, to exclude all files that have `fr` part in their names, add the following config:
-
-```ruby
-c.skip_file_export = ->(file) { f.split[1].to_s.include?('fr') }
-```
-
-* `max_retries_export` (`integer`) - this option is introduced to properly handle Lokalise API rate limiting. If the HTTP status code 429 (too many requests) has been received, LokaliseRails will apply an exponential backoff mechanism with a very simple formula: `2 ** retries` (initially `retries` is `0`). If the maximum number of retries has been reached, a `Lokalise::Error::TooManyRequests` exception will be raised and the export operation will be halted. By default, LokaliseRails will make up to `5` retries which potentially means `1 + 2 + 4 + 8 + 16 + 32 = 63` seconds of waiting time. If the `max_retries_export` is less than `1`, LokaliseRails will not perform any retries and give up immediately after receiving error 429.
-
-### Settings to work with formats other than YAML
-
-If your translation files are not in YAML format, you will need to adjust the following options:
-
-* `file_ext_regexp` (`regexp`) - regular expression applied to file extensions to determine which files should be imported and exported. Defaults to `/\.ya?ml\z/i` (YAML files).
-* `translations_loader` (`lambda` or `proc`) - loads translations data and makes sure they are valid before saving them to a translation file. Defaults to `->(raw_data) { YAML.safe_load raw_data }`. In the simplest case you may just return the data back, for example `-> (raw_data) { raw_data }`.
-* `translations_converter` (`lambda` or `proc`) - converts translations data to a proper format before saving them to a translation file. Defaults to `->(raw_data) { raw_data.to_yaml }`. In the simplest case you may just return the data back, for example `-> (raw_data) { raw_data }`.
-* `lang_iso_inferer` (`lambda` or `proc`) - infers language ISO code based on the translation file data before uploading it to Lokalise. Defaults to `->(data) { YAML.safe_load(data)&.keys&.first }`.
 
 ## Running tests
 

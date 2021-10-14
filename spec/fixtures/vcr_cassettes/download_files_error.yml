@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.lokalise.com/api2/projects/fake%3Amaster/files/download
+    uri: https://api.lokalise.com/api2/projects/fake/files/download
     body:
       encoding: UTF-8
       string: '{"format":"yaml","placeholder_format":"icu","yaml_include_root":true,"original_filenames":true,"directory_prefix":"","indentation":"2sp"}'
@@ -23,7 +23,7 @@ http_interactions:
       server:
       - nginx
       date:
-      - Wed, 13 Oct 2021 16:32:22 GMT
+      - Thu, 14 Oct 2021 13:12:42 GMT
       content-type:
       - application/json
       transfer-encoding:
@@ -45,9 +45,9 @@ http_interactions:
       referrer-policy:
       - origin
       expires:
-      - Wed, 13 Oct 2021 16:32:22 GMT
+      - Thu, 14 Oct 2021 13:12:42 GMT
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Invalid `project_id` parameter","code":400}}'
-  recorded_at: Wed, 13 Oct 2021 16:32:22 GMT
+  recorded_at: Thu, 14 Oct 2021 13:12:43 GMT
 recorded_with: VCR 6.0.0

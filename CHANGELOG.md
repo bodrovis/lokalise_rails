@@ -1,16 +1,34 @@
 # Changelog
 
-## Unreleased
+## 3.0.0 (14-Oct-21)
 
-* Breaking change: to run your task prommatically, you now have to instantiate the corresponding class:
+This is a major re-write of this gem. The actual import/export functionality was extracted to a separate gem called [lokalise_manager](https://github.com/bodrovis/lokalise_manager) that you can use to run your tasks programmatically from *any* Ruby scripts (powered or not powered by Rails). LokaliseRails now has only the Rails-related logic (even though it should probably work with other frameworks as well).
+
+* **Breaking change:** the global config class is renamed therefore update your `config/lokalise_rails.rb` file to look like this:
 
 ```ruby
-LokaliseRails::TaskDefinition::Importer.new.import!
-
-LokaliseRails::TaskDefinition::Exporter.new.export!
+LokaliseRails::GlobalConfig.config do |c|
+  # ...your configuration options provided as before...
+end
 ```
 
-* The above change doesn't have any effect on you if you're using only Rake tasks to import/export files.
+* **Breaking change**: the `branch` config option now has `""` set as default value (it was `"master"` previously). Therefore, you might need to explicitly state which branch to use now:
+
+```ruby
+LokaliseRails::GlobalConfig.config do |c|
+  c.branch = "master"
+end
+```
+
+* **Breaking change**: to run your task prommatically, use a new approach:
+
+```ruby
+LokaliseManager.importer(optional_config, global_config_object).import!
+
+LokaliseManager.exporter(optional_config, global_config_object).export!
+```
+
+* Please check [this document section](https://github.com/bodrovis/lokalise_rails#running-tasks-programmatically) to learn more about running tasks programmatically. This change doesn't have any effect on you if you're using only Rake tasks to import/export files.
 * No need to say `require 'lokalise_rails` in your `lokalise_rails.rb` config file anymore.
 
 ## 2.0.0 (19-Aug-21)

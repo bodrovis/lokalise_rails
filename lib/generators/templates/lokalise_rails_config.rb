@@ -9,7 +9,7 @@ LokaliseRails::GlobalConfig.config do |c|
   # c.locales_path = "#{Rails.root}/config/locales"
 
   # Provide a Lokalise project branch to use:
-  # c.branch = 'master'
+  # c.branch = ''
 
   # Provide request timeouts for the Lokalise API client:
   # c.timeouts = {open_timeout: nil, timeout: nil}

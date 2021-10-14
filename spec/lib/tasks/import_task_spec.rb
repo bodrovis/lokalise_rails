@@ -41,8 +41,8 @@ RSpec.describe 'Import Rake task' do
           expect(count_translations).to eq(4)
 
           expect_file_exist loc_path, 'en.yml'
-          expect_file_exist loc_path, 'yo.yml'
           expect_file_exist loc_path, 'ru.yml'
+          expect_file_exist loc_path, 'yo.yml'
         end
       end
 

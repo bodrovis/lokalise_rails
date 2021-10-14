@@ -19,8 +19,8 @@ describe LokaliseRails::GlobalConfig do
 
     expect(child_config.branch).to eq('develop')
     importer = LokaliseManager::TaskDefinitions::Importer.new({}, child_config)
-    expect(importer.options.branch).to eq('develop')
-    expect(importer.options.api_token).to eq(ENV['LOKALISE_API_TOKEN'])
+    expect(importer.config.branch).to eq('develop')
+    expect(importer.config.api_token).to eq(ENV['LOKALISE_API_TOKEN'])
   end
 
   describe 'parameters' do

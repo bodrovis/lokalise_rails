@@ -6,7 +6,7 @@ module SpecAddons
     expect(File.file?(file_path)).to be true
   end
 
-  def allow_project_id(obj, value = '189934715f57a162257d74.88352370')
+  def allow_project_id(obj, value)
     allow(obj).to receive(:project_id).and_return(value)
     return unless block_given?
 
