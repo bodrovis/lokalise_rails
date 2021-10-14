@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.lokalise.com/api2/projects/invalid%3Amaster/files/download
+    uri: https://api.lokalise.com/api2/projects/fake/files/download
     body:
       encoding: UTF-8
       string: '{"format":"yaml","placeholder_format":"icu","yaml_include_root":true,"original_filenames":true,"directory_prefix":"","indentation":"2sp"}'
@@ -10,9 +10,11 @@ http_interactions:
       Accept:
       - application/json
       User-Agent:
-      - ruby-lokalise-api gem/3.1.0
+      - ruby-lokalise-api gem/4.3.1
       X-api-token:
       - "<LOKALISE_TOKEN>"
+      Accept-Encoding:
+      - gzip,deflate
   response:
     status:
       code: 400
@@ -20,6 +22,8 @@ http_interactions:
     headers:
       server:
       - nginx
+      date:
+      - Thu, 14 Oct 2021 13:12:42 GMT
       content-type:
       - application/json
       transfer-encoding:
@@ -28,8 +32,6 @@ http_interactions:
       - keep-alive
       cache-control:
       - max-age=0, must-revalidate, no-cache, no-store, private
-      date:
-      - Fri, 23 Oct 2020 15:25:11 GMT
       pragma:
       - no-cache
       x-content-type-options:
@@ -43,9 +45,9 @@ http_interactions:
       referrer-policy:
       - origin
       expires:
-      - Fri, 23 Oct 2020 15:25:11 GMT
+      - Thu, 14 Oct 2021 13:12:42 GMT
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Invalid `project_id` parameter","code":400}}'
-  recorded_at: Fri, 23 Oct 2020 15:25:02 GMT
+  recorded_at: Thu, 14 Oct 2021 13:12:43 GMT
 recorded_with: VCR 6.0.0

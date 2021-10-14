@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-LokaliseRails.config do |c|
+LokaliseRails::GlobalConfig.config do |c|
   # These are mandatory options that you must set before running rake tasks:
   # c.api_token = ENV['LOKALISE_API_TOKEN']
   # c.project_id = ENV['LOKALISE_PROJECT_ID']
@@ -9,7 +9,7 @@ LokaliseRails.config do |c|
   # c.locales_path = "#{Rails.root}/config/locales"
 
   # Provide a Lokalise project branch to use:
-  # c.branch = 'master'
+  # c.branch = ''
 
   # Provide request timeouts for the Lokalise API client:
   # c.timeouts = {open_timeout: nil, timeout: nil}

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pathname'
 
 module LokaliseRails
@@ -10,6 +12,7 @@ module LokaliseRails
       def rails_root
         return ::Rails.root.to_s if defined?(::Rails.root) && ::Rails.root
         return RAILS_ROOT.to_s if defined?(RAILS_ROOT)
+
         nil
       end
     end

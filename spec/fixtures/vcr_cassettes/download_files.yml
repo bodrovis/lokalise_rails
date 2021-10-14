@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.lokalise.com/api2/projects/672198945b7d72fc048021.15940510%3Amaster/files/download
+    uri: https://api.lokalise.com/api2/projects/672198945b7d72fc048021.15940510/files/download
     body:
       encoding: UTF-8
       string: '{"format":"yaml","placeholder_format":"icu","yaml_include_root":true,"original_filenames":true,"directory_prefix":"","indentation":"2sp"}'
@@ -10,7 +10,7 @@ http_interactions:
       Accept:
       - application/json
       User-Agent:
-      - ruby-lokalise-api gem/4.3.0
+      - ruby-lokalise-api gem/4.3.1
       X-api-token:
       - "<LOKALISE_TOKEN>"
       Accept-Encoding:
@@ -23,7 +23,7 @@ http_interactions:
       server:
       - nginx
       date:
-      - Thu, 12 Aug 2021 13:44:26 GMT
+      - Thu, 14 Oct 2021 13:14:50 GMT
       content-type:
       - application/json
       transfer-encoding:
@@ -47,7 +47,7 @@ http_interactions:
       referrer-policy:
       - origin
       expires:
-      - Thu, 12 Aug 2021 13:44:26 GMT
+      - Thu, 14 Oct 2021 13:14:50 GMT
       access-control-allow-origin:
       - "*"
       access-control-allow-headers:
@@ -57,6 +57,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAAAAAAAEA4WPQQ7CIBAA/8JZCpTWQs8+wHgmabawjSiVpkuj0fh3+wNPc5lkMh+2rPmGvgwxsJ4du1pZY5t27EJXT142RtaqUq1tZKskO7Bxe4SEw7amXb+WslDvhBOkOW78iVS4qmCGd37AkyqfZydSvkOKhByIsJATU0y4A19LXosTf6K7UIMcUWur7aSDlKDkOFmvm2DQGPROnHDOwwViouG8//CUPSSs3nFh3x8O8xH84wAAAA==
-  recorded_at: Thu, 12 Aug 2021 13:44:28 GMT
+        H4sIAAAAAAAEA4WPS27DIBRF98K4mI9NsTPOAqqOkaxneFZosbF4WIkSde+lK+joSkd3cM6LHSV/oa9zDOzC3q1W0zgNZrHB6tXLYZRadcpMgzRKsje2FNj9rV03oIrlj5x7SDifJTV6q/WgixNOUM/x5HekylUHGzzzDnfqfN6cSPkbUiTkQISVnFhjwjb4OHKpTvyj4YS00tje2sFij2bxflIrNkcddFj6MDpxxS3PnxATzR+tkKfsIWH3jAf7+QUYhJNA9QAAAA==
+  recorded_at: Thu, 14 Oct 2021 13:14:51 GMT
 recorded_with: VCR 6.0.0
