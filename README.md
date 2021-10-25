@@ -15,6 +15,8 @@ This gem provides [Lokalise](http://lokalise.com) integration for Ruby on Rails 
 
 This gem requires Ruby 2.5+ and Rails 5.1+. It might work with older versions of Rails though. You will also need to [setup a Lokalise account](https://app.lokalise.com/signup) and create a [translation project](https://docs.lokalise.com/en/articles/1400460-projects). Finally, you will need to generate a [read/write API token](https://docs.lokalise.com/en/articles/1929556-api-tokens) at your Lokalise profile.
 
+Alternatively, you can utilize a token obtained via OAuth 2 flow. When using such a token, you'll have to set `:use_oauth2_token` option to `true` (please check [options docs](https://github.com/bodrovis/lokalise_manager#common-config) to learn more).
+
 ### Installation
 
 Add the gem to your `Gemfile`:
