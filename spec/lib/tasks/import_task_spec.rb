@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'fileutils'
-
 RSpec.describe 'Import Rake task' do
   let(:global_config) { LokaliseRails::GlobalConfig }
   let(:loc_path) { global_config.locales_path }
