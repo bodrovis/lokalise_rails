@@ -25,20 +25,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'lokalise_manager', '~> 1.0'
 
-  spec.add_development_dependency 'codecov', '~> 0.2'
-  spec.add_development_dependency 'dotenv', '~> 2.5'
-  if ENV['TEST_RAILS_VERSION'].nil?
-    spec.add_development_dependency 'rails', '~> 6.1.4'
-  else
-    spec.add_development_dependency 'rails', ENV['TEST_RAILS_VERSION'].to_s
-  end
-  spec.add_development_dependency 'rake', '~> 13.0'
-  spec.add_development_dependency 'rspec', '~> 3.6'
-  spec.add_development_dependency 'rubocop', '~> 1.0'
-  spec.add_development_dependency 'rubocop-performance', '~> 1.5'
-  spec.add_development_dependency 'rubocop-rspec', '~> 2.6'
-  spec.add_development_dependency 'simplecov', '~> 0.16'
-  spec.add_development_dependency 'vcr', '~> 6.0'
   spec.metadata = {
     'rubygems_mfa_required' => 'true'
   }

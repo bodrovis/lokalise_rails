@@ -1,7 +1,7 @@
 # LokaliseRails
 
 ![Gem](https://img.shields.io/gem/v/lokalise_rails)
-[![Build Status](https://travis-ci.com/bodrovis/lokalise_rails.svg?branch=master)](https://travis-ci.com/github/bodrovis/lokalise_rails)
+![CI](https://github.com/bodrovis/lokalise_rails/actions/workflows/ci.yml/badge.svg)
 [![Test Coverage](https://codecov.io/gh/bodrovis/lokalise_rails/graph/badge.svg)](https://codecov.io/gh/bodrovis/lokalise_rails)
 ![Downloads total](https://img.shields.io/gem/dt/lokalise_rails)
 
