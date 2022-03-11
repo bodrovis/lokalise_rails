@@ -3,14 +3,12 @@
 require 'zeitwerk'
 require 'lokalise_manager'
 
-require 'lokalise_rails/utils'
-require 'lokalise_rails/global_config'
-
 loader = Zeitwerk::Loader.for_gem
+loader.ignore "#{__dir__}/lokalise_rails/railtie.rb"
 loader.setup
 
 # Main LokaliseRails module
 module LokaliseRails
 end
 
-require 'lokalise_rails/railtie' if defined?(Rails)
+require_relative 'lokalise_rails/railtie' if defined?(Rails)
