@@ -24,7 +24,6 @@ ENV['RAILS_ROOT'] ||= "#{File.dirname(__FILE__)}../../../spec/dummy"
 
 RSpec.configure do |config|
   config.include FileManager
-  config.include RakeUtils
   config.include SpecAddons
 end
 

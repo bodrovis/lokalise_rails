@@ -3,7 +3,9 @@
 require 'rails/generators'
 
 module LokaliseRails
+  # Generators for LokaliseRails
   module Generators
+    # Installs LokaliseRails config
     class InstallGenerator < Rails::Generators::Base
       source_root File.expand_path('../templates', __dir__)
 

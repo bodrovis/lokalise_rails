@@ -1,5 +1,12 @@
 # Changelog
 
+## 5.0.0 (11-Mar-2022)
+
+* **Breaking change**: require Ruby 2.7+
+* Use Zeitwerk loader
+* Use newer LokaliseManager (v3) and RubyLokaliseApi (v6)
+* Prettify code
+
 ## 4.0.0 (27-Jan-22)
 
 * File exporting is now multi-threaded as Lokalise API started to support parallel requests since January 2022
