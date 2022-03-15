@@ -5,6 +5,8 @@ require 'lokalise_manager'
 
 loader = Zeitwerk::Loader.for_gem
 loader.ignore "#{__dir__}/lokalise_rails/railtie.rb"
+loader.ignore "#{__dir__}/generators/templates/lokalise_rails_config.rb"
+loader.ignore "#{__dir__}/generators/lokalise_rails/install_generator.rb"
 loader.setup
 
 # Main LokaliseRails module

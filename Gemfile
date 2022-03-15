@@ -16,5 +16,5 @@ group :test do
   gem 'simplecov', '~> 0.16'
   gem 'sprockets-rails', '~> 3'
   gem 'tzinfo-data' # , platforms: %i[mingw mswin x64_mingw jruby]
-  gem 'vcr', '~> 6.0'
+  gem 'vcr', '~> 6.1'
 end
