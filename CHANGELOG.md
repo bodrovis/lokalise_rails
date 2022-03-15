@@ -1,5 +1,9 @@
 # Changelog
 
+## 5.0.1 (15-Mar-2022)
+
+* Fix issue with Zeitwerk and files loading
+
 ## 5.0.0 (11-Mar-2022)
 
 * **Breaking change**: require Ruby 2.7+
