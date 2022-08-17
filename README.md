@@ -131,7 +131,7 @@ LokaliseRails::GlobalConfig.config do |c|
 
   # Import options have the following defaults:
   # c.import_opts = {
-  #   format: 'yaml',
+  #   format: 'ruby_yaml',
   #   placeholder_format: :icu,
   #   yaml_include_root: true,
   #   original_filenames: true,
