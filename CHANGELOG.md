@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.1.0 (26-Aug-2022)
+
+* Fixed an issue with `\n` being improperly imported
+* Changed default `yaml` format to `ruby_yaml` 
+* Update dependencies
+
 ## 5.0.1 (15-Mar-2022)
 
 * Fix issue with Zeitwerk and files loading

@@ -31,7 +31,7 @@ RSpec.describe 'Import Rake task' do
 
     describe 'import' do
       it 'is callable' do
-        allow_project_id global_config, ENV['LOKALISE_PROJECT_ID'] do
+        allow_project_id global_config, ENV.fetch('LOKALISE_PROJECT_ID', nil) do
           VCR.use_cassette('download_files') do
             expect { Rake::Task['lokalise_rails:import'].execute }.to output(/complete!/).to_stdout
           end

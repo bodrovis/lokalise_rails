@@ -32,7 +32,7 @@ RSpec.describe 'Export Rake task' do
 
     describe 'export' do
       it 'is callable' do
-        allow_project_id global_config, ENV['LOKALISE_PROJECT_ID'] do
+        allow_project_id global_config, ENV.fetch('LOKALISE_PROJECT_ID', nil) do
           VCR.use_cassette('upload_files') do
             expect { Rake::Task['lokalise_rails:export'].execute }.to output(/complete!/).to_stdout
           end
