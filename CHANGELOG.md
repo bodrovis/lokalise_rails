@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.0 (27-Jan-22)
+
+* File exporting is now multi-threaded as Lokalise API started to support parallel requests since January 2022
+* Test with Ruby 3.1
+
 ## 3.0.0 (14-Oct-21)
 
 This is a major re-write of this gem. The actual import/export functionality was extracted to a separate gem called [lokalise_manager](https://github.com/bodrovis/lokalise_manager) that you can use to run your tasks programmatically from *any* Ruby scripts (powered or not powered by Rails). LokaliseRails now has only the Rails-related logic (even though it should probably work with other frameworks as well).

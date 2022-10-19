@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.extra_rdoc_files = ['README.md']
   spec.require_paths    = ['lib']
 
-  spec.add_dependency 'lokalise_manager', '~> 1.0'
+  spec.add_dependency 'lokalise_manager', '~> 2.0'
 
   spec.metadata = {
     'rubygems_mfa_required' => 'true'
