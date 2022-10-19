@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module LokaliseRails
+  # Global configuration, based on LokaliseManager config
   class GlobalConfig < LokaliseManager::GlobalConfig
     class << self
       def locales_path

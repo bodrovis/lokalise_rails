@@ -11,8 +11,8 @@ describe LokaliseRails::GlobalConfig do
 
   it 'can be redefined' do
     child_config.config do |c|
-      c.api_token = ENV['LOKALISE_API_TOKEN']
-      c.project_id = ENV['LOKALISE_PROJECT_ID']
+      c.api_token = ENV.fetch('LOKALISE_API_TOKEN', nil)
+      c.project_id = ENV.fetch('LOKALISE_PROJECT_ID', nil)
 
       c.branch = 'develop'
     end
@@ -20,7 +20,7 @@ describe LokaliseRails::GlobalConfig do
     expect(child_config.branch).to eq('develop')
     importer = LokaliseManager::TaskDefinitions::Importer.new({}, child_config)
     expect(importer.config.branch).to eq('develop')
-    expect(importer.config.api_token).to eq(ENV['LOKALISE_API_TOKEN'])
+    expect(importer.config.api_token).to eq(ENV.fetch('LOKALISE_API_TOKEN', nil))
   end
 
   describe 'parameters' do

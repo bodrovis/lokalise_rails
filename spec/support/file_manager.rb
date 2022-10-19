@@ -4,7 +4,9 @@ require 'fileutils'
 
 module FileManager
   def mkdir_locales
-    FileUtils.mkdir_p(LokaliseRails::GlobalConfig.locales_path) unless File.directory?(LokaliseRails::GlobalConfig.locales_path)
+    return if File.directory?(LokaliseRails::GlobalConfig.locales_path)
+
+    FileUtils.mkdir_p(LokaliseRails::GlobalConfig.locales_path)
   end
 
   def rm_translation_files

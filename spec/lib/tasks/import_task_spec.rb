@@ -7,14 +7,14 @@ RSpec.describe 'Import Rake task' do
   it 'halts when the API key is not set' do
     allow(global_config).to receive(:api_token).and_return(nil)
 
-    expect(import_executor).to raise_error(SystemExit, /API token is not set/i)
+    expect { Rake::Task['lokalise_rails:import'].execute }.to raise_error(SystemExit, /API token is not set/i)
     expect(global_config).to have_received(:api_token)
   end
 
   it 'halts when the project ID is not set' do
     allow(global_config).to receive(:project_id).and_return(nil)
 
-    expect(import_executor).to raise_error(SystemExit, /ID is not set/i)
+    expect { Rake::Task['lokalise_rails:import'].execute }.to raise_error(SystemExit, /ID is not set/i)
 
     expect(global_config).to have_received(:project_id)
   end
@@ -25,15 +25,15 @@ RSpec.describe 'Import Rake task' do
       rm_translation_files
     end
 
-    after :all do
+    after do
       rm_translation_files
     end
 
     describe 'import' do
       it 'is callable' do
-        allow_project_id global_config, ENV['LOKALISE_PROJECT_ID'] do
+        allow_project_id global_config, ENV.fetch('LOKALISE_PROJECT_ID', nil) do
           VCR.use_cassette('download_files') do
-            expect(import_executor).to output(/complete!/).to_stdout
+            expect { Rake::Task['lokalise_rails:import'].execute }.to output(/complete!/).to_stdout
           end
 
           expect(count_translations).to eq(4)
@@ -47,7 +47,9 @@ RSpec.describe 'Import Rake task' do
       it 're-raises export errors' do
         allow_project_id global_config, 'fake' do
           VCR.use_cassette('download_files_error') do
-            expect(import_executor).to raise_error(SystemExit, /Invalid `project_id` parameter/)
+            expect do
+              Rake::Task['lokalise_rails:import'].execute
+            end.to raise_error(SystemExit, /Invalid `project_id` parameter/)
           end
         end
       end

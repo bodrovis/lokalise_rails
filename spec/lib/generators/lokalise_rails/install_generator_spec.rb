@@ -3,11 +3,11 @@
 require 'generators/lokalise_rails/install_generator'
 
 describe LokaliseRails::Generators::InstallGenerator do
-  before :all do
+  before do
     remove_config
   end
 
-  after :all do
+  after do
     remove_config
     add_config!
   end

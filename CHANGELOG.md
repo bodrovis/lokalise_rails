@@ -1,5 +1,22 @@
 # Changelog
 
+## 5.1.0 (26-Aug-2022)
+
+* Fixed an issue with `\n` being improperly imported
+* Changed default `yaml` format to `ruby_yaml` 
+* Update dependencies
+
+## 5.0.1 (15-Mar-2022)
+
+* Fix issue with Zeitwerk and files loading
+
+## 5.0.0 (11-Mar-2022)
+
+* **Breaking change**: require Ruby 2.7+
+* Use Zeitwerk loader
+* Use newer LokaliseManager (v3) and RubyLokaliseApi (v6)
+* Prettify code
+
 ## 4.0.0 (27-Jan-22)
 
 * File exporting is now multi-threaded as Lokalise API started to support parallel requests since January 2022

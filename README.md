@@ -131,7 +131,7 @@ LokaliseRails::GlobalConfig.config do |c|
 
   # Import options have the following defaults:
   # c.import_opts = {
-  #   format: 'yaml',
+  #   format: 'ruby_yaml',
   #   placeholder_format: :icu,
   #   yaml_include_root: true,
   #   original_filenames: true,
@@ -156,7 +156,7 @@ LokaliseRails::GlobalConfig.config do |c|
   ## c.translations_loader = ->(raw_data) { YAML.safe_load raw_data }
 
   ## Convert translations data to a proper format:
-  ## c.translations_converter = ->(raw_data) { raw_data.to_yaml }
+  ## c.translations_converter = ->(raw_data) { YAML.dump(raw_data).gsub(/\\\\n/, '\n') }
 
   ## Infer language ISO code for the translation file:
   ## c.lang_iso_inferer = ->(data) { YAML.safe_load(data)&.keys&.first }
@@ -170,4 +170,4 @@ end
 
 ## License
 
-Copyright (c) [Lokalise team](http://lokalise.com), [Ilya Bodrov](http://bodrovis.tech). License type is [MIT](https://github.com/bodrovis/lokalise_rails/blob/master/LICENSE).
+Copyright (c) [Lokalise team](http://lokalise.com), [Ilya Krukowski](http://bodrovis.tech). License type is [MIT](https://github.com/bodrovis/lokalise_rails/blob/master/LICENSE).
