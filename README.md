@@ -165,7 +165,7 @@ end
 
 ## Running tests
 
-1. Copypaste `.env.example` file as `.env`. Put your Lokalise API token and project ID inside. The `.env` file is excluded from version control so your data is safe. All in all, we use pre-recorded VCR cassettes, so the actual API requests won’t be sent. However, providing at least some values is required.
+1. Copypaste `.env.example` file as `.env`. Put your Lokalise API token and project ID inside. The `.env` file is excluded from version control so your data is safe. All in all, we use stubbed requests, so the actual API requests won't be sent. However, providing at least some values is required.
 2. Run `rspec .`. Observe test results and code coverage.
 
 ## License

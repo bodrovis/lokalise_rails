@@ -12,9 +12,10 @@ group :test do
   gem 'rspec', '~> 3.6'
   gem 'rubocop', '~> 1.0'
   gem 'rubocop-performance', '~> 1.5'
+  gem 'rubocop-rake', '~> 0.6'
   gem 'rubocop-rspec', '~> 2.6'
   gem 'simplecov', '~> 0.16'
   gem 'sprockets-rails', '~> 3'
-  gem 'tzinfo-data' # , platforms: %i[mingw mswin x64_mingw jruby]
-  gem 'vcr', '~> 6.1'
+  gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+  gem 'webmock', '~> 3.14'
 end
