@@ -10,11 +10,6 @@ SimpleCov.start 'rails' do
   add_filter 'lib/generators/templates/'
 end
 
-if ENV['CI'] == 'true'
-  require 'codecov'
-  SimpleCov.formatter = SimpleCov::Formatter::Codecov
-end
-
 # Support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
 
