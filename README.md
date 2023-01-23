@@ -1,7 +1,7 @@
 # LokaliseRails
 
 ![Gem](https://img.shields.io/gem/v/lokalise_rails)
-[![Test Coverage](https://codecov.io/gh/bodrovis/lokalise_rails/graph/badge.svg)](https://codecov.io/gh/bodrovis/lokalise_rails)
+![CI](https://github.com/bodrovis/lokalise_rails/actions/workflows/ci.yml/badge.svg)
 ![Downloads total](https://img.shields.io/gem/dt/lokalise_rails)
 
 This gem provides [Lokalise](http://lokalise.com) integration for Ruby on Rails and allows to exchange translation files easily. It relies on [lokalise_manager](https://github.com/bodrovis/lokalise_manager) which perform the actual import/export and can be used to run this task in any Ruby script.
