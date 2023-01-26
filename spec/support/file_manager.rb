@@ -40,13 +40,14 @@ module FileManager
 
   def add_config!(custom_text = '')
     data = <<~DATA
-      LokaliseRails::GlobalConfig.config do |c|
-        c.api_token = ENV['LOKALISE_API_TOKEN']
-        c.project_id = ENV['LOKALISE_PROJECT_ID']
+      if defined?(LokaliseRails) && defined?(LokaliseRails::GlobalConfig)
+        LokaliseRails::GlobalConfig.config do |c|
+          c.api_token = ENV['LOKALISE_API_TOKEN']
+          c.project_id = ENV['LOKALISE_PROJECT_ID']
     DATA
 
     data += custom_text
-    data += "\nend"
+    data += "end\nend"
     open_and_write('config/lokalise_rails.rb') { |f| f.write data }
   end
 
