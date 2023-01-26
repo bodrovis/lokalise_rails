@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.2.0 (26-Jan-2023)
+
+* The gem can now be added to the `development` group instead of `production` to reduce the bundle size
+* Update dependences, test with Ruby 3.2
+
 ## 5.1.0 (26-Aug-2022)
 
 * Fixed an issue with `\n` being improperly imported

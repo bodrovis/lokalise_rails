@@ -18,7 +18,7 @@ Alternatively, you can utilize a token obtained via OAuth 2 flow. When using suc
 
 ### Installation
 
-Add the gem to your `Gemfile`:
+Add the gem to your `Gemfile` (it can be added to the `development` group if you're not planning to import/export translations in production):
 
 ```ruby
 gem 'lokalise_rails'
