@@ -101,6 +101,30 @@ importer.import!
 exporter.export!
 ```
 
+### Example: Multiple translation paths
+
+Creating custom import/export script can come in really handy if you have a non-standard setup, for instance, your translation files are stored in multiple directories (not only in the default `./config/locales`. To overcome this problem, create a custom Rake task and provide as many importers/exporters as needed:
+
+```ruby
+require 'rake'
+require 'lokalise_rails'
+require "#{LokaliseRails::Utils.root}/config/lokalise_rails"
+
+namespace :lokalise_custom do
+  task :export do
+    # importing from the default directory (./config/locales/)
+    exporter = LokaliseManager.exporter({}, LokaliseRails::GlobalConfig)
+    exporter.export!
+
+    # importing from the custom directory
+    exporter = LokaliseManager.exporter({locales_path: "#{Rails.root}/config/custom_locales"}, LokaliseRails::GlobalConfig)
+    exporter.export!
+  rescue StandardError => e
+    abort e.inspect
+  end
+end
+```
+
 ## Configuration
 
 Options are specified in the `config/lokalise_rails.rb` file.
@@ -169,4 +193,4 @@ end
 
 ## License
 
-Copyright (c) [Lokalise team](http://lokalise.com), [Ilya Krukowski](http://bodrovis.tech). License type is [MIT](https://github.com/bodrovis/lokalise_rails/blob/master/LICENSE).
+Copyright (c) [Ilya Krukowski](http://bodrovis.tech). License type is [MIT](https://github.com/bodrovis/lokalise_rails/blob/master/LICENSE).
