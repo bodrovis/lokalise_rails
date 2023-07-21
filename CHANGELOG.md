@@ -1,5 +1,10 @@
 # Changelog
 
+## 6.0.0 (27-Jul-2023)
+
+* Use lokalise-manager v4 and ruby-lokalise-api v8. The latter is a major rewrite of the original SDK and has some breaking changes (however 95% of the methods have similar signatures). Therefore please make sure that your tests pass.
+* Do not test with Ruby 2.7 (EOL)
+
 ## 5.2.0 (26-Jan-2023)
 
 * The gem can now be added to the `development` group instead of `production` to reduce the bundle size

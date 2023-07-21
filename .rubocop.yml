@@ -76,3 +76,6 @@ RSpec/FilePath:
 
 RSpec/MultipleMemoizedHelpers:
   Max: 10
+
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
