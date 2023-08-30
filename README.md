@@ -2,6 +2,7 @@
 
 ![Gem](https://img.shields.io/gem/v/lokalise_rails)
 ![CI](https://github.com/bodrovis/lokalise_rails/actions/workflows/ci.yml/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/bodrovis/lokalise_rails/badge.svg?branch=master)](https://coveralls.io/github/bodrovis/lokalise_rails?branch=master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6e5c98f76227de00b0f2/maintainability)](https://codeclimate.com/github/bodrovis/lokalise_rails/maintainability)
 ![Downloads total](https://img.shields.io/gem/dt/lokalise_rails)
 
