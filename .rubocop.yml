@@ -79,3 +79,7 @@ RSpec/MultipleMemoizedHelpers:
 
 Gemspec/DevelopmentDependencies:
   EnforcedStyle: gemspec
+
+RSpec/SpecFilePathFormat:
+  Exclude:
+    - spec/lib/generators/lokalise_rails/**/*.rb
