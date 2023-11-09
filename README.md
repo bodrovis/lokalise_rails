@@ -184,7 +184,7 @@ LokaliseRails::GlobalConfig.config do |c|
   ## c.translations_converter = ->(raw_data) { YAML.dump(raw_data).gsub(/\\\\n/, '\n') }
 
   ## Infer language ISO code for the translation file:
-  ## c.lang_iso_inferer = ->(data) { YAML.safe_load(data)&.keys&.first }
+  ## c.lang_iso_inferer = ->(data, _path) { YAML.safe_load(data)&.keys&.first }
 end
 ```
 

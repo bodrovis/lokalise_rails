@@ -23,7 +23,7 @@ SimpleCov.start 'rails' do
 end
 
 # Support files
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each { |f| require f }
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 # Configure Rails Environment
 ENV['RAILS_ENV'] = 'test'
