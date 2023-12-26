@@ -32,7 +32,7 @@ module Dummy
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    if Rails.version < Gem::Version.new('7.0')
+    if Rails.gem_version < Gem::Version.new('7.0')
       config.load_defaults 6.1
     else
       config.load_defaults 7.0
