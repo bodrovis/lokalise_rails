@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.0.1
+## 7.0.1 (10-May-2024)
 
 * Update documentation, minor code tweaks
 
