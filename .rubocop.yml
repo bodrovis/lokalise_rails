@@ -72,9 +72,6 @@ RSpec/MultipleExpectations:
 RSpec/ExampleLength:
   Max: 35
 
-RSpec/FilePath:
-  Enabled: false
-
 RSpec/MultipleMemoizedHelpers:
   Max: 10
 

@@ -120,21 +120,21 @@ describe LokaliseRails::GlobalConfig do
     end
 
     it 'is possible to set skip_file_export' do
-      cond = ->(f) { f.nil? }
+      cond = lambda(&:nil?)
       allow(fake_class).to receive(:skip_file_export=).with(cond)
       fake_class.skip_file_export = cond
       expect(fake_class).to have_received(:skip_file_export=)
     end
 
     it 'is possible to set translations_loader' do
-      runner = ->(f) { f.to_json }
+      runner = lambda(&:to_json)
       allow(fake_class).to receive(:translations_loader=).with(runner)
       fake_class.translations_loader = runner
       expect(fake_class).to have_received(:translations_loader=)
     end
 
     it 'is possible to set translations_converter' do
-      runner = ->(f) { f.to_json }
+      runner = lambda(&:to_json)
       allow(fake_class).to receive(:translations_converter=).with(runner)
       fake_class.translations_converter = runner
       expect(fake_class).to have_received(:translations_converter=)
