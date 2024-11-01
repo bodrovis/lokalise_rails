@@ -34,8 +34,10 @@ module Dummy
 
     if Rails.gem_version < Gem::Version.new('7.0')
       config.load_defaults 6.1
-    else
+    elsif Rails.gem_version < Gem::Version.new('8.0')
       config.load_defaults 7.0
+    else
+      config.load_defaults 8.0
     end
   end
 end
