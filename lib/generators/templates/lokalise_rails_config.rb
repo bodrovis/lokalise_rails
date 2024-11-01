@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if defined?(LokaliseRails) && defined?(LokaliseRails::GlobalConfig)
+if defined?(LokaliseRails::GlobalConfig)
   LokaliseRails::GlobalConfig.config do |c|
     # These are mandatory options that you must set before running rake tasks:
     # c.api_token = ENV['LOKALISE_API_TOKEN']
