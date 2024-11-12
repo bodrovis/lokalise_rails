@@ -195,4 +195,4 @@ end
 
 ## License
 
-Copyright (c) [Ilya Krukowski](http://bodrovis.tech). License type is [MIT](https://github.com/bodrovis/lokalise_rails/blob/master/LICENSE).
+Copyright (c) [Ilya Krukowski](http://bodrovis.tech). License type is [MIT](https://github.com/bodrovis/lokalise_rails/blob/master/LICENSE.md).
