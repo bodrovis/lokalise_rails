@@ -1,8 +1,9 @@
 # Changelog
 
-## Unreleased
+## 7.1.0 (12-Nov-2024)
 
 * Test with Rails 8
+* Various updates
 
 ## 7.0.1 (10-May-2024)
 

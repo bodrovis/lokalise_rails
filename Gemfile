@@ -6,7 +6,7 @@ gemspec
 
 group :test do
   gem 'dotenv', '~> 3.0'
-  gem 'rails', '8.0.0.rc2'
+  gem 'rails', '8.0.0'
   gem 'rake', '~> 13.0'
   gem 'rspec', '~> 3.6'
   gem 'rubocop', '~> 1.0'

@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.platform              = Gem::Platform::RUBY
   spec.required_ruby_version = '>= 3.0'
 
-  spec.files = Dir['README.md', 'LICENSE',
+  spec.files = Dir['README.md', 'LICENSE.md',
                    'CHANGELOG.md', 'lib/**/*.rb',
                    'lib/**/*.rake',
                    'lokalise_rails.gemspec', '.github/*.md',
