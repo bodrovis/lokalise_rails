@@ -13,7 +13,7 @@ if defined?(LokaliseRails::GlobalConfig)
     # c.branch = ''
 
     # Provide request timeouts for the Lokalise API client:
-    # c.timeouts = {open_timeout: nil, timeout: nil}
+    # c.additional_client_opts = {open_timeout: nil, timeout: nil}
 
     # Provide maximum number of retries for file exporting:
     # c.max_retries_export = 5

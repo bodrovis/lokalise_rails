@@ -105,7 +105,7 @@ exporter.export!
 
 ### Example: Multiple translation paths
 
-Creating custom import/export script can come in really handy if you have a non-standard setup, for instance, your translation files are stored in multiple directories (not only in the default `./config/locales`. To overcome this problem, create a custom Rake task and provide as many importers/exporters as needed:
+Creating custom import/export script can come in really handy if you have a non-standard setup, for instance, your translation files are stored in multiple directories (not only in the default `./config/locales`). To overcome this problem, create a custom Rake task and provide as many importers/exporters as needed:
 
 ```ruby
 require 'rake'
@@ -146,7 +146,7 @@ LokaliseRails::GlobalConfig.config do |c|
   c.branch = 'develop'
 
   # Provide request timeouts for the Lokalise API client:
-  c.timeouts = {open_timeout: 5, timeout: 5}
+  c.additional_client_opts = {open_timeout: 5, timeout: 5}
 
   # Provide maximum number of retries for file exporting:
   c.max_retries_export = 5

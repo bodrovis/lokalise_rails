@@ -81,12 +81,12 @@ describe LokaliseRails::GlobalConfig do
     end
 
     it 'is possible to set timeouts' do
-      allow(fake_class).to receive(:timeouts=).with(duck_type(:each))
-      fake_class.timeouts = {
+      allow(fake_class).to receive(:additional_client_opts=).with(duck_type(:each))
+      fake_class.additional_client_opts = {
         open_timeout: 100,
         timeout: 500
       }
-      expect(fake_class).to have_received(:timeouts=)
+      expect(fake_class).to have_received(:additional_client_opts=)
     end
 
     it 'is possible to set import_safe_mode' do
