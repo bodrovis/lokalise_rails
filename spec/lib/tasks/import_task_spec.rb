@@ -30,11 +30,13 @@ RSpec.describe 'Import Rake task' do
     end
 
     describe 'import' do
-      it 'is callable' do
-        allow_project_id global_config, ENV.fetch('LOKALISE_PROJECT_ID', nil) do
+      let(:project_id) { ENV.fetch('LOKALISE_PROJECT_ID', nil) }
+
+      it 'runs successfully' do
+        allow_project_id global_config, project_id do
           fake_bundle = "#{Dir.getwd}/spec/fixtures/trans.zip"
 
-          stub_request(:post, 'https://api.lokalise.com/api2/projects/672198945b7d72fc048021.15940510/files/download').
+          stub_request(:post, "https://api.lokalise.com/api2/projects/#{project_id}/files/download").
             with(
               body: JSON.dump({
                                 format: 'ruby_yaml',
@@ -48,7 +50,7 @@ RSpec.describe 'Import Rake task' do
             to_return(
               status: 200,
               body: JSON.dump({
-                                project_id: '672198945b7d72fc048021.15940510',
+                                project_id: project_id,
                                 bundle_url: fake_bundle
                               })
             )
@@ -61,6 +63,66 @@ RSpec.describe 'Import Rake task' do
           expect_file_exist loc_path, 'en/nested/deep/secondary_en.yml'
           expect_file_exist loc_path, 'ru/main_ru.yml'
         end
+      end
+
+      it 'runs successfully in async mode' do
+        process_id = '1efed57f-2720-6212-abd2-3e03040b6ae5'
+
+        allow(global_config).to receive(:import_async).and_return(true)
+
+        allow_project_id global_config, project_id do
+          fake_bundle = "#{Dir.getwd}/spec/fixtures/trans.zip"
+
+          stub_request(:post, "https://api.lokalise.com/api2/projects/#{project_id}/files/async-download").
+            with(
+              body: JSON.dump({
+                                format: 'ruby_yaml',
+                                placeholder_format: 'icu',
+                                yaml_include_root: true,
+                                original_filenames: true,
+                                directory_prefix: '',
+                                indentation: '2sp'
+                              })
+            ).
+            to_return(
+              status: 200,
+              body: JSON.dump({
+                                process_id: process_id
+                              })
+            )
+
+          stub_request(:get, "https://api.lokalise.com/api2/projects/#{project_id}/processes/#{process_id}").
+            to_return(
+              status: 200,
+              body: JSON.dump({
+                                process: {
+                                  process_id: '1efed57f-2720-6212-abd2-3e03040b6ae5',
+                                  type: 'async-export',
+                                  status: 'finished',
+                                  message: '',
+                                  created_by: 20_181,
+                                  created_by_email: 'bodrovis@protonmail.com',
+                                  created_at: '2023-05-16 12:00:49 (Etc/UTC)',
+                                  created_at_timestamp: 1_684_238_449,
+                                  details: {
+                                    file_size_kb: 1,
+                                    total_number_of_keys: 4,
+                                    download_url: fake_bundle
+                                  }
+                                }
+                              })
+            )
+
+          expect { Rake::Task['lokalise_rails:import'].execute }.to output(/complete!/).to_stdout
+
+          expect(count_translations).to eq(4)
+
+          expect_file_exist loc_path, 'en/nested/main_en.yml'
+          expect_file_exist loc_path, 'en/nested/deep/secondary_en.yml'
+          expect_file_exist loc_path, 'ru/main_ru.yml'
+        end
+
+        expect(global_config).to have_received(:import_async)
       end
 
       it 're-raises export errors' do

@@ -34,6 +34,9 @@ if defined?(LokaliseRails::GlobalConfig)
     # Safe mode for imports is disabled by default:
     # c.import_safe_mode = false
 
+    # Run imports asynchronously
+    # c.import_async = false
+
     # Additional export options (only filename, contents, and lang_iso params are provided by default)
     # c.export_opts = {}
 

@@ -1,4 +1,4 @@
-require:
+plugins:
  - rubocop-performance
  - rubocop-rspec
  - rubocop-rake
@@ -70,7 +70,7 @@ RSpec/MultipleExpectations:
   Max: 30
 
 RSpec/ExampleLength:
-  Max: 35
+  Max: 65
 
 RSpec/MultipleMemoizedHelpers:
   Max: 10
