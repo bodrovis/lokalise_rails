@@ -146,5 +146,10 @@ describe LokaliseRails::GlobalConfig do
       fake_class.lang_iso_inferer = runner
       expect(fake_class).to have_received(:lang_iso_inferer=)
     end
+
+    it 'is possible to disable the export task' do
+      described_class.disable_export_task = true
+      expect(described_class.disable_export_task).to be true
+    end
   end
 end
