@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.1.0 (17-Apr-2025)
+
+* Added `disable_export_task` boolean option. When enabled, the export task is turned off in your project to prevent from accidentally exporting keys to Lokalise and overwriting existing data. Defaults to `false`. Thanks, @aarisr!
+
 ## 8.0.1 (19-Feb-2025)
 
 * Minor code tweaks, use latest `lokalise_manager` that now enables asynchronous imports

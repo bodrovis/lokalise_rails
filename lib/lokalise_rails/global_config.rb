@@ -5,7 +5,7 @@ module LokaliseRails
   # specific to the LokaliseRails gem in a Rails application.
   class GlobalConfig < LokaliseManager::GlobalConfig
     class << self
-      attr_accessor :disable_export_task
+      attr_writer :disable_export_task
 
       # Returns whether the export task should be disabled.
       #
@@ -13,7 +13,7 @@ module LokaliseRails
       #
       # @return [Boolean] `true` if the export task is disabled, otherwise `false`.
       def disable_export_task
-        @disable_export_task ||= false
+        @disable_export_task.nil? ? false : @disable_export_task
       end
 
       # Returns the path to the directory where translation files are stored.

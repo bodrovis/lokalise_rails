@@ -53,6 +53,17 @@ RSpec.describe 'Export Rake task' do
         end
       end
 
+      it 'is not callable when disable_export_task is true' do
+        allow(global_config).to receive_messages(disable_export_task: true, project_id: 'fake')
+        expect do
+          expect do
+            Rake::Task['lokalise_rails:export'].execute
+          end.to raise_error(SystemExit) { |e| expect(e.status).to eq(0) }
+        end.to output(/Export task is disabled\./).to_stdout
+        expect(global_config).to have_received(:disable_export_task)
+        expect(global_config).not_to have_received(:project_id)
+      end
+
       it 're-raises export errors' do
         allow_project_id global_config, '542886116159f798720dc4.94769464' do
           stub_request(:post, 'https://api.lokalise.com/api2/projects/542886116159f798720dc4.94769464/files/upload').

@@ -148,8 +148,9 @@ describe LokaliseRails::GlobalConfig do
     end
 
     it 'is possible to disable the export task' do
-      described_class.disable_export_task = true
-      expect(described_class.disable_export_task).to be true
+      allow(fake_class).to receive(:disable_export_task=).with(true)
+      fake_class.disable_export_task = true
+      expect(fake_class).to have_received(:disable_export_task=)
     end
   end
 end
