@@ -55,5 +55,8 @@ if defined?(LokaliseRails::GlobalConfig)
 
     ## Infer language ISO code for the translation file:
     ## c.lang_iso_inferer = ->(data, _path) { YAML.safe_load(data)&.keys&.first }
+
+    ## Disable the export rake task:
+    ## c.disable_export_task = false
   end
 end

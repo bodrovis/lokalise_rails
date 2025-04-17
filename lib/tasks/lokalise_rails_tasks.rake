@@ -20,17 +20,19 @@ namespace :lokalise_rails do
     abort "Import failed: #{e.message}"
   end
 
-  # Exports translations from the Rails project to Lokalise.
-  #
-  # Uses LokaliseManager to push localization files based on the configuration
-  # in `LokaliseRails::GlobalConfig`.
-  #
-  # @raise [StandardError] Prints an error message and aborts if the export fails.
-  desc 'Export translations from the Rails project to Lokalise'
-  task :export do
-    exporter = LokaliseManager.exporter({}, LokaliseRails::GlobalConfig)
-    exporter.export!
-  rescue StandardError => e
-    abort "Export failed: #{e.message}"
+  unless LokaliseRails::GlobalConfig.disable_export_task
+    # Exports translations from the Rails project to Lokalise.
+    #
+    # Uses LokaliseManager to push localization files based on the configuration
+    # in `LokaliseRails::GlobalConfig`.
+    #
+    # @raise [StandardError] Prints an error message and aborts if the export fails.
+    desc 'Export translations from the Rails project to Lokalise'
+    task :export do
+      exporter = LokaliseManager.exporter({}, LokaliseRails::GlobalConfig)
+      exporter.export!
+    rescue StandardError => e
+      abort "Export failed: #{e.message}"
+    end
   end
 end
