@@ -4,6 +4,9 @@ on:
   - push
   - pull_request
 
+permissions:
+  contents: read
+
 jobs:
   test:
     strategy:
@@ -43,5 +46,9 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
     - run: bundle exec rake spec
-    - name: Coveralls
-      uses: coverallsapp/github-action@v2
+    # - name: Coveralls
+    #   uses: coverallsapp/github-action@v2
+    - uses: qltysh/qlty-action/coverage@v1
+      with:
+        token: {{secrets.QLTY_COVERAGE_TOKEN}}
+        files: coverage/.resultset.json
