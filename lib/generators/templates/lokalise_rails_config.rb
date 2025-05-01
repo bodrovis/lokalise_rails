@@ -58,5 +58,8 @@ if defined?(LokaliseRails::GlobalConfig)
 
     ## Disable the export rake task:
     ## c.disable_export_task = false
+
+    ## Disable the import rake task:
+    ## c.disable_import_task = false
   end
 end

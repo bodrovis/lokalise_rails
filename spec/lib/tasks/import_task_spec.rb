@@ -125,6 +125,17 @@ RSpec.describe 'Import Rake task' do
         expect(global_config).to have_received(:import_async)
       end
 
+      it 'is not callable when disable_import_task is true' do
+        allow(global_config).to receive_messages(disable_import_task: true, project_id: 'fake')
+        expect do
+          expect do
+            Rake::Task['lokalise_rails:import'].execute
+          end.to raise_error(SystemExit) { |e| expect(e.status).to eq(0) }
+        end.to output(/Import task is disabled\./).to_stdout
+        expect(global_config).to have_received(:disable_import_task)
+        expect(global_config).not_to have_received(:project_id)
+      end
+
       it 're-raises export errors' do
         allow_project_id global_config, 'fake' do
           stub_request(:post, 'https://api.lokalise.com/api2/projects/fake/files/download').

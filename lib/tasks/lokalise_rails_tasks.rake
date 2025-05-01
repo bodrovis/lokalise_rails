@@ -11,6 +11,11 @@ namespace :lokalise_rails do
   ##########################################################################
   desc 'Import translations from Lokalise into the Rails project'
   task :import do
+    if LokaliseRails::GlobalConfig.disable_import_task
+      $stdout.puts 'Import task is disabled.'
+      exit 0
+    end
+
     importer = LokaliseManager.importer({}, LokaliseRails::GlobalConfig)
     importer.import!
   rescue StandardError => e

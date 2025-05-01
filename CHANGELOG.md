@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.2.0 (01-May-2025)
+
+* Added `disable_import_task` boolean option. When enabled, the import task is turned off in your project. Defaults to `false`.
+
 ## 8.1.0 (17-Apr-2025)
 
 * Added `disable_export_task` boolean option. When enabled, the export task is turned off in your project to prevent from accidentally exporting keys to Lokalise and overwriting existing data. Defaults to `false`. Thanks, @aarisr!

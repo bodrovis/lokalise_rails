@@ -152,5 +152,11 @@ describe LokaliseRails::GlobalConfig do
       fake_class.disable_export_task = true
       expect(fake_class).to have_received(:disable_export_task=)
     end
+
+    it 'is possible to disable the import task' do
+      allow(fake_class).to receive(:disable_import_task=).with(true)
+      fake_class.disable_import_task = true
+      expect(fake_class).to have_received(:disable_import_task=)
+    end
   end
 end

@@ -2,7 +2,7 @@
 
 ![Gem](https://img.shields.io/gem/v/lokalise_rails)
 ![CI](https://github.com/bodrovis/lokalise_rails/actions/workflows/ci.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/bodrovis/lokalise_rails/badge.svg?branch=master)](https://coveralls.io/github/bodrovis/lokalise_rails?branch=master)
+[![Code Coverage](https://qlty.sh/badges/79a78652-f955-42fd-9640-d5e7186a0b8b/test_coverage.svg)](https://qlty.sh/gh/bodrovis/projects/lokalise_rails)
 [![Maintainability](https://qlty.sh/badges/79a78652-f955-42fd-9640-d5e7186a0b8b/maintainability.svg)](https://qlty.sh/gh/bodrovis/projects/lokalise_rails)
 ![Downloads total](https://img.shields.io/gem/dt/lokalise_rails)
 
@@ -188,6 +188,9 @@ LokaliseRails::GlobalConfig.config do |c|
 
   ## Disable the export rake task:
   ## c.disable_export_task = false
+
+  ## Disable the import rake task:
+  ## c.disable_import_task = false
 end
 ```
 
