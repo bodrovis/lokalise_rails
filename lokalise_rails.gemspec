@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.extra_rdoc_files = ['README.md']
   spec.require_paths    = ['lib']
 
-  spec.add_dependency 'lokalise_manager', '~> 6.0'
+  spec.add_dependency 'lokalise_manager', '~> 6.5'
   spec.add_dependency 'zeitwerk', '~> 2.4'
 
   spec.metadata = {

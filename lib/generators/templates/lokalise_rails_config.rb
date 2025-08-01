@@ -59,6 +59,9 @@ if defined?(LokaliseRails::GlobalConfig)
     ## Pre-process translations before exporting to Lokalise:
     ## c.export_preprocessor = ->(raw_data, _path) { raw_data }
 
+    ## Adjust filenames before exporting to Lokalise:
+    ## c.export_filename_generator = ->(_full_path, relative_path) { relative_path }
+
     ## Disable the export rake task:
     ## c.disable_export_task = false
 
