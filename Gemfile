@@ -14,6 +14,6 @@ group :test do
   gem 'rubocop-rake', '~> 0.6'
   gem 'rubocop-rspec', '~> 3.0'
   gem 'simplecov', '~> 0.22'
-  gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+  gem 'tzinfo-data', platforms: %i[windows jruby]
   gem 'webmock', '~> 3.14'
 end
