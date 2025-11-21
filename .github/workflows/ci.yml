@@ -25,7 +25,10 @@ jobs:
           - 3.3
           - 3.4
           - '3.5.0-preview1'
+          - '4.0.0-preview2'
         exclude:
+          - gemfile: gemfiles/Gemfile-rails-6-1
+            ruby: '4.0.0-preview2'
           - gemfile: gemfiles/Gemfile-rails-6-1
             ruby: '3.5.0-preview1'
           - gemfile: gemfiles/Gemfile-rails-7-2
