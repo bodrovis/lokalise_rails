@@ -45,7 +45,7 @@ jobs:
       LOKALISE_PROJECT_ID: 672198945b7d72fc048021.15940510
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
