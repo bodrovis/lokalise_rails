@@ -6,28 +6,29 @@ module LokaliseRails
   # Utility methods for LokaliseRails
   module Utils
     class << self
-      # Retrieves the root directory of the current project.
+      # Returns the root directory of the current project.
       #
-      # If Rails is available, it returns `Rails.root`. Otherwise, it defaults
-      # to the current working directory.
+      # If Rails is available, this returns `Rails.root`.
+      # Otherwise, it falls back to the current working directory.
       #
-      # @return [Pathname] Pathname object pointing to the project root.
+      # @return [Pathname] Pathname pointing to the project root.
       def root
-        Pathname.new(rails_root || Dir.getwd)
+        rails_root || Pathname.pwd
       end
 
-      # Determines the root directory of a Rails project.
+      # Returns the root directory of a Rails application, if present.
       #
-      # - Uses `Rails.root` if available.
-      # - Falls back to `RAILS_ROOT` for older Rails versions.
-      # - Returns `nil` if Rails is not present.
+      # - Uses `Rails.root` when Rails is loaded.
+      # - Falls back to `RAILS_ROOT` for legacy Rails versions.
+      # - Returns `nil` when Rails is not available.
       #
-      # @return [String, nil] Path to the root directory or `nil` if not found.
+      # @return [Pathname, nil] Pathname pointing to the Rails root, or `nil`.
       def rails_root
-        return ::Rails.root.to_s if defined?(::Rails.root) && ::Rails.root
-        return RAILS_ROOT.to_s if defined?(RAILS_ROOT)
-
-        nil
+        if defined?(::Rails) && ::Rails.respond_to?(:root) && ::Rails.root
+          Pathname(::Rails.root)
+        elsif defined?(::RAILS_ROOT)
+          Pathname(::RAILS_ROOT)
+        end
       end
     end
   end
