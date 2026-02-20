@@ -211,5 +211,18 @@ describe LokaliseRails::GlobalConfig do
         expect(c.respond_to?(:project_id)).to be false
       end
     end
+
+    it 'raises when an unknown config key is provided' do
+      expect do
+        described_class.for_project(:mobile) { |c| c.projet_id = 'oops' }
+      end.to raise_error(ArgumentError, /Unknown config key/i)
+    end
+
+    it 'does not respond to unknown setters' do
+      described_class.for_project(:mobile) do |c|
+        expect(c.respond_to?(:project_id=)).to be true
+        expect(c.respond_to?(:projet_id=)).to be false # sic!
+      end
+    end
   end
 end

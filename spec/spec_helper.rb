@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'dotenv/load'
 require 'simplecov'
-require 'webmock/rspec'
 
 SimpleCov.start 'rails' do
   add_filter 'spec/'
@@ -10,6 +8,9 @@ SimpleCov.start 'rails' do
   add_filter 'lib/generators/templates/'
   add_filter 'lib/lokalise_rails/version.rb'
 end
+
+require 'dotenv/load'
+require 'webmock/rspec'
 
 # Support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
@@ -24,9 +25,5 @@ RSpec.configure do |config|
   config.include SpecAddons
 end
 
-# rubocop:disable Style/MixinUsage
-include FileManager
-# rubocop:enable Style/MixinUsage
-
-add_config!
+FileManager.add_config!
 Rails.application.load_tasks

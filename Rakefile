@@ -27,7 +27,7 @@ namespace :lokalise do
   task :install do
     puts 'Running bundle install'
     sh 'gem update --system'
-    sh 'bundle'
+    sh 'bundle install'
   end
 
   desc 'Builds the gem'

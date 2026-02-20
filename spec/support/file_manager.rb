@@ -3,6 +3,8 @@
 require 'fileutils'
 
 module FileManager
+  extend self
+
   def mkdir_locales
     return if File.directory?(LokaliseRails::GlobalConfig.locales_path)
 
@@ -60,7 +62,7 @@ module FileManager
   def open_and_write(rel_path, &block)
     return unless block
 
-    File.open("#{Rails.root}/#{rel_path}", 'w+:UTF-8', &block)
+    File.open("#{Rails.root}/#{rel_path}", 'w:UTF-8', &block)
   end
 
   def remove_config

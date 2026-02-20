@@ -17,15 +17,26 @@ Gem::Specification.new do |spec|
   spec.files = Dir['README.md', 'LICENSE.md',
                    'CHANGELOG.md', 'lib/**/*.rb',
                    'lib/**/*.rake',
-                   'lokalise_rails.gemspec', '.github/*.md',
-                   'Gemfile', 'Rakefile']
+                   'lokalise_rails.gemspec']
   spec.extra_rdoc_files = ['README.md']
   spec.require_paths    = ['lib']
 
-  spec.add_dependency 'lokalise_manager', '~> 6.5'
+  spec.add_dependency 'lokalise_manager', '~> 7.0'
   spec.add_dependency 'zeitwerk', '~> 2.4'
 
+  spec.add_development_dependency 'rake', '~> 13.0'
+  spec.add_development_dependency 'rspec', '~> 3.13'
+  spec.add_development_dependency 'rubocop', '~> 1.0'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.5'
+  spec.add_development_dependency 'rubocop-rake', '~> 0.7'
+  spec.add_development_dependency 'rubocop-rspec', '~> 3.0'
+  spec.add_development_dependency 'simplecov', '~> 0.22'
+
   spec.metadata = {
-    'rubygems_mfa_required' => 'true'
+    'rubygems_mfa_required' => 'true',
+    'bug_tracker_uri' => 'https://github.com/bodrovis/lokalise_rails/issues',
+    'changelog_uri' => 'https://github.com/bodrovis/lokalise_rails/blob/master/CHANGELOG.md',
+    'documentation_uri' => 'https://github.com/bodrovis/lokalise_rails/blob/master/README.md',
+    'homepage_uri' => spec.homepage
   }
 end

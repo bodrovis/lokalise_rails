@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Use `LokaliseManager` v7.0.0.
+- Added support for syncing multiple Lokalise projects via `LokaliseRails::GlobalConfig.for_project`, generating scoped rake tasks: `lokalise_rails:<name>:import` and `lokalise_rails:<name>:export` (thanks, [@floriansr](https://github.com/floriansr))
+- Project-specific config keys are validated against `LokaliseManager` supported options to prevent typos/unknown settings.
+
 ## 8.2.0 (01-May-2025)
 
 * Added `disable_import_task` boolean option. When enabled, the import task is turned off in your project. Defaults to `false`.

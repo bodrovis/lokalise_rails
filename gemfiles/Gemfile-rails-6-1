@@ -16,13 +16,5 @@ group :test do
   gem 'dotenv', '~> 2.5'
   gem 'mutex_m', '~> 0.3.0'
   gem 'rails', '~> 6.1'
-  gem 'rake', '~> 13.0'
-  gem 'rspec', '~> 3.6'
-  gem 'rubocop', '~> 1.0'
-  gem 'rubocop-performance', '~> 1.5'
-  gem 'rubocop-rspec', '~> 2.6'
-  gem 'rubocop-rake', '~> 0.6'
-  gem 'simplecov', '~> 0.16'
-  gem 'simplecov-lcov', '~> 0.8'
   gem 'webmock', '~> 3.14'
 end
