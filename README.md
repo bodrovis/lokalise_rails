@@ -127,6 +127,58 @@ namespace :lokalise_custom do
 end
 ```
 
+## Multiple Lokalise projects
+
+If your Rails app needs to sync with more than one Lokalise **project** (different `project_id`, possibly a different `api_token`), use `for_project` in `config/lokalise_rails.rb`. It registers a named, isolated config and automatically generates scoped rake tasks without changing the existing `lokalise_rails:import` and `lokalise_rails:export` tasks.
+
+```ruby
+# config/lokalise_rails.rb
+
+# Main project — unchanged
+LokaliseRails::GlobalConfig.config do |c|
+  c.api_token  = ENV['LOKALISE_API_TOKEN']
+  c.project_id = ENV['LOKALISE_PROJECT_ID']
+end
+
+# Additional project
+LokaliseRails::GlobalConfig.for_project(:mobile) do |c|
+  c.project_id  = ENV['LOKALISE_MOBILE_PROJECT_ID']
+  c.locales_path = "#{Rails.root}/config/locales/mobile"
+end
+```
+
+This generates the following rake tasks automatically:
+
+```
+rake lokalise_rails:import         # existing - uses the main config
+rake lokalise_rails:export         # existing - uses the main config
+rake lokalise_rails:mobile:import  # auto-generated — uses the :mobile config
+rake lokalise_rails:mobile:export  # auto-generated — uses the :mobile config
+```
+
+Any setting not explicitly set in the `for_project` block falls back to the main `GlobalConfig` - so shared options like `api_token` only need to be written once:
+
+```ruby
+LokaliseRails::GlobalConfig.config do |c|
+  c.api_token  = ENV['LOKALISE_API_TOKEN']  # shared by all projects
+  c.project_id = ENV['LOKALISE_PROJECT_ID']
+end
+
+LokaliseRails::GlobalConfig.for_project(:mobile) do |c|
+  # api_token is inherited from the main config above
+  c.project_id  = ENV['LOKALISE_MOBILE_PROJECT_ID']
+  c.locales_path = "#{Rails.root}/config/locales/mobile"
+end
+```
+
+You can register as many named projects as needed and sync them all in one command:
+
+```
+rails lokalise_rails:import lokalise_rails:mobile:import
+```
+
+> **Note:** `for_project` is designed for apps that need multiple distinct Lokalise **projects**. If you only need to sync multiple local directories against the same project, the `lokalise_custom` rake task pattern described above is sufficient.
+
 ## Configuration
 
 Options are specified in the `config/lokalise_rails.rb` file.

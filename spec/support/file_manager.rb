@@ -49,7 +49,11 @@ module FileManager
     DATA
 
     data += custom_text
-    data += "end\nend\n"
+    data += "  end\n\n"
+    data += "  LokaliseRails::GlobalConfig.for_project(:dummy_project) do |c|\n"
+    data += "    c.project_id = ENV.fetch('LOKALISE_PROJECT_ID', nil)\n"
+    data += "  end\n"
+    data += "end\n"
     open_and_write('config/lokalise_rails.rb') { |f| f.write data }
   end
 
