@@ -161,6 +161,7 @@ describe LokaliseRails::GlobalConfig do
   end
 
   describe '.for_project' do
+    before { described_class.projects.clear }
     after { described_class.projects.clear }
 
     it 'registers a named project with the given settings' do
