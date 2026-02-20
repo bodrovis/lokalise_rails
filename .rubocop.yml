@@ -21,6 +21,7 @@ Metrics/BlockLength:
   Exclude:
     - spec/**/*.rb
     - lokalise_rails.gemspec
+    - lib/tasks/lokalise_rails_tasks.rake
 
 Metrics/BlockNesting:
   Max: 2

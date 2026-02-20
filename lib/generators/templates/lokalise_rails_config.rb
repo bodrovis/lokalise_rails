@@ -68,4 +68,13 @@ if defined?(LokaliseRails::GlobalConfig)
     ## Disable the import rake task:
     ## c.disable_import_task = false
   end
+
+  # To sync with a second Lokalise project, register a named config.
+  # This auto-generates lokalise_rails:<name>:import and lokalise_rails:<name>:export tasks.
+  # Settings not set here fall back to the GlobalConfig block above.
+  #
+  # LokaliseRails::GlobalConfig.for_project(:mobile) do |c|
+  #   c.project_id  = ENV['LOKALISE_MOBILE_PROJECT_ID']
+  #   c.locales_path = "#{Rails.root}/config/locales/mobile"
+  # end
 end
