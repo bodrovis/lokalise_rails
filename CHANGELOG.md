@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 9.0.0 (21-Feb-2026)
 
 - Use `LokaliseManager` v7.0.0.
 - Added support for syncing multiple Lokalise projects via `LokaliseRails::GlobalConfig.for_project`, generating scoped rake tasks: `lokalise_rails:<name>:import` and `lokalise_rails:<name>:export` (thanks, [@floriansr](https://github.com/floriansr))

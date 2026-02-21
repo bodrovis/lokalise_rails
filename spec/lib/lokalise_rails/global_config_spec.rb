@@ -161,53 +161,55 @@ describe LokaliseRails::GlobalConfig do
   end
 
   describe '.for_project' do
-    before { described_class.projects.clear }
-    after { described_class.projects.clear }
+    let(:cfg) { Class.new(described_class) }
+
+    before { cfg.projects.clear }
+    after  { cfg.projects.clear }
+
+    it 'supports registering multiple named projects' do
+      cfg.for_project(:mobile) { |c| c.project_id = 'mobile.123' }
+      cfg.for_project(:admin)  { |c| c.project_id = 'admin.456' }
+
+      expect(cfg.projects.keys).to contain_exactly(:mobile, :admin)
+    end
 
     it 'registers a named project with the given settings' do
-      described_class.for_project(:mobile) do |c|
+      cfg.for_project(:mobile) do |c|
         c.project_id = 'mobile_id.123'
         c.locales_path = '/config/locales/mobile'
       end
 
-      expect(described_class.projects[:mobile]).to eq(
+      expect(cfg.projects[:mobile]).to eq(
         project_id: 'mobile_id.123',
         locales_path: '/config/locales/mobile'
       )
     end
 
-    it 'supports registering multiple named projects' do
-      described_class.for_project(:mobile) { |c| c.project_id = 'mobile.123' }
-      described_class.for_project(:admin) { |c| c.project_id = 'admin.456' }
-
-      expect(described_class.projects.keys).to contain_exactly(:mobile, :admin)
-    end
-
     it 'stores an empty hash when no block is given' do
-      described_class.for_project(:empty)
+      cfg.for_project(:empty)
 
-      expect(described_class.projects[:empty]).to eq({})
+      expect(cfg.projects[:empty]).to eq({})
     end
 
     it 'accepts lambda values such as skip_file_export' do
       filter = ->(file) { file.include?('fr') }
-      described_class.for_project(:mobile) { |c| c.skip_file_export = filter }
+      cfg.for_project(:mobile) { |c| c.skip_file_export = filter }
 
-      expect(described_class.projects[:mobile][:skip_file_export]).to eq(filter)
+      expect(cfg.projects[:mobile][:skip_file_export]).to eq(filter)
     end
 
     it 'does not leak settings into GlobalConfig' do
-      described_class.for_project(:mobile) { |c| c.project_id = 'mobile.123' }
+      cfg.for_project(:mobile) { |c| c.project_id = 'mobile.123' }
 
-      expect(described_class.project_id).not_to eq('mobile.123')
+      expect(cfg.project_id).not_to eq('mobile.123')
     end
 
     it 'raises NoMethodError when calling a getter (non-setter) in the block' do
-      expect { described_class.for_project(:mobile, &:project_id) }.to raise_error(NoMethodError)
+      expect { cfg.for_project(:mobile, &:project_id) }.to raise_error(NoMethodError)
     end
 
     it 'responds to setter methods but not to getter methods' do
-      described_class.for_project(:mobile) do |c|
+      cfg.for_project(:mobile) do |c|
         expect(c.respond_to?(:project_id=)).to be true
         expect(c.respond_to?(:project_id)).to be false
       end
@@ -215,12 +217,12 @@ describe LokaliseRails::GlobalConfig do
 
     it 'raises when an unknown config key is provided' do
       expect do
-        described_class.for_project(:mobile) { |c| c.projet_id = 'oops' }
+        cfg.for_project(:mobile) { |c| c.projet_id = 'oops' }
       end.to raise_error(ArgumentError, /Unknown config key/i)
     end
 
     it 'does not respond to unknown setters' do
-      described_class.for_project(:mobile) do |c|
+      cfg.for_project(:mobile) do |c|
         expect(c.respond_to?(:project_id=)).to be true
         expect(c.respond_to?(:projet_id=)).to be false # sic!
       end
