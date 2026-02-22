@@ -1,5 +1,26 @@
 # Changelog
 
+## Unreleased
+
+- Added `LokaliseRails::GlobalConfig.for_default_project` to define per-run overrides for the default project (without changing global settings), and updated rake tasks to use `project_opts(:default)`.
+
+Example:
+
+```ruby
+# config/lokalise_rails.rb
+
+LokaliseRails::GlobalConfig.config do |c|
+  c.api_token  = ENV["LOKALISE_API_TOKEN"]
+  c.project_id = ENV["LOKALISE_PROJECT_ID"]
+end
+
+# Optional: override default project options used by rake tasks
+LokaliseRails::GlobalConfig.for_default_project do |c|
+  c.branch = "develop"
+  c.max_retries_import = 10
+end
+```
+
 ## 9.0.0 (21-Feb-2026)
 
 - Use `LokaliseManager` v7.0.0.

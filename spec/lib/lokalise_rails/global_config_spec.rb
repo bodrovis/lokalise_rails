@@ -228,4 +228,62 @@ describe LokaliseRails::GlobalConfig do
       end
     end
   end
+
+  describe '.for_default_project' do
+    let(:cfg) { Class.new(described_class) }
+
+    before { cfg.default_project.clear }
+    after  { cfg.default_project.clear }
+
+    it 'stores default project overrides and returns the merged hash' do
+      result = cfg.for_default_project do |c|
+        c.project_id = 'default.123'
+        c.locales_path = '/config/locales/default'
+      end
+
+      expect(result).to eq(
+        project_id: 'default.123',
+        locales_path: '/config/locales/default'
+      )
+      expect(cfg.default_project).to eq(result)
+      expect(cfg.project_opts(:default)).to eq(result)
+    end
+
+    it 'merges settings across multiple calls (does not replace)' do
+      cfg.for_default_project { |c| c.project_id = 'default.123' }
+      cfg.for_default_project { |c| c.locales_path = '/config/locales/default' }
+
+      expect(cfg.project_opts(:default)).to eq(
+        project_id: 'default.123',
+        locales_path: '/config/locales/default'
+      )
+    end
+
+    it 'stores an empty hash when no block is given' do
+      expect(cfg.for_default_project).to eq({})
+      expect(cfg.project_opts(:default)).to eq({})
+    end
+
+    it 'does not leak settings into GlobalConfig setters' do
+      cfg.project_id = 'global.999'
+
+      cfg.for_default_project { |c| c.project_id = 'default.123' }
+
+      expect(cfg.project_id).to eq('global.999')
+      expect(cfg.project_opts(:default)[:project_id]).to eq('default.123')
+    end
+
+    it 'raises when an unknown config key is provided' do
+      expect do
+        cfg.for_default_project { |c| c.projet_id = 'oops' } # sic!
+      end.to raise_error(ArgumentError, /Unknown config key/i)
+    end
+
+    it 'does not respond to unknown setters' do
+      cfg.for_default_project do |c|
+        expect(c.respond_to?(:project_id=)).to be true
+        expect(c.respond_to?(:projet_id=)).to be false # sic!
+      end
+    end
+  end
 end

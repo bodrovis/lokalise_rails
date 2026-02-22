@@ -8,8 +8,7 @@ loader = Zeitwerk::Loader.for_gem
 
 # Ignore files that should not be autoloaded.
 loader.ignore "#{__dir__}/lokalise_rails/railtie.rb" # Exclude Railtie when not in a Rails app
-loader.ignore "#{__dir__}/generators/templates/lokalise_rails_config.rb" # Ignore generator templates
-loader.ignore "#{__dir__}/generators/lokalise_rails/install_generator.rb" # Ignore installation generator
+loader.ignore "#{__dir__}/generators" # Exclude generators
 
 loader.setup
 
@@ -21,4 +20,4 @@ module LokaliseRails
 end
 
 # Load Railtie if running within a Rails application.
-require_relative 'lokalise_rails/railtie' if defined?(Rails)
+require_relative 'lokalise_rails/railtie' if defined?(Rails::Railtie)

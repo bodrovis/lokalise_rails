@@ -24,8 +24,8 @@ module LokaliseRails
       #
       # @return [Pathname, nil] Pathname pointing to the Rails root, or `nil`.
       def rails_root
-        if defined?(::Rails) && ::Rails.respond_to?(:root) && ::Rails.root
-          Pathname(::Rails.root)
+        if defined?(::Rails) && ::Rails.respond_to?(:root) && (r = ::Rails.root)
+          Pathname(r)
         elsif defined?(::RAILS_ROOT)
           Pathname(::RAILS_ROOT)
         end

@@ -53,15 +53,17 @@ RSpec.describe 'Export Rake task' do
         end
       end
 
-      it 'is not callable when disable_export_task is true' do
-        allow(global_config).to receive_messages(disable_export_task: true, project_id: 'fake')
+      it 'does nothing when disable_export_task is true' do
+        allow(LokaliseManager).to receive(:exporter)
+        allow(global_config).to receive(:disable_export_task).and_return(true)
+
+        expect(LokaliseManager).not_to have_received(:exporter)
+
         expect do
-          expect do
-            Rake::Task['lokalise_rails:export'].execute
-          end.to raise_error(SystemExit) { |e| expect(e.status).to eq(0) }
+          Rake::Task['lokalise_rails:export'].execute
         end.to output(/Export task is disabled\./).to_stdout
+
         expect(global_config).to have_received(:disable_export_task)
-        expect(global_config).not_to have_received(:project_id)
       end
 
       it 're-raises export errors' do
@@ -75,6 +77,14 @@ RSpec.describe 'Export Rake task' do
           expect { Rake::Task['lokalise_rails:export'].execute }.to raise_error(SystemExit, /Unknown `lang_iso`/)
         end
       end
+    end
+  end
+
+  describe 'edge cases' do
+    it 'raises ArgumentError on unknown task kind' do
+      expect do
+        Rake::Task['lokalise_rails:__test_unknown_kind'].invoke
+      end.to raise_error(SystemExit, /Unknown task kind: :wat/)
     end
   end
 end

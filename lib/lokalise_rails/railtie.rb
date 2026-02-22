@@ -11,7 +11,7 @@ module LokaliseRails
     # This ensures that the tasks are loaded when the Rails application boots
     # and Rake is invoked.
     rake_tasks do
-      load 'tasks/lokalise_rails_tasks.rake'
+      load File.expand_path('../tasks/lokalise_rails_tasks.rake', __dir__)
     end
   end
 end

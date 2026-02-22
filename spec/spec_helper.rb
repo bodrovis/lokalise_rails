@@ -17,6 +17,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 # Configure Rails Environment
 ENV['RAILS_ENV'] = 'test'
+ENV['LOKALISE_RAILS_TEST'] = 'true'
 require_relative '../spec/dummy/config/environment'
 ENV['RAILS_ROOT'] ||= "#{File.dirname(__FILE__)}../../../spec/dummy"
 

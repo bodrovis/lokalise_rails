@@ -1,79 +1,83 @@
 # frozen_string_literal: true
 
 require 'fileutils'
+require 'pathname'
+require 'yaml'
 
 module FileManager
   extend self
 
-  def mkdir_locales
-    return if File.directory?(LokaliseRails::GlobalConfig.locales_path)
+  def locales_root
+    Pathname(LokaliseRails::GlobalConfig.locales_path.to_s)
+  end
 
-    FileUtils.mkdir_p(LokaliseRails::GlobalConfig.locales_path)
+  def mkdir_locales
+    FileUtils.mkdir_p(locales_root)
+  end
+
+  def locales_entries
+    Dir[locales_root.join('**', '*').to_s]
   end
 
   def rm_translation_files
-    FileUtils.rm_rf locales_dir
-  end
-
-  def locales_dir
-    Dir["#{LokaliseRails::GlobalConfig.locales_path}/**/*"]
+    FileUtils.rm_rf(locales_entries)
   end
 
   def count_translations
-    locales_dir.count { |file| File.file?(file) }
+    locales_entries.count { |path| File.file?(path) }
   end
 
   def add_translation_files!(with_ru: false, additional: nil)
-    FileUtils.mkdir_p "#{Rails.root}/config/locales/nested"
-    open_and_write('config/locales/nested/en.yml') { |f| f.write en_data }
+    write_file(locales_root.join('nested', 'en.yml')) { |f| f.write(en_data) }
 
-    return unless with_ru
-
-    open_and_write('config/locales/ru.yml') { |f| f.write ru_data }
+    write_file(locales_root.join('ru.yml')) { |f| f.write(ru_data) } if with_ru
 
     return unless additional
 
     additional.times do |i|
       data = {'en' => {"key_#{i}" => "value #{i}"}}
-
-      open_and_write("config/locales/en_#{i}.yml") { |f| f.write data.to_yaml }
+      write_file(locales_root.join("en_#{i}.yml")) { |f| f.write(data.to_yaml) }
     end
   end
 
   def add_config!(custom_text = '')
-    data = <<~DATA
+    data = <<~RUBY
       # frozen_string_literal: true
 
       if defined?(LokaliseRails) && defined?(LokaliseRails::GlobalConfig)
         LokaliseRails::GlobalConfig.config do |c|
-          c.api_token = ENV.fetch('LOKALISE_API_TOKEN', nil)
-          c.project_id = ENV.fetch('LOKALISE_PROJECT_ID', nil)
-    DATA
+          c.api_token  = ENV["LOKALISE_API_TOKEN"]
+          c.project_id = ENV["LOKALISE_PROJECT_ID"]
+    RUBY
 
     data += custom_text
-    data += "  end\n\n"
-    data += "  LokaliseRails::GlobalConfig.for_project(:dummy_project) do |c|\n"
-    data += "    c.project_id = ENV.fetch('LOKALISE_PROJECT_ID', nil)\n"
-    data += "  end\n"
-    data += "end\n"
-    open_and_write('config/lokalise_rails.rb') { |f| f.write data }
-  end
+    data += <<~RUBY
+        end
 
-  def open_and_write(rel_path, &block)
-    return unless block
+        LokaliseRails::GlobalConfig.for_project(:dummy_project) do |c|
+          c.project_id = ENV["LOKALISE_PROJECT_ID"]
+        end
+      end
+    RUBY
 
-    File.open("#{Rails.root}/#{rel_path}", 'w:UTF-8', &block)
+    write_file(Rails.root.join('config', 'lokalise_rails.rb')) { |f| f.write(data) }
   end
 
   def remove_config
-    FileUtils.remove_file config_file if File.file?(config_file)
+    FileUtils.remove_file(config_file) if File.file?(config_file)
   end
 
   def config_file
-    "#{Rails.root}/config/lokalise_rails.rb"
+    Rails.root.join('config', 'lokalise_rails.rb')
   end
 
   private
+
+  def write_file(path, &block)
+    path = Pathname(path)
+    FileUtils.mkdir_p(path.dirname)
+    File.open(path.to_s, 'w:UTF-8', &block)
+  end
 
   def en_data
     <<~DATA

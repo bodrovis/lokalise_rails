@@ -13,7 +13,7 @@ module LokaliseRails
 
       # Copies the configuration template to the application's config directory.
       def copy_config
-        template 'lokalise_rails_config.rb', "#{Rails.root}/config/lokalise_rails.rb"
+        template 'lokalise_rails_config.rb', Rails.root.join('config', 'lokalise_rails.rb')
       end
     end
   end
