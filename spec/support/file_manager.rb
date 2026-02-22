@@ -8,7 +8,7 @@ module FileManager
   extend self
 
   def locales_root
-    Pathname(LokaliseRails::GlobalConfig.locales_path.to_s)
+    Pathname(LokaliseRails::GlobalConfig.locales_path)
   end
 
   def mkdir_locales

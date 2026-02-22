@@ -21,7 +21,7 @@ module LokaliseRails
       end
 
       def locales_path
-        @locales_path || LokaliseRails::Utils.root.join('config', 'locales')
+        (@locales_path || LokaliseRails::Utils.root.join('config', 'locales')).to_s
       end
 
       # Default inline overrides (stored separately to avoid breaking existing global setters)
