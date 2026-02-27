@@ -15,6 +15,6 @@ group :test do
   gem 'tzinfo-data', platforms: tz_platforms
   gem 'dotenv', '~> 2.5'
   gem 'mutex_m', '~> 0.3.0'
-  gem 'rails', '~> 6.1'
+  gem 'rails', '6.1.7.10'
   gem 'webmock', '~> 3.14'
 end
