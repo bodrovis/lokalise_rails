@@ -10,40 +10,46 @@ permissions:
 
 jobs:
   test:
-  strategy:
-    fail-fast: false
-    matrix:
-      os: [ubuntu-latest]
-      gemfile:
-        - Gemfile
-        - gemfiles/Gemfile-rails-6-1
-        - gemfiles/Gemfile-rails-7-1
-        - gemfiles/Gemfile-rails-7-2
-      ruby:
-        - '3.2'
-        - '3.3'
-        - '3.4'
-        - '4.0'
-      exclude:
-        - gemfile: gemfiles/Gemfile-rails-6-1
-          ruby: '4.0'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        gemfile:
+          - Gemfile
+          - gemfiles/Gemfile-rails-6-1
+          - gemfiles/Gemfile-rails-7-1
+          - gemfiles/Gemfile-rails-7-2
+        ruby:
+          - '3.2'
+          - '3.3'
+          - '3.4'
+          - '4.0'
+        exclude:
+          - gemfile: gemfiles/Gemfile-rails-6-1
+            ruby: '4.0'
+
     runs-on: ${{ matrix.os }}
+
     env:
       LOKALISE_API_TOKEN: 123abc
       LOKALISE_PROJECT_ID: 672198945b7d72fc048021.15940510
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+
     steps:
-    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      with:
-        persist-credentials: false
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        bundler-cache: true
-    - run: bundle exec rake spec
-    - uses: qltysh/qlty-action/coverage@08a0a862c159eae9b9003081da6663d96efef637
-      if: matrix.ruby == '4.0' && matrix.gemfile == 'Gemfile'
-      with:
-        token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
-        files: coverage/.resultset.json
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - run: bundle exec rake spec
+
+      - uses: qltysh/qlty-action/coverage@08a0a862c159eae9b9003081da6663d96efef637
+        if: matrix.ruby == '4.0' && matrix.gemfile == 'Gemfile'
+        with:
+          token: ${{ secrets.QLTY_COVERAGE_TOKEN }}
+          files: coverage/.resultset.json
