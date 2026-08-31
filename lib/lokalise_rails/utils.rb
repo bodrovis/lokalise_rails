@@ -19,16 +19,24 @@ module LokaliseRails
       # Returns the root directory of a Rails application, if present.
       #
       # - Uses `Rails.root` when Rails is loaded.
-      # - Falls back to `RAILS_ROOT` for legacy Rails versions.
       # - Returns `nil` when Rails is not available.
       #
       # @return [Pathname, nil] Pathname pointing to the Rails root, or `nil`.
       def rails_root
-        if defined?(::Rails) && ::Rails.respond_to?(:root) && (r = ::Rails.root)
-          Pathname(r)
-        elsif defined?(::RAILS_ROOT)
-          Pathname(::RAILS_ROOT)
+        ::Rails.root if defined?(::Rails) && ::Rails.respond_to?(:root)
+      end
+
+      def require_config!
+        config_path = root.join('config', 'lokalise_rails.rb')
+
+        unless config_path.exist?
+          abort <<~MSG
+            LokaliseRails configuration file was not found at #{config_path}.
+            Run `rails generate lokalise_rails:install` first.
+          MSG
         end
+
+        require config_path.to_s
       end
     end
   end

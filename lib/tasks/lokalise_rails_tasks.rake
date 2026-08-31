@@ -3,7 +3,7 @@
 require 'rake'
 require 'lokalise_rails'
 
-require LokaliseRails::Utils.root.join('config', 'lokalise_rails.rb').to_s
+LokaliseRails::Utils.require_config!
 
 # Rake tasks for syncing translation files between a Rails project and Lokalise.
 namespace :lokalise_rails do

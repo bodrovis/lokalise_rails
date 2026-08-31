@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.0.0 (31-Aug-2026)
+
+* **Require Ruby 3.2+**
+* Various code updates and enhancements
+
 ## 9.1.0 (22-Feb-2026)
 
 - Added `LokaliseRails::GlobalConfig.for_default_project` to define per-run overrides for the default project (without changing global settings), and updated rake tasks to use `project_opts(:default)`.

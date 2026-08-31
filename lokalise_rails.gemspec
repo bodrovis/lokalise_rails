@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.homepage              = 'https://github.com/bodrovis/lokalise_rails'
   spec.license               = 'MIT'
   spec.platform              = Gem::Platform::RUBY
-  spec.required_ruby_version = '>= 3.0'
+  spec.required_ruby_version = '>= 3.2'
 
   spec.files = Dir['README.md', 'LICENSE.md',
                    'CHANGELOG.md', 'lib/**/*.rb',
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.extra_rdoc_files = ['README.md']
   spec.require_paths    = ['lib']
 
-  spec.add_dependency 'lokalise_manager', '~> 7.0'
+  spec.add_dependency 'lokalise_manager', '~> 8.0'
   spec.add_dependency 'zeitwerk', '~> 2.4'
 
   spec.add_development_dependency 'rake', '~> 13.0'
@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rubocop-performance', '~> 1.5'
   spec.add_development_dependency 'rubocop-rake', '~> 0.7'
   spec.add_development_dependency 'rubocop-rspec', '~> 3.0'
-  spec.add_development_dependency 'simplecov', '~> 0.22'
+  spec.add_development_dependency 'simplecov', '~> 1.0'
 
   spec.metadata = {
     'rubygems_mfa_required' => 'true',

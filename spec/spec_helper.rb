@@ -3,10 +3,10 @@
 require 'simplecov'
 
 SimpleCov.start 'rails' do
-  add_filter 'spec/'
-  add_filter '.github/'
-  add_filter 'lib/generators/templates/'
-  add_filter 'lib/lokalise_rails/version.rb'
+  skip 'spec/'
+  skip '.github/'
+  skip 'lib/generators/templates/'
+  skip 'lib/lokalise_rails/version.rb'
 end
 
 require 'dotenv/load'

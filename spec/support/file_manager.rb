@@ -73,10 +73,10 @@ module FileManager
 
   private
 
-  def write_file(path, &block)
+  def write_file(path, &)
     path = Pathname(path)
     FileUtils.mkdir_p(path.dirname)
-    File.open(path.to_s, 'w:UTF-8', &block)
+    File.open(path.to_s, 'w:UTF-8', &)
   end
 
   def en_data

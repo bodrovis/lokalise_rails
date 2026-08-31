@@ -7,7 +7,7 @@ require 'lokalise_manager'
 loader = Zeitwerk::Loader.for_gem
 
 # Ignore files that should not be autoloaded.
-loader.ignore "#{__dir__}/lokalise_rails/railtie.rb" # Exclude Railtie when not in a Rails app
+loader.ignore "#{__dir__}/lokalise_rails/railtie.rb" # Load Railtie manually only in Rails applications.
 loader.ignore "#{__dir__}/generators" # Exclude generators
 
 loader.setup

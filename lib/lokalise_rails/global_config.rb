@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'set'
-
 module LokaliseRails
   # Extends `LokaliseManager::GlobalConfig` to provide a global configuration
   # specific to the LokaliseRails gem in a Rails application.
